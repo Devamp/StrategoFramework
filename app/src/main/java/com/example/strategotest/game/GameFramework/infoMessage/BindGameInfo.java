@@ -2,6 +2,7 @@ package com.example.strategotest.game.GameFramework.infoMessage;
 
 import com.example.strategotest.game.GameFramework.Game;
 
+
 /**
  * A message from the game to a player that tells the player:
  * - who the game is

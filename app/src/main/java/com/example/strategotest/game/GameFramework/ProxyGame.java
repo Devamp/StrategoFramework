@@ -1,5 +1,7 @@
 package com.example.strategotest.game.GameFramework;
 
+import com.example.strategotest.game.GameFramework.players.GamePlayer;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
