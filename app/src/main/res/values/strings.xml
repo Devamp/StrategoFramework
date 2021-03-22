@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">StrategoTest</string>
+    <string name="timer_value">TIME: 1:23</string>
+    <string name="surrender_btn">Surrender</string>
+    <string name="end_turn_btn">End Turn</string>
+    <string name="undo_turn_btn">Undo Turn</string>
+    <string name="undo_move_btn">Undo Move</string>
+    <string name="player_turn_text">TURN:</string>
+    <string name="captured_pieces_text">CAPTURED PIECES:</string>
+    <string name="mult_zero">x0</string>
+    <string name="mult_one">x1</string>
+    <string name="mult_two">x2</string>
+    <string name="mult_three">x3</string>
+    <string name="mult_four">x4</string>
 </resources>

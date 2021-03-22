@@ -2,17 +2,450 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bomb"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7CC655"
+        android:backgroundTint="#D3E6C778"
+        android:gravity="center|right"
+        android:orientation="vertical"
+        android:paddingBottom="20sp"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="36dp">
+
+        <LinearLayout
+            android:id="@+id/topButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E66565"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:outlineAmbientShadowColor="#000000"
+            android:outlineProvider="none">
+
+            <TextView
+                android:id="@+id/timerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:text="@string/timer_value"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/surrenderButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="@string/surrender_btn"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/endTurnButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="@string/end_turn_btn"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/undoTurnButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:backgroundTint="#673AB7"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="@string/undo_turn_btn"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/undoMoveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="@string/undo_move_btn"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/playerTurnText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:text="@string/player_turn_text"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/redPlayerTurnImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|left"
+                android:layout_weight="0"
+                android:background="#FF0000"
+                android:outlineAmbientShadowColor="#000000"
+                android:paddingRight="10sp"
+                app:srcCompat="@drawable/redsquare" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/board_captureLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="20sp"
+            android:paddingTop="10sp"
+            android:paddingRight="20sp">
+
+            <LinearLayout
+                android:id="@+id/mainScreenLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/surfaceViewLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.example.strategocs301.MySurfaceView
+                        android:id="@+id/mySurfaceView"
+                        android:layout_width="800dp"
+                        android:layout_height="800dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/capturedLaytout"
+                    android:layout_width="300sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20sp"
+                    android:background="#FFFFFF"
+                    android:backgroundTint="#3EEA7D"
+                    android:gravity="center|right|top|left"
+                    android:orientation="vertical"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:id="@+id/capturePiecesText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:backgroundTint="#FF5D70"
+                        android:text="@string/captured_pieces_text"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/capture1Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/marshallTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FDFDFD"
+                            app:srcCompat="@drawable/marsh" />
+
+                        <TextView
+                            android:id="@+id/marshallMultiplier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="@string/mult_one"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/captureTwoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/generalTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/gen" />
+
+                        <TextView
+                            android:id="@+id/generalMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_one"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture3Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/colonelTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/col" />
+
+                        <TextView
+                            android:id="@+id/colonelMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_zero"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture4Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/majorTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/maj" />
+
+                        <TextView
+                            android:id="@+id/majorMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_two"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture5Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/captainTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/capt" />
+
+                        <TextView
+                            android:id="@+id/captainMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_two"
+                            android:textSize="36sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture6Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/lieutenantTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/lt" />
+
+                        <TextView
+                            android:id="@+id/lieutenantMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_zero"
+                            android:textSize="36sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture7Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/sergentTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/serg" />
+
+                        <TextView
+                            android:id="@+id/sergentMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_four"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture8Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/minerTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/miner" />
+
+                        <TextView
+                            android:id="@+id/minerMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_three"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/capture9Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/scoutTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/scout" />
+
+                        <TextView
+                            android:id="@+id/scoutMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_three"
+                            android:textSize="36sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/captureBLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/bombTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/bomb" />
+
+                        <TextView
+                            android:id="@+id/bombMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_one"
+                            android:textSize="36sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/captureFLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="58sp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/flagTracker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50sp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#FFFFFF"
+                            app:srcCompat="@drawable/flag" />
+
+                        <TextView
+                            android:id="@+id/flagMult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mult_zero"
+                            android:textSize="36sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
