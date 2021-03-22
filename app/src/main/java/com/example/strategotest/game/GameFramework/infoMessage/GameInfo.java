@@ -1,8 +1,9 @@
 package com.example.strategotest.game.GameFramework.infoMessage;
 
+import com.example.strategotest.game.GameFramework.Game;
+
 import java.io.Serializable;
 
-import edu.up.cs301.game.GameFramework.Game;
 
 /**
  * An informational message that is sent from the game to a player.  The

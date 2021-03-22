@@ -1,7 +1,8 @@
 package com.example.strategotest.game.GameFramework.players;
 
-import edu.up.cs301.game.GameFramework.GameMainActivity;
-import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
+import com.example.strategotest.game.GameFramework.GameMainActivity;
+import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
+
 
 /**
  * A player who plays a (generic) game. Each class that implements a player for
