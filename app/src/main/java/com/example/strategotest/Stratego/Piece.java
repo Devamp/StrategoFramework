@@ -1,4 +1,4 @@
-package com.example.strategotest.game.GameFramework.infoMessage.gamestate;
+package com.example.strategotest.Stratego;
 
 /**
  * @author Gareth Rice

@@ -1,4 +1,4 @@
-package com.example.strategotest.game.GameFramework.infoMessage.gamestate;
+package com.example.strategotest.Stratego;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
+
 /**
  * @author Gareth Rice
  * @author Caden Deutscher

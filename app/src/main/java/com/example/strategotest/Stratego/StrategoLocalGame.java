@@ -1,9 +1,8 @@
-package com.example.strategotest;
+package com.example.strategotest.Stratego;
 
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
-import com.example.strategotest.game.GameFramework.infoMessage.GameState;
-import com.example.strategotest.game.GameFramework.infoMessage.gamestate.StrategoGameState;
+import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 public class StrategoLocalGame extends LocalGame {

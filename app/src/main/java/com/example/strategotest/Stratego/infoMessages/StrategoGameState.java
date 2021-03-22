@@ -1,6 +1,8 @@
-package com.example.strategotest.game.GameFramework.infoMessage.gamestate;
+package com.example.strategotest.Stratego.infoMessages;
 
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
+import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.SpecialPiece;
 
 import java.util.ArrayList;
 
