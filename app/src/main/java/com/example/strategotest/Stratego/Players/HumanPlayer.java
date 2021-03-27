@@ -16,6 +16,7 @@ public class HumanPlayer extends GameHumanPlayer {
         super(name);
     }
 
+
     @Override
     public View getTopView() {
         return null;

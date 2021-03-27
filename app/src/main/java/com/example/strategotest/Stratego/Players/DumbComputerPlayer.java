@@ -13,6 +13,14 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         super(name);
     }
 
+
+    /**
+     * Called when the player receives a game-state (or other info) from the
+     * game.
+     *
+     * @param info
+     * 		the message from the game
+     */
     @Override
     protected void receiveInfo(GameInfo info) {
 

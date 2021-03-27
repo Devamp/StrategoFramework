@@ -17,6 +17,10 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         super(name);
     }
 
+    /**
+     *
+     * @param info the message from the game
+     */
     @Override
     protected void receiveInfo(GameInfo info) {
 
