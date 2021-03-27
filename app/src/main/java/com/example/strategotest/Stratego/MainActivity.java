@@ -12,6 +12,7 @@ import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.gameConfiguration.GameConfig;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
+import com.example.strategotest.game.GameFramework.utilities.Saving;
 
 /**
  * @author Gareth Rice
@@ -38,6 +39,32 @@ public class MainActivity extends GameMainActivity {
     public LocalGame createLocalGame(GameState gameState) {
         return null;
     }
+
+    /**
+     * saveGame, adds this games prepend to the filename
+     *
+     * @param gameName
+     * 				Desired save name
+     * @return String representation of the save
+     */
+    @Override
+    public GameState saveGame(String gameName) {
+        return super.saveGame(getGameString(gameName));
+    }
+
+    /**
+     * loadGame, adds this games prepend to the desire file to open and creates the game specific state
+     * @param gameName
+     * 				The file to open
+     * @return The loaded GameState
+     */
+    @Override
+    public GameState loadGame(String gameName){
+        String appName = getGameString(gameName);
+        super.loadGame(appName);
+        return (GameState) new StrategoGameState((StrategoGameState) Saving.readFromFile(appName, this.getApplicationContext()));
+    }
+
 
 //    /**
 //     * onCreate: setup the project
