@@ -34,7 +34,7 @@ import com.example.strategotest.game.GameFramework.utilities.IPCoder;
 import com.example.strategotest.game.GameFramework.utilities.Logger;
 import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 import com.example.strategotest.game.GameFramework.utilities.Saving;
-import com.example.strategotest.game.R;
+import com.example.strategotest.R;
 
 /**
  * class GameMainActivity
