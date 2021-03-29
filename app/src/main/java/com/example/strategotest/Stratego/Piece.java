@@ -137,5 +137,22 @@ public class Piece {
         }
     }
 
+    /**
+     * Determines if two pieces are equal
+     *
+     * @param p - the piece to check against
+     * @return true if the pieces are the same or false if the pieces are not
+     */
+    public boolean isEqual(Piece p) {
+        if(p.getValue() != this.getValue()){
+            return false;
+        }
+        if(p.getPlayer() != this.getPlayer()){
+            return false;
+        }
+        return true;
+    }
+
+
 }
 

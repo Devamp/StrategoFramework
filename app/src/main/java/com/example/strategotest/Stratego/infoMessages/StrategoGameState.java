@@ -630,5 +630,30 @@ public class StrategoGameState extends GameState {
         }
     }
 
+    public Piece[][] getBoard(){
+        return board;
+    }
+
+    /**
+     * equals - Checks if two GameStates are equal
+     *
+     * @param g - GameState to check agaist
+     * @return true if the gamestates are the same and false if not
+     */
+    public boolean equals(StrategoGameState g){
+        for(int row = 0; row < 10; row++){
+            for(int col = 0; col< 10; col++){
+                if(this.board[row][col] == null && g.getBoard()[row][col] != null || this.board[row][col] != null && g.getBoard()[row][col] == null){
+                    return false;
+                }
+                if(!(board[row][col].isEqual(g.getBoard()[row][col]))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
 
 }
