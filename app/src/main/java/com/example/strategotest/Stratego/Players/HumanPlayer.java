@@ -17,16 +17,32 @@ public class HumanPlayer extends GameHumanPlayer {
     }
 
 
+    /**
+     * returns the GUI's top view
+     *
+     * @return
+     * 		the GUI's top view
+     */
     @Override
     public View getTopView() {
         return null;
     }
 
+    /**
+     * Callback method, called when player gets a message
+     *
+     * @param info
+     * 		the message
+     */
     @Override
     public void receiveInfo(GameInfo info) {
 
     }
 
+
+    /**
+     * sets the current player as the activity's GUI
+     */
     @Override
     public void setAsGui(GameMainActivity activity) {
 
