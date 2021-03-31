@@ -56,7 +56,6 @@ public abstract class GameMainActivity extends Activity implements
      * Instance Variables
      * --------------------------------------------------------------------
      */
-
     // A reference to the object representing the game itself. This is the
     // object that knows the rules of the game. This variable is initialized in
     // launchGame.
