@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.example.strategotest.game.GameFramework.GameMainActivity;
-import com.example.strategotest.game.R;
+import com.example.strategotest.R;
 
 /**
  * Helper-class for showing dialog boxes

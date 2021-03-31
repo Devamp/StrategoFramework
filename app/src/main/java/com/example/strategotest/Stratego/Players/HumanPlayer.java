@@ -16,7 +16,7 @@ public class HumanPlayer extends GameHumanPlayer {
         super(name);
     }
 
-
+    
     /**
      * returns the GUI's top view
      *
