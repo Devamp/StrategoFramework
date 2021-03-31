@@ -653,6 +653,10 @@ public class StrategoGameState extends GameState {
         }
         return true;
     }
+    public int getId() {
+        return turn;
+    }
+
 
 
 

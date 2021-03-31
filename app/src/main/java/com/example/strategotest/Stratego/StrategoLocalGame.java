@@ -11,10 +11,11 @@ public class StrategoLocalGame extends LocalGame {
      * Constructor for the StrategoLocalGame
      *
      */
+    private StrategoGameState gameState;
     public StrategoLocalGame(){
     super();
     super.state = new StrategoGameState();
-
+    gameState = new StrategoGameState();
     }
 
     /**
@@ -43,7 +44,12 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return false;
+        if(playerIdx == gameState.getId() ){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
