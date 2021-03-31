@@ -49,18 +49,11 @@ public class MainActivity extends GameMainActivity {
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
         // local human GUI - as player 0
-        playerTypes.add(new GamePlayerType("Local Human Player") {
+        playerTypes.add(new GamePlayerType("Human Player") {
             public GamePlayer createPlayer(String name) {
                 return new HumanPlayer(name, R.layout.activity_main, 0);
             }
         });
-
-//        // local human GUI - as player 1
-//        playerTypes.add(new GamePlayerType("s Human Player") {
-//            public GamePlayer createPlayer(String name) {
-//                return new HumanPlayer(name, R.layout.activity_main, 1);
-//            }
-//        });
 
         // dumb computer player
         playerTypes.add(new GamePlayerType("Dumb Computer Player") {
@@ -76,7 +69,7 @@ public class MainActivity extends GameMainActivity {
             }
         });
 
-        // Create a game configuration class for Tic-tac-toe
+        // Create a game configuration class for Stratego
         GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Stratego", PORT_NUMBER);
 
         // Add the default players
@@ -92,7 +85,8 @@ public class MainActivity extends GameMainActivity {
 
     @Override
     public LocalGame createLocalGame(GameState gameState) {
-        return null;
+        if(gameState == null) return new StrategoLocalGame();
+        return new StrategoLocalGame((StrategoGameState) gameState);
     }
 
     /**
