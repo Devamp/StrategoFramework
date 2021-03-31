@@ -24,6 +24,10 @@ import com.example.strategotest.game.GameFramework.utilities.Saving;
  *
  * Notes:
  *
+ * Change Captured Pieces field in GUI to be Place Pieces at appropriate time
+ * Add field to show which teams pieces have been captured
+ *
+ *
  * ToDo:
  *
  */
