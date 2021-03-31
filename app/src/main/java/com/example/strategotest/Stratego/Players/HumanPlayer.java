@@ -7,13 +7,18 @@ import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
 
 public class HumanPlayer extends GameHumanPlayer {
+
+    private int layoutID;
+    private int humanPlayerID;
     /**
      * constructor
      *
      * @param name the name of the player
      */
-    public HumanPlayer(String name) {
+    public HumanPlayer(String name, int layoutID, int playerID) {
         super(name);
+        this.layoutID = layoutID;
+        humanPlayerID = playerID;
     }
 
     

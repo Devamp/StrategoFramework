@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
+import com.example.strategotest.Stratego.Players.HumanPlayer;
+import com.example.strategotest.Stratego.Players.SmartComputerPlayer;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.LocalGame;
@@ -45,47 +48,40 @@ public class MainActivity extends GameMainActivity {
         // Define the allowed player types
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
-        // yellow-on-blue GUI
-        playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
+        // local human GUI - as player 0
+        playerTypes.add(new GamePlayerType("Local Human Player") {
             public GamePlayer createPlayer(String name) {
-                return new (name, R.layout.ttt_human_player1);
+                return new HumanPlayer(name, R.layout.activity_main, 0);
             }
         });
 
-        // red-on-yellow GUI
-        playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
-            public GamePlayer createPlayer(String name) {
-                return new TTTHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
-            }
-        });
-
-        // game of 33
-        playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
-            public GamePlayer createPlayer(String name) {
-                return new TTTHumanPlayer2(name);
-            }
-        });
+//        // local human GUI - as player 1
+//        playerTypes.add(new GamePlayerType("s Human Player") {
+//            public GamePlayer createPlayer(String name) {
+//                return new HumanPlayer(name, R.layout.activity_main, 1);
+//            }
+//        });
 
         // dumb computer player
-        playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
+        playerTypes.add(new GamePlayerType("Dumb Computer Player") {
             public GamePlayer createPlayer(String name) {
-                return new TTTComputerPlayer1(name);
+                return new DumbComputerPlayer(name);
             }
         });
 
         // smarter computer player
-        playerTypes.add(new GamePlayerType("Computer Player (smart)") {
+        playerTypes.add(new GamePlayerType("Smart Computer Player") {
             public GamePlayer createPlayer(String name) {
-                return new TTTComputerPlayer2(name);
+                return new SmartComputerPlayer(name);
             }
         });
 
         // Create a game configuration class for Tic-tac-toe
-        GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Tic-Tac-Toe", PORT_NUMBER);
+        GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Stratego", PORT_NUMBER);
 
         // Add the default players
         defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI
-        defaultConfig.addPlayer("Computer", 3); // dumb computer player
+        defaultConfig.addPlayer("Computer", 1); // dumb computer player
 
         // Set the initial information for the remote player
         defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
