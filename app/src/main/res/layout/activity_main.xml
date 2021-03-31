@@ -138,327 +138,993 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
 
-                <TableLayout
-                    android:id="@+id/battlefield"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TableRow
-                        android:id="@+id/row1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <TableRow
-                        android:id="@+id/row2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <TableRow
-                        android:id="@+id/row3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <TableRow
-                        android:id="@+id/row4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </TableLayout>
-
                 <LinearLayout
-                    android:id="@+id/capturedLaytout"
-                    android:layout_width="300sp"
+                    android:id="@+id/MainLeft"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20sp"
-                    android:background="#FFFFFF"
-                    android:backgroundTint="#3EEA7D"
-                    android:gravity="center|right|top|left"
-                    android:orientation="vertical"
-                    android:paddingBottom="20sp">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/capturePiecesText"
+                        android:id="@+id/textView5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:backgroundTint="@color/sky_blue"
-                        android:text="@string/captured_pieces_text"
-                        android:textAlignment="center"
-                        android:textColor="#000000"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:text="Turn Summary:"
+                        android:textSize="30sp" />
 
-                    <LinearLayout
-                        android:id="@+id/capture1Layout"
+                    <TableLayout
+                        android:id="@+id/battlefield"
                         android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <ImageButton
-                            android:id="@+id/marshallTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FDFDFD"
-                            app:srcCompat="@drawable/marsh" />
+                        <TableRow
+                            android:id="@+id/row1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/marshallMultiplier"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/mult_one"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton34"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/captureTwoLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton35"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/generalTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/gen" />
+                            <ImageButton
+                                android:id="@+id/imageButton36"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/generalMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_one"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:id="@+id/imageButton37"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton38"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture3Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton39"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/colonelTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/col" />
+                            <ImageButton
+                                android:id="@+id/imageButton40"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/colonelMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_zero"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:id="@+id/imageButton41"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton42"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture4Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                        </TableRow>
 
-                        <ImageButton
-                            android:id="@+id/majorTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/maj" />
+                        <TableRow
+                            android:id="@+id/row2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/majorMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_two"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:id="@+id/imageButton2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture5Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/captainTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/capt" />
+                            <ImageButton
+                                android:id="@+id/imageButton5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/captainMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_two"
-                            android:textSize="36sp" />
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture6Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/lieutenantTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/lt" />
+                            <ImageButton
+                                android:id="@+id/imageButton8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/lieutenantMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_zero"
-                            android:textSize="36sp" />
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture7Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/sergentTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/serg" />
+                            <ImageButton
+                                android:id="@+id/imageButton33"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/sergentMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_four"
-                            android:textSize="36sp" />
+                        </TableRow>
 
-                    </LinearLayout>
+                        <TableRow
+                            android:id="@+id/row3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <LinearLayout
-                        android:id="@+id/capture8Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/minerTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/miner" />
+                            <ImageButton
+                                android:id="@+id/imageButton12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/minerMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_three"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:id="@+id/imageButton13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/capture9Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton15"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/scoutTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/scout" />
+                            <ImageButton
+                                android:id="@+id/imageButton16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/scoutMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_three"
-                            android:textSize="36sp" />
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    <LinearLayout
-                        android:id="@+id/captureBLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/imageButton18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <ImageButton
-                            android:id="@+id/bombTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/bomb" />
+                            <ImageButton
+                                android:id="@+id/imageButton19"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/bombMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_one"
-                            android:textSize="36sp" />
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton32"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
 
-                    <LinearLayout
-                        android:id="@+id/captureFLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="58sp"
-                        android:orientation="horizontal">
+                        <TableRow
+                            android:id="@+id/row4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <ImageButton
-                            android:id="@+id/flagTracker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="50sp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#FFFFFF"
-                            app:srcCompat="@drawable/flag" />
+                            <ImageButton
+                                android:id="@+id/imageButton20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                        <TextView
-                            android:id="@+id/flagMult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/mult_zero"
-                            android:textSize="36sp" />
+                            <ImageButton
+                                android:id="@+id/imageButton21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
-                    </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/imageButton22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
 
+                            <ImageButton
+                                android:id="@+id/imageButton23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton25"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton26"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton27"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton28"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton43"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton44"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton45"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton46"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton47"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton48"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton49"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton50"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton51"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton52"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton53"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton54"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton55"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton56"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton57"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton58"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton59"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton60"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton61"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton62"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton63"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton64"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton65"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton66"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton67"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton68"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton69"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton70"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton71"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton72"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton73"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton74"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton75"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton76"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton77"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton78"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton79"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton80"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton81"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton82"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row9"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton83"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton84"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton85"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton86"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton87"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton88"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton89"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton90"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton91"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton92"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/row10"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/imageButton93"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton94"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton95"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton96"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton97"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton98"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton99"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton100"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton101"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton102"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/test" />
+                        </TableRow>
+
+                    </TableLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/MainRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/capturedLaytout"
+                        android:layout_width="300sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20sp"
+                        android:background="#FFFFFF"
+                        android:backgroundTint="#3EEA7D"
+                        android:gravity="center|right|top|left"
+                        android:orientation="vertical"
+                        android:paddingBottom="20sp">
+
+                        <TextView
+                            android:id="@+id/capturePiecesText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#FFFFFF"
+                            android:backgroundTint="@color/sky_blue"
+                            android:text="@string/captured_pieces_text"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/capture1Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/marshallTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FDFDFD"
+                                app:srcCompat="@drawable/marsh" />
+
+                            <TextView
+                                android:id="@+id/marshallMultiplier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="@string/mult_one"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/captureTwoLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/generalTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/gen" />
+
+                            <TextView
+                                android:id="@+id/generalMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_one"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture3Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/colonelTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/col" />
+
+                            <TextView
+                                android:id="@+id/colonelMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_zero"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture4Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/majorTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/maj" />
+
+                            <TextView
+                                android:id="@+id/majorMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_two"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture5Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/captainTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/capt" />
+
+                            <TextView
+                                android:id="@+id/captainMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_two"
+                                android:textSize="36sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture6Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/lieutenantTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/lt" />
+
+                            <TextView
+                                android:id="@+id/lieutenantMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_zero"
+                                android:textSize="36sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture7Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/sergentTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/serg" />
+
+                            <TextView
+                                android:id="@+id/sergentMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_four"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture8Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/minerTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/miner" />
+
+                            <TextView
+                                android:id="@+id/minerMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_three"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture9Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/scoutTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/scout" />
+
+                            <TextView
+                                android:id="@+id/scoutMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_three"
+                                android:textSize="36sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/captureBLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/bombTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/bomb" />
+
+                            <TextView
+                                android:id="@+id/bombMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_one"
+                                android:textSize="36sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/captureFLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="58sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/flagTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                app:srcCompat="@drawable/flag" />
+
+                            <TextView
+                                android:id="@+id/flagMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_zero"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
