@@ -39,4 +39,3 @@ public class StrategoMoveAction extends GameAction {
         return toY;
     }
 }
-}
