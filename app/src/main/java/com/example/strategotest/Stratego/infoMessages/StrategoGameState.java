@@ -1,5 +1,6 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import com.example.strategotest.Stratego.actions.StrategoMoveAction;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
@@ -380,6 +381,7 @@ public class StrategoGameState extends GameState {
                 if(board[toX][toY] == null){
                     board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer());
                     board[fromX][fromY] = null;
+
                     success = true;
                 }
                 //Attack
