@@ -1,12 +1,15 @@
 package com.example.strategotest.Stratego.Players;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
+import com.example.strategotest.game.GameFramework.infoMessage.GameOverInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.IllegalMoveInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
@@ -18,6 +21,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     private int humanPlayerID;
 
     private GameMainActivity myActivity;
+
+    private Button surrender = null;
 
     /**
      * constructor
@@ -62,6 +67,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         myActivity = activity;
 
         activity.setContentView(R.layout.activity_main);
+
+        //find views of buttons
+        surrender = (Button) activity.findViewById(R.id.surrenderButton);
+        surrender.setOnClickListener(this);
     }
 
     public void turnMsg(String msg){
@@ -70,6 +79,21 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if(v instanceof Button){
+            buttonOnClick(v);
+        }else if(v instanceof ImageButton){
+            imageButtonOnClick(v);
+        }
+    }
+
+    public void buttonOnClick(View v){
+        if(v.getId() == R.id.surrenderButton){
+            sendInfo(new GameOverInfo("Player has surrendered"));
+        }
+        //setGameOver(true);
+    }
+
+    public void imageButtonOnClick(View v){
 
     }
 }
