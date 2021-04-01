@@ -666,6 +666,14 @@ public class StrategoGameState extends GameState {
         return timer;
     }
 
+    public int[] getBlueCharacter(){
+        return blueCharacter;
+    }
+
+    public int[] getRedCharacter(){
+        return redCharacter;
+    }
+
 
 
 }
