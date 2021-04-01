@@ -656,6 +656,18 @@ public class StrategoGameState extends GameState {
         return true;
     }
 
+    public int getPlayerID(){
+        return turn;
+    }
+
+    public int getPhase(){
+        return phase;
+    }
+
+    public float getTimer(){
+        return timer;
+    }
+
 
 
 }
