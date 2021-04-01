@@ -38,12 +38,12 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-
+        p.sendInfo(new StrategoGameState((StrategoGameState) state));
     }
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return false;
+        return playerIdx == ((StrategoGameState)state).getPlayerID();
     }
 
     @Override
