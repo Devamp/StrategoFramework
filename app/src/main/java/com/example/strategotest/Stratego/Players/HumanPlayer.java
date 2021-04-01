@@ -2,6 +2,7 @@ package com.example.strategotest.Stratego.Players;
 
 import android.view.View;
 
+import com.example.strategotest.R;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
@@ -30,7 +31,7 @@ public class HumanPlayer extends GameHumanPlayer {
      */
     @Override
     public View getTopView() {
-        return null;
+        return myActivity.findViewById(layoutID);
     }
 
     /**
