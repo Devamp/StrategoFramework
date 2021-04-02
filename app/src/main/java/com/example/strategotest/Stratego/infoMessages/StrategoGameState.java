@@ -676,6 +676,8 @@ public class StrategoGameState extends GameState {
         return redCharacter;
     }
 
+    public int getTurn(){return turn;}
+
 
 
 }
