@@ -39,8 +39,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
-    private TableLayout theTable = null;
-
 
     /**
      * constructor
@@ -95,6 +93,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }else{
             whoseTurn.setImageResource(R.drawable.redsquare);
         }
+
+        //I CAN'T GET INTO THIS METHOD
+        toUse.showBoard(boardButtons);
     }
 
 
@@ -117,9 +118,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         time = (TextView) activity.findViewById(R.id.timerTextView);
 
         whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
-
-        theTable = (TableLayout) activity.findViewById(R.id.battlefield);
-
 
         //connect all the buttons.
         //https://www.technotalkative.com/android-findviewbyid-in-a-loop/

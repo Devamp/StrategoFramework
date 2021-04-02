@@ -1,5 +1,8 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import android.widget.ImageButton;
+
+import com.example.strategotest.R;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
@@ -166,6 +169,20 @@ public class StrategoGameState extends GameState {
         blueBench = original.blueBench;
         redBench = original.redBench;
 
+    }
+
+    /**
+     * Show the game pieces on the board
+     *
+     * @param boardButtons: ImageButton[][]
+     *        array of the buttons
+     */
+    public void showBoard(ImageButton[][] boardButtons){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                boardButtons[i][j].setImageResource(R.drawable.bomb);
+            }
+        }
     }
 
     /**
