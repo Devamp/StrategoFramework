@@ -660,13 +660,19 @@ public class StrategoGameState extends GameState {
         return turn;
     }
 
+    public void setPlayerID(int id){this.turn = id;}
+
     public int getPhase(){
         return phase;
     }
 
+    public void setPhase(int p){this.phase = p;}
+
     public float getTimer(){
         return timer;
     }
+
+    public void setTimer(float t){this.timer = t;}
 
     public int[] getBlueCharacter(){
         return blueCharacter;
@@ -678,6 +684,9 @@ public class StrategoGameState extends GameState {
 
     public int getTurn(){return turn;}
 
+    public void setTurn(int turn){
+        this.turn = turn;
+    }
 
 
 }
