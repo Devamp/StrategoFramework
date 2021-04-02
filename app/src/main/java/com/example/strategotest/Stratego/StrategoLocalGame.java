@@ -60,7 +60,11 @@ public class StrategoLocalGame extends LocalGame {
         if(action instanceof PassTurnAction){
             officialState.endTurn();
             return true;
-        }else{
+        }
+//        else if(action instanceof DisplayBoardAction){
+//
+//        }
+        else{
             return false;
         }
     }

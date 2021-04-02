@@ -1,5 +1,6 @@
 package com.example.strategotest.Stratego.Players;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.strategotest.R;
@@ -34,6 +36,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private TextView time = null;
     private ImageView whoseTurn = null;
+
+    private ImageButton[][] boardButtons = new ImageButton[10][10];
+
+    private TableLayout theTable = null;
 
 
     /**
@@ -111,6 +117,26 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         time = (TextView) activity.findViewById(R.id.timerTextView);
 
         whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
+
+        theTable = (TableLayout) activity.findViewById(R.id.battlefield);
+
+
+        //connect all the buttons.
+        //https://www.technotalkative.com/android-findviewbyid-in-a-loop/
+        //God bless ^^^^
+        //Saved hours of tedious coding
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                String spaceID = "space" + (i) + (j);
+
+                int resID = myActivity.getResources().getIdentifier(spaceID, "id", myActivity.getPackageName());
+                boardButtons[i][j] = (ImageButton) activity.findViewById(resID);
+                boardButtons[i][j].setOnClickListener(this);
+            }
+        }
+
+        //example set
+        boardButtons[0][0].setImageResource(R.drawable.capt);
 
     }
 
