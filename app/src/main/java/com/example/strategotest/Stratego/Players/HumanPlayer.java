@@ -149,7 +149,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     public void buttonOnClick(View v){
             if(v.getId() == R.id.surrenderButton){
-                sendInfo(new GameOverInfo("Player has surrendered "));
+                sendInfo(new GameOverInfo("Player has surrendered"));
             }else if(v.getId() == R.id.endTurnButton){
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);

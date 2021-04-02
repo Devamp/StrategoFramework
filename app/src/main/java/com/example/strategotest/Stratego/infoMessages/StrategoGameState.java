@@ -1,5 +1,8 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import android.widget.ImageButton;
+
+import com.example.strategotest.R;
 import com.example.strategotest.Stratego.actions.StrategoMoveAction;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
@@ -167,6 +170,20 @@ public class StrategoGameState extends GameState {
         blueBench = original.blueBench;
         redBench = original.redBench;
 
+    }
+
+    /**
+     * Show the game pieces on the board
+     *
+     * @param boardButtons: ImageButton[][]
+     *        array of the buttons
+     */
+    public void showBoard(ImageButton[][] boardButtons){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                boardButtons[i][j].setImageResource(R.drawable.bomb);
+            }
+        }
     }
 
     /**
@@ -381,7 +398,6 @@ public class StrategoGameState extends GameState {
                 if(board[toX][toY] == null){
                     board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer());
                     board[fromX][fromY] = null;
-
                     success = true;
                 }
                 //Attack
@@ -545,18 +561,22 @@ public class StrategoGameState extends GameState {
         return finalMessage;
     }
 
-    public boolean endTurn(StrategoGameState gameState) {
+    public boolean endTurn() {
         boolean isTrue = false;
         // Player 1 (represented by 0) ended turn
-         if (gameState.turn == 0) {
-             gameState.turn = 1;
+//         if (gameState.turn == 0) {
+        if(this.turn == 0){
+//             gameState.turn = 1;
+             this.turn = 0;
              isTrue = true;
          }
          // Player 2 (represented by 1) ended turn
-         else if (gameState.turn == 1){
-             gameState.turn = 0;
+//         else if (gameState.turn == 1){
+          else if(this.turn == 1){
+//             gameState.turn = 0;
+             this.turn = 0;
              isTrue = true;
-        }
+          }
          // Handle Errors
          // Return false, so the action is invalid
          else {
@@ -682,11 +702,14 @@ public class StrategoGameState extends GameState {
         return redCharacter;
     }
 
-    public int getTurn(){return turn;}
+    public int getTurn(){
+        return turn;
+    }
 
     public void setTurn(int turn){
         this.turn = turn;
     }
+
 
 
 }
