@@ -1,11 +1,14 @@
 package com.example.strategotest.Stratego;
 
+import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 public class StrategoLocalGame extends LocalGame {
+
+    StrategoGameState officialState;
 
     /**
      * Constructor for the StrategoLocalGame
@@ -14,7 +17,7 @@ public class StrategoLocalGame extends LocalGame {
     public StrategoLocalGame(){
     super();
     super.state = new StrategoGameState();
-
+    officialState = new StrategoGameState();
     }
 
     /**
@@ -24,6 +27,7 @@ public class StrategoLocalGame extends LocalGame {
     public StrategoLocalGame(StrategoGameState stState){
         super();
         super.state = new StrategoGameState(stState);
+        officialState = new StrategoGameState(stState);
     }
 
     /**
@@ -53,6 +57,11 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
-        return false;
+        if(action instanceof PassTurnAction){
+            officialState.endTurn();
+            return true;
+        }else{
+            return false;
+        }
     }
 }

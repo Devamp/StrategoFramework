@@ -543,18 +543,22 @@ public class StrategoGameState extends GameState {
         return finalMessage;
     }
 
-    public boolean endTurn(StrategoGameState gameState) {
+    public boolean endTurn() {
         boolean isTrue = false;
         // Player 1 (represented by 0) ended turn
-         if (gameState.turn == 0) {
-             gameState.turn = 1;
+//         if (gameState.turn == 0) {
+        if(this.turn == 0){
+//             gameState.turn = 1;
+             this.turn = 0;
              isTrue = true;
          }
          // Player 2 (represented by 1) ended turn
-         else if (gameState.turn == 1){
-             gameState.turn = 0;
+//         else if (gameState.turn == 1){
+          else if(this.turn == 1){
+//             gameState.turn = 0;
+             this.turn = 0;
              isTrue = true;
-        }
+          }
          // Handle Errors
          // Return false, so the action is invalid
          else {
@@ -652,6 +656,14 @@ public class StrategoGameState extends GameState {
             }
         }
         return true;
+    }
+
+    public int getTurn(){
+        return turn;
+    }
+
+    public void setTurn(int turn){
+        this.turn = turn;
     }
 
 

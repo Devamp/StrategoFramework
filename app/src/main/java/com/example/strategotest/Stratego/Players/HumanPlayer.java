@@ -1,13 +1,20 @@
 package com.example.strategotest.Stratego.Players;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.MainActivity;
+import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
+import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.GameOverInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.IllegalMoveInfo;
@@ -23,6 +30,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     private GameMainActivity myActivity;
 
     private Button surrender = null;
+    private Button endTurn = null;
+
+    private TextView time = null;
+    private ImageView whoseTurn = null;
+
 
     /**
      * constructor
@@ -56,6 +68,27 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     @Override
     public void receiveInfo(GameInfo info) {
 
+        if(!(info instanceof StrategoGameState)){
+            int myColor = Color.rgb(255, 0, 0);
+            flash(myColor, 1000);
+            return;
+        }
+
+        //get working gameState
+        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
+
+//        setTurnColor(t)
+
+        //set turn color to whatever players turn it is
+        if(toUse.getTurn() == 0){
+            //red players turn
+            whoseTurn.setImageResource(R.drawable.redsquare);
+        }else if(toUse.getTurn() == 1){
+            //blue player is turn 1
+            whoseTurn.setImageResource(R.drawable.bluetile);
+        }else{
+            whoseTurn.setImageResource(R.drawable.redsquare);
+        }
     }
 
 
@@ -71,10 +104,14 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //find views of buttons
         surrender = (Button) activity.findViewById(R.id.surrenderButton);
         surrender.setOnClickListener(this);
-    }
+        endTurn = (Button) activity.findViewById(R.id.endTurnButton);
+        endTurn.setOnClickListener(this);
 
-    public void turnMsg(String msg){
-        MessageBox.popUpMessage(msg, myActivity);
+        //get timer view
+        time = (TextView) activity.findViewById(R.id.timerTextView);
+
+        whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
+
     }
 
     @Override
@@ -87,10 +124,14 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     }
 
     public void buttonOnClick(View v){
-        if(v.getId() == R.id.surrenderButton){
-            sendInfo(new GameOverInfo("Player has surrendered"));
-        }
-        //setGameOver(true);
+            if(v.getId() == R.id.surrenderButton){
+                sendInfo(new GameOverInfo("Player has surrendered"));
+            }else if(v.getId() == R.id.endTurnButton){
+                PassTurnAction newPass = new PassTurnAction(this);
+                game.sendAction(newPass);
+            }else{}
+
+
     }
 
     public void imageButtonOnClick(View v){
