@@ -1,6 +1,7 @@
 package com.example.strategotest.Stratego;
 
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -8,7 +9,7 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 public class StrategoLocalGame extends LocalGame {
 
-    StrategoGameState officialState;
+    //StrategoGameState officialState;
 
 
 
@@ -29,7 +30,7 @@ public class StrategoLocalGame extends LocalGame {
     public StrategoLocalGame(StrategoGameState stState){
         super();
         super.state = new StrategoGameState(stState);
-        officialState = new StrategoGameState(stState);
+        //officialState = new StrategoGameState(stState);
     }
 
     /**
@@ -75,13 +76,18 @@ public class StrategoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof PassTurnAction){
-            officialState.endTurn();
+            //officialState.endTurn();
+            ((StrategoGameState)state).endTurn();
             return true;
         }
 //        else if(action instanceof DisplayBoardAction){
 //
 //        }
-        else{
+        else if(action instanceof StrategoPlaceAction){
+            ((StrategoGameState)state).placeRemove(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
+            return true;
+        }
+        else {
             return false;
         }
     }
