@@ -180,7 +180,7 @@ public class StrategoGameState extends GameState {
     public void showBoard(ImageButton[][] boardButtons){
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                boardButtons[i][j].setImageResource(R.drawable.bomb);
+                boardButtons[i][j].setImageResource(R.drawable.bluetile);
             }
         }
     }
@@ -674,12 +674,6 @@ public class StrategoGameState extends GameState {
         }
         return true;
     }
-
-    public int getPlayerID(){
-        return turn;
-    }
-
-    public void setPlayerID(int id){this.turn = id;}
 
     public int getPhase(){
         return phase;

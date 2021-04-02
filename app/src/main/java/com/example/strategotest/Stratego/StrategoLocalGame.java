@@ -49,7 +49,7 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return playerIdx == ((StrategoGameState)state).getPlayerID();
+        return playerIdx == ((StrategoGameState)state).getTurn();
     }
 
     @Override
