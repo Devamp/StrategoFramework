@@ -1,9 +1,9 @@
-package com.example.strategotest.Stratego.actions;
+package com.example.strategotest.Stratego.actionMessage;
 
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
-public class StrategoMoveAction extends GameAction {
+public class StrategoAttackAction extends GameAction {
 
     private int fromX; // selected row index for original location (move from)
     private int fromY; // selected col index for original location (move from)
@@ -15,7 +15,7 @@ public class StrategoMoveAction extends GameAction {
      *
      * @param player the player who created the action
      */
-    public StrategoMoveAction(GamePlayer player, int fromX, int fromY, int toX, int toY) {
+    public StrategoAttackAction(GamePlayer player, int fromX, int fromY, int toX, int toY) {
         super(player);
         this.fromX = fromX;
         this.fromY = fromY;

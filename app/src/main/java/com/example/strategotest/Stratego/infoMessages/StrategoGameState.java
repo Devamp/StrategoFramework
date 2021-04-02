@@ -3,7 +3,6 @@ package com.example.strategotest.Stratego.infoMessages;
 import android.widget.ImageButton;
 
 import com.example.strategotest.R;
-import com.example.strategotest.Stratego.actions.StrategoMoveAction;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
