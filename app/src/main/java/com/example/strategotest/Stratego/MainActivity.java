@@ -40,6 +40,8 @@ import java.util.ArrayList;
  */
 
 public class MainActivity extends GameMainActivity {
+
+    private static final String TAG = "MainActivity";
     public static final int PORT_NUMBER = 4444;
 
     @Override
@@ -49,7 +51,7 @@ public class MainActivity extends GameMainActivity {
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
         // local human GUI - as player 0
-        playerTypes.add(new GamePlayerType("Human Player") {
+        playerTypes.add(new GamePlayerType("Local Human Player") {
             public GamePlayer createPlayer(String name) {
                 return new HumanPlayer(name, R.layout.activity_main, 0);
             }
@@ -77,7 +79,7 @@ public class MainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer", 1);
 
         // Set the initial information for the remote player
-        defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
+        defaultConfig.setRemoteData("Remote Player", "", 1);
 
         //done!
         return defaultConfig;

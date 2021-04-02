@@ -27,11 +27,9 @@ public class IPCoder {
         try {
             // loop through the device's network interfaces and internet address until one is found
             // that is a well-formed UP address; return it when found
-            for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                 NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf
-                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
                         return inetAddress.getHostAddress().toString();
@@ -41,6 +39,8 @@ public class IPCoder {
         } catch (SocketException ex) {
             //Log.e("IPCoder"/*this.toString()*/, ex.toString());
             Logger.log(TAG, ""+ex.toString(), Logger.ERROR);
+        }catch(Exception ex){
+            //I added this to get it working on my tablet
         }
         return "Unable to determine IP address";
     }
