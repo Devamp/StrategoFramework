@@ -283,6 +283,25 @@ public class StrategoGameState extends GameState {
     }
 
     /**
+     * Change an individual element of the red character array
+     * @param p - piece #
+     * @param v - number of pieces
+     */
+    public void  setInRedCharacter(int p, int v){
+     redCharacter[p] = v;
+    }
+    /**
+     * Change an individual element of the blue character array
+     * @param p - piece #
+     * @param v - number of pieces
+     */
+    public void  setInBlueCharacter(int p, int v){
+        blueCharacter[p] = v;
+
+    }
+
+
+    /**
      * place: Place the pieces from their respective arrayLists
      *
      * @return
@@ -706,6 +725,10 @@ public class StrategoGameState extends GameState {
     public void setTurn(int turn){
         this.turn = turn;
     }
+
+
+
+
 
 
 
