@@ -49,6 +49,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private Button surrender = null;
     private Button endTurn = null;
+    private Button undoTurn = null;
 
     private TextView time = null;
     private ImageView whoseTurn = null;
@@ -64,6 +65,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     int fromY = -1;
     int toX = -1;
     int toY = -1;
+
+    //if this is true, then no other moves can be made.
+    private boolean hasMoved = false;
 
     /**
      * constructor
@@ -120,6 +124,15 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
         toUse.showBoard(boardButtons);
+
+        //if the player has made a move, undoTurn and endTurn become available
+        if(hasMoved){
+            endTurn.setVisibility(View.VISIBLE);
+            undoTurn.setVisibility(View.VISIBLE);
+        }else{
+            endTurn.setVisibility(View.INVISIBLE);
+            undoTurn.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -137,6 +150,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         surrender.setOnClickListener(this);
         endTurn = (Button) activity.findViewById(R.id.endTurnButton);
         endTurn.setOnClickListener(this);
+        undoTurn = (Button) activity.findViewById(R.id.undoTurnButton);
+        undoTurn.setOnClickListener(this);
+
+        //set end and undo turn to invisible by default
+        endTurn.setVisibility(View.INVISIBLE);
+        undoTurn.setVisibility(View.INVISIBLE);
 
         //get timer view
         time = (TextView) activity.findViewById(R.id.timerTextView);
@@ -157,16 +176,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
-        //example set
-        boardButtons[0][0].setImageResource(R.drawable.capt);
-
     }
 
     @Override
     public void onClick(View v) {
         if(v instanceof Button){
             buttonOnClick(v);
-        }else if(v instanceof ImageButton){
+        }else if(v instanceof ImageButton && !hasMoved){
             imageButtonOnClick(v);
         }
     }
@@ -198,6 +214,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             toY = clickedCol;
             game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
             selectedFirst = false;
+
+            //set the player to have moved so they can't move again
+            hasMoved = true;
         }else{
             fromX = clickedRow;
             fromY = clickedCol;
