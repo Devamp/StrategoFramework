@@ -94,7 +94,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             whoseTurn.setImageResource(R.drawable.redsquare);
         }
 
-        //I CAN'T GET INTO THIS METHOD
         toUse.showBoard(boardButtons);
     }
 

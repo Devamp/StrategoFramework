@@ -180,7 +180,16 @@ public class StrategoGameState extends GameState {
     public void showBoard(ImageButton[][] boardButtons){
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                boardButtons[i][j].setImageResource(R.drawable.bluetile);
+//                boardButtons[i][j].setImageResource(R.drawable.bluetile);
+                if(board[i][j] == null){
+                    boardButtons[i][j].setImageResource(R.drawable.test);
+                }else if(board[i][j].getValue() == -1){
+                    boardButtons[i][j].setImageResource(R.drawable.purple_delete_button);
+                }else{
+//                    boardButtons[i][j].setImageResource(board[i][j].getIcon());
+                    boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue()));
+                }
+
             }
         }
     }
@@ -208,6 +217,7 @@ public class StrategoGameState extends GameState {
         for(int i = 0; i < 12; i++){
             //need to instance all of the pieces
             name = setName(i);
+//            int theIcon = setIcon(i); //this doesn't work like it's supposed to. Maybe fix later?
 
             //go over the number of each particular piece and add an instanced piece to
             //an array list
@@ -215,8 +225,10 @@ public class StrategoGameState extends GameState {
                 //if the piece is flag or bomb, create special piece
                 if(i == 0 || i == 10){
                     assign.add(new SpecialPiece(name, i, player));
+//                    assign.add(new SpecialPiece(name, i, player, theIcon));
                 }else{
                     //we can add conditions to add spy, miner, and scout special pieces
+//                    assign.add(new Piece(name, i, player, theIcon));
                     assign.add(new Piece(name, i, player));
                 }
 
@@ -280,6 +292,54 @@ public class StrategoGameState extends GameState {
         }
 
         return returnName;
+    }
+
+    public int setIcon(int whichPiece){
+        int returnDrawID;
+
+        switch(whichPiece){
+            case 0:
+                returnDrawID = R.drawable.flag;
+                break;
+            case 1:
+                returnDrawID = R.drawable.marsh;
+                break;
+            case 2:
+                returnDrawID = R.drawable.gen;
+                break;
+            case 3:
+                returnDrawID = R.drawable.col;
+                break;
+            case 4:
+                returnDrawID = R.drawable.maj;
+                break;
+            case 5:
+                returnDrawID = R.drawable.capt;
+                break;
+            case 6:
+                returnDrawID = R.drawable.lt;
+                break;
+            case 7:
+                returnDrawID = R.drawable.serg;
+                break;
+            case 8:
+                returnDrawID = R.drawable.miner;
+                break;
+            case 9:
+                returnDrawID = R.drawable.scout;
+                break;
+            case 10:
+                returnDrawID = R.drawable.bomb;
+                break;
+            case 11:
+                returnDrawID = R.drawable.spy;
+                break;
+            default:
+                returnDrawID = R.drawable.bluetile;
+                break;
+        }
+
+        return returnDrawID;
     }
 
     /**

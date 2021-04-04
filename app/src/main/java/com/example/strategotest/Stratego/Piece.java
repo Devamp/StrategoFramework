@@ -1,5 +1,7 @@
 package com.example.strategotest.Stratego;
 
+import com.example.strategotest.R;
+
 /**
  * @author Gareth Rice
  * @author Caden Deutscher
@@ -22,6 +24,17 @@ public class Piece {
     private int value;
 
     private boolean isVisible = true;
+
+    //the res drawable icon for the piece
+    private int icon; //doesn't work like I want it to. Maybe fix later?
+
+    public Piece(String name, int val, int player, int icon){
+        this.value = val;
+        this.player = player;
+
+        this.icon = icon;
+        this.name = name;
+    }
 
     public Piece(String name, int val, int player){
         this.name = name;
@@ -72,6 +85,14 @@ public class Piece {
 
     public int getPlayer(){
         return player;
+    }
+
+    public void setIcon(int icon){
+        this.icon = icon;
+    }
+
+    public int getIcon(){
+        return icon;
     }
 
     /**

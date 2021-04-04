@@ -19,6 +19,10 @@ public class SpecialPiece extends Piece {
         super(name, value, player);
     }
 
+    public SpecialPiece(String name, int value, int player, int icon){
+        super(name, value, player, icon);
+    }
+
     @Override
     public boolean move(Piece toPlace){
         return false;
