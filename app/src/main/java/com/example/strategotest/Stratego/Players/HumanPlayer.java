@@ -25,6 +25,21 @@ import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
 import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 
+/**
+ * @author Gareth Rice
+ *
+ * @version 4/21
+ *
+ * Notes:
+ * Make End turn and undo turn invisible until a move has been made
+ * Lock out movement after a player has moved
+ * Make opponents pieces invisible -- done
+ * Can move the opponents pieces. Should probably fix that
+ * If you click on an empty tile, and then try to click one of your pieces, it makes an illegal
+ *      move action. Trying to then move the just clicked piece doesn't work and is confusing
+ *      Maybe somehow highlight the currently selected piece
+ * Gotta reveal the piece that the player interacted with. Maybe that will be in beta?
+ */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
     private int layoutID;
@@ -45,10 +60,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     private boolean selectedFirst = false;
 
     //keep track of where the human is moving to and from
-    int fromX;
-    int fromY;
-    int toX;
-    int toY;
+    int fromX = -1;
+    int fromY = -1;
+    int toX = -1;
+    int toY = -1;
 
     /**
      * constructor

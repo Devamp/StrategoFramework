@@ -18,8 +18,11 @@ import java.util.ArrayList;
  *
  * @version 3/21
  *
- * Notes:
- *
+ * Notes/Bugs:
+ * The scout can move as far as it pleases, but it can't move and attack
+ *      when I think it should be able to
+ * Make a red stratego tile instead of a blue one for when it's the blue players turn?
+ * Capturing the flag doesn't end the game. (Haven't tried taking all the pieces)
  */
 
 public class StrategoGameState extends GameState {
@@ -27,10 +30,12 @@ public class StrategoGameState extends GameState {
     //0 - spy, 10 - bomb, 11 - flag
     private int[] blueCharacter;
     private int[] redCharacter;
+
     //turn indicator // red = 0, blue = 1
     private int turn;
     //Board: -1 = empty space, -2 = impassable space (lake), -3 = invisible character (other army)
     private Piece[][] board;
+
     //Game Timer
     private float timer;
     //Phase Indicator
@@ -185,8 +190,12 @@ public class StrategoGameState extends GameState {
                     boardButtons[i][j].setImageResource(R.drawable.test);
                 }else if(board[i][j].getValue() == -1){
                     boardButtons[i][j].setImageResource(R.drawable.purple_delete_button);
+                }else if(turn == 0 && board[i][j].getPlayer() == 1){
+                    //if it's the red players turn and the piece is blue, make it invisible blue
+                    boardButtons[i][j].setImageResource(R.drawable.bluetile);
+                }else if(turn == 1 && board[i][j].getPlayer() == 0){
+                    boardButtons[i][j].setImageResource(R.drawable.bluetile); //make this a red stratego tile
                 }else{
-//                    boardButtons[i][j].setImageResource(board[i][j].getIcon());
                     boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue()));
                 }
 
