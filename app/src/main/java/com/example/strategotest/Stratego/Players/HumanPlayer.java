@@ -214,7 +214,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 game.sendAction(newPass);
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
-
                 game.sendAction(new StrategoUndoTurnAction(this));
             } else{}
 

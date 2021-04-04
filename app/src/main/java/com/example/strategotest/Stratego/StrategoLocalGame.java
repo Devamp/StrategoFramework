@@ -78,14 +78,13 @@ public class StrategoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof PassTurnAction){
-
 //            officialState.endTurn();
             ((StrategoGameState)state).endTurn();
             return true;
 
         }else if(action instanceof StrategoMoveAction){
             StrategoMoveAction toUse = (StrategoMoveAction) action;
-            ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+           boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
@@ -95,7 +94,7 @@ public class StrategoLocalGame extends LocalGame {
                 //it also check if all the pieces have been captured, or did we do that in the
                 //action method?
             }
-            return true;
+            return worked;
 
         }else if(action instanceof StrategoUndoTurnAction){
             super.state = ((StrategoGameState)state).getBackup();
