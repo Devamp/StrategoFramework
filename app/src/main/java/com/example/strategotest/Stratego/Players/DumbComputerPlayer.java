@@ -8,6 +8,8 @@ import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
 import java.util.Random;
 
 public class DumbComputerPlayer extends GameComputerPlayer {
+    private boolean placed[][] = new boolean[10][10];
+
     /**
      * constructor
      *
@@ -30,16 +32,36 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         StrategoGameState gameState = new StrategoGameState((StrategoGameState) info);
 
-       if(gameState.getTurn() != playerNum){ //not the computer's turn
-           return ;
+        if (gameState.getTurn() != playerNum) { //not the computer's turn
+            return;
 
-       } else {
+        } else {
             Random gen = new Random(); //random generator to make random calls
 
-           //in placement phase
-           if(gameState.getPhase() == 0){
+            //in placement phase
+            if (gameState.getPhase() == 0) {
+                for (int p = 0; p < 11; p++) {
+                    for (int n = 0; n < gameState.getRedCharacter()[p]; n++) {
+                        //Generate random values
+                        int rr = (int) (Math.random() * 4) + 6;
+                        int rc = (int) (Math.random() * 10);
+                        int four = 0;
+                        //Loop through to find an empty spot
+                        while (placed[rr][rc]) {
+                            four++;
+                            rr += ((rr + 1) + 6) % 10;
+                            if (four == 4) {
+                                rc += (rc + 1) % 10;
+                            }
 
-               if(playerNum == 0){ //computer is player 1
+                        }
+                        //Place Piece
+                        game.sendAction(new StrategoPlaceAction(this, p, rr, rc));
+                        placed[rr][rc] = true;
+                    }
+                }
+
+               /*if(playerNum == 0){ //computer is player 1
 
                    int row = 6; // set to 6 because player 1's front row would be row 6
                    int col = gen.nextInt(10); // get a random column value from 0 - 9
@@ -52,9 +74,21 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
                    //...
 
-               }
 
-           }
-       }
+
+                */
+
+
+
+            }
+        }
     }
+
+           private void initializePlace(){
+               for(int row = 0; row < 10; row++) {
+                   for(int col = 0; col < 10; col++) {
+                       placed[row][col] = false;
+                   }
+               }
+           }
 }

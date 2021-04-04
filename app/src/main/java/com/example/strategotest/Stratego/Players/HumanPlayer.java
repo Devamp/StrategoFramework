@@ -159,6 +159,17 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     }
 
     public void imageButtonOnClick(View v){
+        int clickedRow = -1;
+        int clickedCol = -1;
+        for(int row = 0; row < 10; row++){
+            for(int col= 0; col < 10; col++){
+                if(v.getId() == boardButtons[row][col].getId()){
+                    clickedRow = row;
+                    clickedCol = col;
+                }
+            }
+        }
+
 
     }
 }
