@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
@@ -39,6 +41,9 @@ import com.example.strategotest.game.GameFramework.utilities.MessageBox;
  *      move action. Trying to then move the just clicked piece doesn't work and is confusing
  *      Maybe somehow highlight the currently selected piece
  * Gotta reveal the piece that the player interacted with. Maybe that will be in beta?
+ * I think I mixed up the undo turn and undo move
+ * Don't lock the player out if they make an invalid move. They should get a warning and be
+ *      allowed to keep making moves until a valid one is selected
  */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
@@ -59,6 +64,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //A move action is created when this is true because a piece has already been selected
     //to move
     private boolean selectedFirst = false;
+
+    //Use this game state for undoing moves. Before a move, this state is created
+    StrategoGameState revertState = null;
+
+    //the state we are going to use
+    StrategoGameState toUse = null;
 
     //keep track of where the human is moving to and from
     int fromX = -1;
@@ -108,7 +119,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
         //get working gameState
-        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
+//        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
+        toUse = new StrategoGameState((StrategoGameState) info);
+
+        //set reversion gameState
+//        revertState = new StrategoGameState((StrategoGameState) info); //this might not work?
 
 //        setTurnColor(t)
 
@@ -130,6 +145,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             endTurn.setVisibility(View.VISIBLE);
             undoTurn.setVisibility(View.VISIBLE);
         }else{
+            //backup the current board so we can revert to it if we want to undo
+//            toUse.saveBackup();
+
+            game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
             endTurn.setVisibility(View.INVISIBLE);
             undoTurn.setVisibility(View.INVISIBLE);
         }
@@ -193,7 +212,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }else if(v.getId() == R.id.endTurnButton){
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
-            }else{}
+            }else if(v.getId() == R.id.undoTurnButton){
+                hasMoved = false;
+
+                game.sendAction(new StrategoUndoTurnAction(this));
+            } else{}
 
     }
 

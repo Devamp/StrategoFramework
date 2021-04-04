@@ -44,6 +44,9 @@ public class StrategoGameState extends GameState {
     ArrayList<Piece> redBench = new ArrayList<Piece>();
     ArrayList<Piece> blueBench = new ArrayList<Piece>();
 
+    //use this for the undo move
+    StrategoGameState backup = null;
+
     /**
      * ctor
      *
@@ -174,6 +177,14 @@ public class StrategoGameState extends GameState {
         blueBench = original.blueBench;
         redBench = original.redBench;
 
+    }
+
+    public void saveBackup(){
+        backup = new StrategoGameState(this);
+    }
+
+    public StrategoGameState getBackup(){
+        return backup;
     }
 
     /**
