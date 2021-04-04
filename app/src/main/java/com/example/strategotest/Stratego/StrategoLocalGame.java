@@ -1,6 +1,7 @@
 package com.example.strategotest.Stratego;
 
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -75,13 +76,14 @@ public class StrategoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof PassTurnAction){
-            officialState.endTurn();
+//            officialState.endTurn();
+            ((StrategoGameState)state).endTurn();
             return true;
-        }
-//        else if(action instanceof DisplayBoardAction){
-//
-//        }
-        else{
+        }else if(action instanceof StrategoMoveAction){
+            StrategoMoveAction toUse = (StrategoMoveAction) action;
+            ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+            return true;
+        }else{
             return false;
         }
     }

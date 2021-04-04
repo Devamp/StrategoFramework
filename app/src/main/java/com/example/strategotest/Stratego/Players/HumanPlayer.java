@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
@@ -39,6 +40,15 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
+    //A move action is created when this is true because a piece has already been selected
+    //to move
+    private boolean selectedFirst = false;
+
+    //keep track of where the human is moving to and from
+    int fromX;
+    int fromY;
+    int toX;
+    int toY;
 
     /**
      * constructor
@@ -154,7 +164,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 game.sendAction(newPass);
             }else{}
 
-
     }
 
     public void imageButtonOnClick(View v){
@@ -167,6 +176,17 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                     clickedCol = col;
                 }
             }
+        }
+
+        if(selectedFirst){
+            toX = clickedRow;
+            toY = clickedCol;
+            game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
+            selectedFirst = false;
+        }else{
+            fromX = clickedRow;
+            fromY = clickedCol;
+            selectedFirst = true;
         }
 
 
