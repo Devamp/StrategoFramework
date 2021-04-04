@@ -56,6 +56,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     private Button endTurn = null;
     private Button undoTurn = null;
 
+    //this will be invisible until Beta
+    private Button undoMove = null;
+
     private TextView time = null;
     private ImageView whoseTurn = null;
 
@@ -171,6 +174,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         endTurn.setOnClickListener(this);
         undoTurn = (Button) activity.findViewById(R.id.undoTurnButton);
         undoTurn.setOnClickListener(this);
+        undoMove = (Button) activity.findViewById(R.id.undoMoveButton);
+
+        //we're not using undoMove button yet. I also mixed up undo move and undo turn
+        undoMove.setVisibility(View.INVISIBLE);
 
         //set end and undo turn to invisible by default
         endTurn.setVisibility(View.INVISIBLE);
