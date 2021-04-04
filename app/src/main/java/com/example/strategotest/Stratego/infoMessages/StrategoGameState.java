@@ -18,8 +18,11 @@ import java.util.ArrayList;
  *
  * @version 3/21
  *
- * Notes:
- *
+ * Notes/Bugs:
+ * The scout can move as far as it pleases, but it can't move and attack
+ *      when I think it should be able to
+ * Make a red stratego tile instead of a blue one for when it's the blue players turn?
+ * Capturing the flag doesn't end the game. (Haven't tried taking all the pieces)
  */
 
 public class StrategoGameState extends GameState {
@@ -27,10 +30,12 @@ public class StrategoGameState extends GameState {
     //0 - spy, 10 - bomb, 11 - flag
     private int[] blueCharacter;
     private int[] redCharacter;
+
     //turn indicator // red = 0, blue = 1
     private int turn;
     //Board: -1 = empty space, -2 = impassable space (lake), -3 = invisible character (other army)
     private Piece[][] board;
+
     //Game Timer
     private float timer;
     //Phase Indicator
@@ -38,6 +43,9 @@ public class StrategoGameState extends GameState {
 
     ArrayList<Piece> redBench = new ArrayList<Piece>();
     ArrayList<Piece> blueBench = new ArrayList<Piece>();
+
+    //use this for the undo move
+    StrategoGameState backup = null;
 
     /**
      * ctor
@@ -171,6 +179,14 @@ public class StrategoGameState extends GameState {
 
     }
 
+    public void saveBackup(){
+        backup = new StrategoGameState(this);
+    }
+
+    public StrategoGameState getBackup(){
+        return backup;
+    }
+
     /**
      * Show the game pieces on the board
      *
@@ -180,7 +196,20 @@ public class StrategoGameState extends GameState {
     public void showBoard(ImageButton[][] boardButtons){
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                boardButtons[i][j].setImageResource(R.drawable.bluetile);
+//                boardButtons[i][j].setImageResource(R.drawable.bluetile);
+                if(board[i][j] == null){
+                    boardButtons[i][j].setImageResource(R.drawable.test);
+                }else if(board[i][j].getValue() == -1){
+                    boardButtons[i][j].setImageResource(R.drawable.purple_delete_button);
+                }else if(turn == 0 && board[i][j].getPlayer() == 1){
+                    //if it's the red players turn and the piece is blue, make it invisible blue
+                    boardButtons[i][j].setImageResource(R.drawable.bluetile);
+                }else if(turn == 1 && board[i][j].getPlayer() == 0){
+                    boardButtons[i][j].setImageResource(R.drawable.bluetile); //make this a red stratego tile
+                }else{
+                    boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue()));
+                }
+
             }
         }
     }
@@ -208,6 +237,7 @@ public class StrategoGameState extends GameState {
         for(int i = 0; i < 12; i++){
             //need to instance all of the pieces
             name = setName(i);
+//            int theIcon = setIcon(i); //this doesn't work like it's supposed to. Maybe fix later?
 
             //go over the number of each particular piece and add an instanced piece to
             //an array list
@@ -215,8 +245,10 @@ public class StrategoGameState extends GameState {
                 //if the piece is flag or bomb, create special piece
                 if(i == 0 || i == 10){
                     assign.add(new SpecialPiece(name, i, player));
+//                    assign.add(new SpecialPiece(name, i, player, theIcon));
                 }else{
                     //we can add conditions to add spy, miner, and scout special pieces
+//                    assign.add(new Piece(name, i, player, theIcon));
                     assign.add(new Piece(name, i, player));
                 }
 
@@ -281,6 +313,73 @@ public class StrategoGameState extends GameState {
 
         return returnName;
     }
+
+    public int setIcon(int whichPiece){
+        int returnDrawID;
+
+        switch(whichPiece){
+            case 0:
+                returnDrawID = R.drawable.flag;
+                break;
+            case 1:
+                returnDrawID = R.drawable.marsh;
+                break;
+            case 2:
+                returnDrawID = R.drawable.gen;
+                break;
+            case 3:
+                returnDrawID = R.drawable.col;
+                break;
+            case 4:
+                returnDrawID = R.drawable.maj;
+                break;
+            case 5:
+                returnDrawID = R.drawable.capt;
+                break;
+            case 6:
+                returnDrawID = R.drawable.lt;
+                break;
+            case 7:
+                returnDrawID = R.drawable.serg;
+                break;
+            case 8:
+                returnDrawID = R.drawable.miner;
+                break;
+            case 9:
+                returnDrawID = R.drawable.scout;
+                break;
+            case 10:
+                returnDrawID = R.drawable.bomb;
+                break;
+            case 11:
+                returnDrawID = R.drawable.spy;
+                break;
+            default:
+                returnDrawID = R.drawable.bluetile;
+                break;
+        }
+
+        return returnDrawID;
+    }
+
+    /**
+     * Change an individual element of the red character array
+     * @param p - piece #
+     * @param v - number of pieces
+     */
+    public void  setInRedCharacter(int p, int v){
+     redCharacter[p] = v;
+    }
+    /**
+     * Change an individual element of the blue character array
+     * @param p - piece #
+     * @param v - number of pieces
+     */
+    public void  setInBlueCharacter(int p, int v){
+        blueCharacter[p] = v;
+
+    }
+
 
     /**
      * place: Place the pieces from their respective arrayLists
@@ -674,6 +773,10 @@ public class StrategoGameState extends GameState {
         }
         return true;
     }
+    public int getId() {
+        return turn;
+    }
+
 
     public int getPhase(){
         return phase;
@@ -702,6 +805,10 @@ public class StrategoGameState extends GameState {
     public void setTurn(int turn){
         this.turn = turn;
     }
+
+
+
+
 
 
 

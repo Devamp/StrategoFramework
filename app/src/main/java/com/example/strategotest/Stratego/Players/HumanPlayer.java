@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
 import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
@@ -24,6 +27,24 @@ import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
 import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 
+/**
+ * @author Gareth Rice
+ *
+ * @version 4/21
+ *
+ * Notes:
+ * Make End turn and undo turn invisible until a move has been made
+ * Lock out movement after a player has moved
+ * Make opponents pieces invisible -- done
+ * Can move the opponents pieces. Should probably fix that
+ * If you click on an empty tile, and then try to click one of your pieces, it makes an illegal
+ *      move action. Trying to then move the just clicked piece doesn't work and is confusing
+ *      Maybe somehow highlight the currently selected piece
+ * Gotta reveal the piece that the player interacted with. Maybe that will be in beta?
+ * I think I mixed up the undo turn and undo move
+ * Don't lock the player out if they make an invalid move. They should get a warning and be
+ *      allowed to keep making moves until a valid one is selected
+ */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
     private int layoutID;
@@ -33,12 +54,31 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private Button surrender = null;
     private Button endTurn = null;
+    private Button undoTurn = null;
 
     private TextView time = null;
     private ImageView whoseTurn = null;
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
+    //A move action is created when this is true because a piece has already been selected
+    //to move
+    private boolean selectedFirst = false;
+
+    //Use this game state for undoing moves. Before a move, this state is created
+    StrategoGameState revertState = null;
+
+    //the state we are going to use
+    StrategoGameState toUse = null;
+
+    //keep track of where the human is moving to and from
+    int fromX = -1;
+    int fromY = -1;
+    int toX = -1;
+    int toY = -1;
+
+    //if this is true, then no other moves can be made.
+    private boolean hasMoved = false;
 
     /**
      * constructor
@@ -79,7 +119,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
         //get working gameState
-        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
+//        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
+        toUse = new StrategoGameState((StrategoGameState) info);
+
+        //set reversion gameState
+//        revertState = new StrategoGameState((StrategoGameState) info); //this might not work?
 
 //        setTurnColor(t)
 
@@ -94,8 +138,20 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             whoseTurn.setImageResource(R.drawable.redsquare);
         }
 
-        //I CAN'T GET INTO THIS METHOD
         toUse.showBoard(boardButtons);
+
+        //if the player has made a move, undoTurn and endTurn become available
+        if(hasMoved){
+            endTurn.setVisibility(View.VISIBLE);
+            undoTurn.setVisibility(View.VISIBLE);
+        }else{
+            //backup the current board so we can revert to it if we want to undo
+//            toUse.saveBackup();
+
+            game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+            endTurn.setVisibility(View.INVISIBLE);
+            undoTurn.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -113,6 +169,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         surrender.setOnClickListener(this);
         endTurn = (Button) activity.findViewById(R.id.endTurnButton);
         endTurn.setOnClickListener(this);
+        undoTurn = (Button) activity.findViewById(R.id.undoTurnButton);
+        undoTurn.setOnClickListener(this);
+
+        //set end and undo turn to invisible by default
+        endTurn.setVisibility(View.INVISIBLE);
+        undoTurn.setVisibility(View.INVISIBLE);
 
         //get timer view
         time = (TextView) activity.findViewById(R.id.timerTextView);
@@ -133,16 +195,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
-        //example set
-        boardButtons[0][0].setImageResource(R.drawable.capt);
-
     }
 
     @Override
     public void onClick(View v) {
         if(v instanceof Button){
             buttonOnClick(v);
-        }else if(v instanceof ImageButton){
+        }else if(v instanceof ImageButton && !hasMoved){
             imageButtonOnClick(v);
         }
     }
@@ -153,12 +212,40 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }else if(v.getId() == R.id.endTurnButton){
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
-            }else{}
+            }else if(v.getId() == R.id.undoTurnButton){
+                hasMoved = false;
 
+                game.sendAction(new StrategoUndoTurnAction(this));
+            } else{}
 
     }
 
     public void imageButtonOnClick(View v){
+        int clickedRow = -1;
+        int clickedCol = -1;
+        for(int row = 0; row < 10; row++){
+            for(int col= 0; col < 10; col++){
+                if(v.getId() == boardButtons[row][col].getId()){
+                    clickedRow = row;
+                    clickedCol = col;
+                }
+            }
+        }
+
+        if(selectedFirst){
+            toX = clickedRow;
+            toY = clickedCol;
+            game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
+            selectedFirst = false;
+
+            //set the player to have moved so they can't move again
+            hasMoved = true;
+        }else{
+            fromX = clickedRow;
+            fromY = clickedCol;
+            selectedFirst = true;
+        }
+
 
     }
 }

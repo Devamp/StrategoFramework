@@ -1,7 +1,9 @@
 package com.example.strategotest.Stratego;
 
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
-import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -9,7 +11,7 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 public class StrategoLocalGame extends LocalGame {
 
-    //StrategoGameState officialState;
+    StrategoGameState officialState;
 
 
 
@@ -30,7 +32,7 @@ public class StrategoLocalGame extends LocalGame {
     public StrategoLocalGame(StrategoGameState stState){
         super();
         super.state = new StrategoGameState(stState);
-        //officialState = new StrategoGameState(stState);
+        officialState = new StrategoGameState(stState);
     }
 
     /**
@@ -76,18 +78,32 @@ public class StrategoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof PassTurnAction){
-            //officialState.endTurn();
+
+//            officialState.endTurn();
             ((StrategoGameState)state).endTurn();
             return true;
-        }
-//        else if(action instanceof DisplayBoardAction){
-//
-//        }
-        else if(action instanceof StrategoPlaceAction){
-            ((StrategoGameState)state).placeRemove(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
+
+        }else if(action instanceof StrategoMoveAction){
+            StrategoMoveAction toUse = (StrategoMoveAction) action;
+            ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+
+            //after move is made, see if flag has been captured
+            String endGameString = checkIfGameOver();
+            if(endGameString != null){
+                //need to somehow see if game is over. Maybe put the checkIfGameOver method in the
+                //human player class and pass in StrategoGameState toUse as an argument. Should
+                //it also check if all the pieces have been captured, or did we do that in the
+                //action method?
+            }
             return true;
-        }
-        else {
+
+        }else if(action instanceof StrategoUndoTurnAction){
+            super.state = ((StrategoGameState)state).getBackup();
+            return true;
+        }else if(action instanceof StrategoBackupAction){
+            ((StrategoGameState)state).saveBackup();
+            return true;
+        }else{
             return false;
         }
     }
