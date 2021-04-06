@@ -31,6 +31,10 @@ public class StrategoGameState extends GameState {
     private int[] blueCharacter;
     private int[] redCharacter;
 
+    private int[] filledRedCharacters = new int[12];
+
+
+
     //turn indicator // red = 0, blue = 1
     private int turn;
     //Board: -1 = empty space, -2 = impassable space (lake), -3 = invisible character (other army)
@@ -55,6 +59,7 @@ public class StrategoGameState extends GameState {
         //character array for each color
         redCharacter = new int[12];
         blueCharacter = new int[12];
+
 
         //Initialize red values
         redCharacter[0] = 1; //flag
@@ -84,6 +89,19 @@ public class StrategoGameState extends GameState {
         blueCharacter[10] = 6;
         blueCharacter[11] = 1;
 
+        filledRedCharacters[0] = 1; //flag
+        filledRedCharacters[1] = 1; //marshall
+        filledRedCharacters[2] = 1; //general
+        filledRedCharacters[3] = 2; //colonel
+        filledRedCharacters[4] = 3; //major
+        filledRedCharacters[5] = 4; //captain
+        filledRedCharacters[6] = 4; //Lieutenant
+        filledRedCharacters[7] = 4; //sergeant
+        filledRedCharacters[8] = 5; //miner
+        filledRedCharacters[9] = 8; //scout
+        filledRedCharacters[10] = 6; //bomb
+        filledRedCharacters[11] = 1; //spy
+
         //initialize other values
         turn = 0;
 
@@ -110,7 +128,6 @@ public class StrategoGameState extends GameState {
 
         place(0);
         place(1);
-
 
     }
 
@@ -168,14 +185,18 @@ public class StrategoGameState extends GameState {
 
         blueCharacter = new int[12];
         redCharacter = new int[12];
+        filledRedCharacters = new int[12];
 
         for(int i = 0; i < blueCharacter.length; i++){
             blueCharacter[i] = original.blueCharacter[i];
             redCharacter[i] = original.redCharacter[i];
+           filledRedCharacters[i] = original.filledRedCharacters[i];
         }
 
         blueBench = original.blueBench;
         redBench = original.redBench;
+
+
 
     }
 
@@ -455,7 +476,7 @@ public class StrategoGameState extends GameState {
 
             }
             else{
-                //Remove piece if one is already there
+               // Remove piece if one is already there
                 board[row][col] = null;
                 return true;
             }
@@ -465,6 +486,35 @@ public class StrategoGameState extends GameState {
         }
 
     }
+
+    /**
+     * Duplicate of the placeRemove method, but edited to meet the computer's needs
+     *
+     * @param value - what the piece value is
+     * @param row - row to place piece
+     * @param col- col to place piece
+     * @return returns true if piece is removed or placed, false if failure
+     */
+    public boolean placeRemoveComputer(int value, int row, int col){
+        if(phase == 0){
+            if(board[row][col] == null || board[row][col] != null){
+                String returnName = setName(value);
+                //Put piece in that spot
+                board[row][col] = new Piece(returnName,value, turn);
+                return true;
+            }
+            else if(board[row][col].getValue() < 0|| board[row][col].getPlayer()  <0 ){
+                //don't mess with lake
+                return false;
+
+            }
+        }
+        else{
+            return false;
+        }
+        return false;
+    }
+
 
     /**
      * action: Preforms the attack and move methods depending on the situation
@@ -789,7 +839,9 @@ public class StrategoGameState extends GameState {
         return phase;
     }
 
-    public void setPhase(int p){this.phase = p;}
+    public void setPhase(int p){
+        this.phase = p;
+    }
 
     public float getTimer(){
         return timer;
@@ -813,6 +865,13 @@ public class StrategoGameState extends GameState {
         this.turn = turn;
     }
 
+    public int[] getFilledRedCharacters(){
+        return filledRedCharacters;
+    }
+
+    public void setFilledRedCharacters(int index, int value){
+        filledRedCharacters[index] = value;
+    }
 
 
 
