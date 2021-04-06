@@ -44,6 +44,7 @@ import com.example.strategotest.game.GameFramework.utilities.MessageBox;
  * I think I mixed up the undo turn and undo move
  * Don't lock the player out if they make an invalid move. They should get a warning and be
  *      allowed to keep making moves until a valid one is selected
+ * Hitting null space, null space for movement causes app to crash
  */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
@@ -64,6 +65,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
+    //create the buttons for placing pieces
+    private ImageButton[] piecesRemain = new ImageButton[12];
+
     //A move action is created when this is true because a piece has already been selected
     //to move
     private boolean selectedFirst = false;
@@ -82,6 +86,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     //if this is true, then no other moves can be made.
     private boolean hasMoved = false;
+
+    //if this is true, we have a piece ready to place and the next click places it
+    private boolean selectToPlace = false;
+
+    private int myPhase = 1;
 
     /**
      * constructor
@@ -203,6 +212,24 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
+        //hardcode references to all the bin buttons
+        piecesRemain[0] = (ImageButton) activity.findViewById(R.id.flagTracker);
+        piecesRemain[1] = (ImageButton) activity.findViewById(R.id.marshallTracker);
+        piecesRemain[2] = (ImageButton) activity.findViewById(R.id.generalTracker);
+        piecesRemain[3] = (ImageButton) activity.findViewById(R.id.colonelTracker);
+        piecesRemain[4] = (ImageButton) activity.findViewById(R.id.majorTracker);
+        piecesRemain[5] = (ImageButton) activity.findViewById(R.id.captainTracker);
+        piecesRemain[6] = (ImageButton) activity.findViewById(R.id.lieutenantTracker);
+        piecesRemain[7] = (ImageButton) activity.findViewById(R.id.sergeantTracker);
+        piecesRemain[8] = (ImageButton) activity.findViewById(R.id.minerTracker);
+        piecesRemain[9] = (ImageButton) activity.findViewById(R.id.scoutTracker);
+        piecesRemain[10] = (ImageButton) activity.findViewById(R.id.bombTracker);
+        piecesRemain[11] = (ImageButton) activity.findViewById(R.id.spyTracker);
+
+        for(int i = 0; i < piecesRemain.length; i++){
+            piecesRemain[i].setOnClickListener(this);
+        }
+
     }
 
     @Override
@@ -239,6 +266,20 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
+        //If we are in the movement phase, we want to call a method to deal with the movement
+        if(myPhase == 1){
+            buttonClickMove(clickedRow, clickedCol);
+        }else if(myPhase == 0){
+            //If we are in the placement phase, we want to call a method to deal with the placement
+            buttonClickPlace(clickedRow, clickedCol);
+        }else{
+
+        }
+
+
+    }
+
+    public void buttonClickMove(int clickedRow, int clickedCol){
         if(selectedFirst){
             toX = clickedRow;
             toY = clickedCol;
@@ -252,7 +293,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             fromY = clickedCol;
             selectedFirst = true;
         }
+    }
 
+    public void buttonClickPlace(int clickedRow, int clickedCol){
 
     }
 }
