@@ -3,9 +3,12 @@ package com.example.strategotest.Stratego.infoMessages;
 import android.widget.ImageButton;
 
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.Players.HumanPlayer;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
+import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
+import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 import java.util.ArrayList;
 
@@ -126,7 +129,8 @@ public class StrategoGameState extends GameState {
         instancePieces(0);
         instancePieces(1);
 
-        place(0);
+
+        //place(0);
         place(1);
 
     }
@@ -485,6 +489,56 @@ public class StrategoGameState extends GameState {
             return false;
         }
 
+    }
+
+    /**
+     *
+     * Notes
+     *  Right now this does no error checking for if the given row and col have anything on them
+     *  or if the player is placing in the right area.
+     *  Also need to check if all the players pieces have been placed
+     *
+     * @param player
+     * @param value
+     * @param row
+     * @param col
+     * @return
+     */
+    public boolean placeChosenPiece(GamePlayer player, int value, int row, int col){
+        int myId;
+
+        if(player instanceof GameComputerPlayer){
+            //place the computers piece
+            //first, we need to decrement
+            return true;
+        }else if(player instanceof HumanPlayer){
+            //place the human players piece
+
+            //first, we need to get a reference to the passed in player. Using their ID decrement
+            //either red (0) or blue (1)
+            myId = ((HumanPlayer)player).getHumanPlayerID();
+
+            //decrement the counter for number of pieces left
+            if(myId == 0){
+                //dec red
+                redCharacter[value]--;
+
+                //then, using the instanced pieces, we need to actually place the piece on the baord
+                board[row][col] = redBench.get(value);
+            }else{
+                //dec blue
+                blueCharacter[value]--;
+
+                //use blueBench to assign blue piece to the board spot
+                board[row][col] = blueBench.get(value);
+            }
+
+
+
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

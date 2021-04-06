@@ -16,6 +16,7 @@ import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
@@ -295,7 +296,28 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
     }
 
-    public void buttonClickPlace(int clickedRow, int clickedCol){
+    //use this variable to hold what piece is selected to place
+    int placePieceVal = -1;
 
+    public void buttonClickPlace(int clickedRow, int clickedCol){
+        if(selectToPlace){
+            int pieceVal = getTheValue();
+            toX = clickedRow;
+            toY = clickedCol;
+            game.sendAction(new StrategoPlaceAction(this, pieceVal, clickedRow, clickedCol));
+        }
+    }
+
+    private int getTheValue(){
+        //everything is broken right now.
+        return 0;
+    }
+
+    private int getPlacePieceVal(){
+        return 0;
+    }
+
+    public int getHumanPlayerID(){
+        return humanPlayerID;
     }
 }
