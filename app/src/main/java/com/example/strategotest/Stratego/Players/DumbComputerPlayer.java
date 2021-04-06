@@ -9,6 +9,8 @@ package com.example.strategotest.Stratego.Players;
 
 import android.view.inputmethod.CorrectionInfo;
 
+import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
@@ -22,7 +24,6 @@ import java.util.Random;
 
 public class DumbComputerPlayer extends GameComputerPlayer {
 
-    //ArrayList<Coords> usedIndices = new ArrayList<>(); // arraylist to help store the coordinates of the indices that have already been used (i.e placed)
     private boolean[][] usedIndices = new boolean[10][10]; // 2D boolean array to help store used up indices
 
     /**
@@ -64,7 +65,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
             } else if (gameState.getPhase() == 1) { // we are in play phase
 
-                // ATTACKING PHASE CODE // ...
+
             }
 
         }
@@ -101,7 +102,12 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             while(usedIndices[oldRow][oldCol]){ // loop until the loop is broken by finding an empty spot
 
                 // generate new row and column values
-                row = gen.nextInt(10-6) + 6;
+                if(playerID == 0) { //computer is on the bottom side of the board (Player 1)
+                    row = gen.nextInt(10-6) + 6; // generate random row value between 6 - 9
+                } else if ( playerID == 1){ // computer is on the top side of the board (Player 2)
+                    row = gen.nextInt(4); // generate random row value between 0 - 3
+                }
+
                 col = gen.nextInt(10);
 
                 if(!usedIndices[row][col]){ //if empty spot is found, break the loop!
@@ -117,6 +123,63 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         usedIndices[row][col] = true; // set the used row and col indices to true
         return new StrategoPlaceAction(this, value, row, col); // return the place action
 
+    }
+
+    /**
+     *
+     * @param playerID
+     * @return
+     */
+    public StrategoMoveAction getMoveAction(int playerID, StrategoGameState state){
+        Random gen = new Random();
+        Piece[][] myBoard = state.getBoard();
+
+
+        int row = 0; // initially set to 0
+
+        if(playerID == 0) { //computer is on the bottom side of the board (Player 1)
+            row = gen.nextInt(10-6) + 6; // generate random row value between 6 - 9
+        } else if ( playerID == 1){ // computer is on the top side of the board (Player 2)
+            row = gen.nextInt(4); // generate random row value between 0 - 3
+        }
+
+        int col = gen.nextInt(10); // generate random col value between 0 - 9
+
+        if(myBoard[row][col] != null){ //if square is not empty
+
+            // set original location of piece that will be moved
+            int fromX = row;
+            int fromY = col;
+
+            int toX = 0;
+            int toY = 0;
+
+            int picker = gen.nextInt(4) + 1; // pick between 1 - 4
+
+            switch (picker) { // one single move
+                case 1: // move down one
+                     toX = row+1;
+                     toY = col;
+                    break;
+                case 2: //move to the right one
+                     toX = row;
+                     toY = col+1;
+                case 3: // move to the left one
+                    toX = row;
+                    toY = col-1;
+                case 4: // move up one
+                    toX = row-1;
+                    toY = col;
+                default:
+                    break;
+            }
+
+            return new StrategoMoveAction(this, fromX, fromY, toX,toY);
+        } else {
+            row = gen.nextInt(gen.nextInt(10-6) + 6);
+        }
+
+        return null;
     }
 
 }
