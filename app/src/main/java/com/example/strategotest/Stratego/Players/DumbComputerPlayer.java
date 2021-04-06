@@ -62,7 +62,6 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
                 gameState.setPhase(1); // after placement, update the game phase to play phase
 
-
             } else if (gameState.getPhase() == 1) { // we are in play phase
 
                 // ATTACKING PHASE CODE // ...

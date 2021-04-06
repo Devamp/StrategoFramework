@@ -109,6 +109,8 @@ public class StrategoLocalGame extends LocalGame {
             ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
 
             return true;
+        } else if (action instanceof StrategoMoveAction){
+            ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
         }
             return false;
 
