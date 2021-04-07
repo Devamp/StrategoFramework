@@ -1,5 +1,6 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import com.example.strategotest.R;
 import com.example.strategotest.Stratego.Piece;
 
 import org.junit.Test;
@@ -18,11 +19,14 @@ public class StrategoGameStateTest {
 
         StrategoGameState backUp = gameState.getBackup();
 
-        assertEquals(backUp, gameState);
+        StrategoGameState gameStateCopy = new StrategoGameState(gameState);
+
+        assertEquals(backUp, gameStateCopy);
 
         gameState.action(6, 9, 5, 9);
+        StrategoGameState gameStateNewCopy = new StrategoGameState(gameState);
 
-        assertNotEquals(backUp, gameState);
+        assertNotEquals(backUp, gameStateNewCopy);
 
 
     }
@@ -51,11 +55,10 @@ public class StrategoGameStateTest {
 //        gameState.instancePieces(0);
 
         ArrayList<Piece> redBench = gameState.getRedBench();
-        Piece practicePiece = redBench.get(1);
+        Piece practicePiece = gameState.redBench.get(1);
+        Piece practiceBlue = gameState.blueBench.get(1);
 
-        Piece flag = new Piece("Flag", 0, 0);
-
-        assertEquals(practicePiece, flag);
+        assertEquals(practicePiece, practiceBlue);
     }
 
     @Test
@@ -69,7 +72,7 @@ public class StrategoGameStateTest {
     @Test
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
-        assertEquals(s.setIcon(1),R.drawable.marsh);
+        assertEquals(s.setIcon(1), R.drawable.marsh);
         assertEquals(s.setIcon(10),R.drawable.bomb);
 
     }
