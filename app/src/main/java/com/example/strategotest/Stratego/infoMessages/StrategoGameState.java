@@ -3,9 +3,12 @@ package com.example.strategotest.Stratego.infoMessages;
 import android.widget.ImageButton;
 
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.Players.HumanPlayer;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
+import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
+import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
 import java.util.ArrayList;
 
@@ -128,7 +131,8 @@ public class StrategoGameState extends GameState {
         instancePieces(0);
         instancePieces(1);
 
-        place(0);
+
+        //place(0);
         place(1);
 
     }
@@ -249,12 +253,16 @@ public class StrategoGameState extends GameState {
      */
     public boolean instancePieces(int player){
         ArrayList<Piece> assign;
-        int[] numberPieces;
+        int[] numberPieces = new int[12];
         String name;
+
+        for(int i = 0; i < numberPieces.length; i++){
+            numberPieces[i] = redCharacter[i];
+        }
 
         if(player == 0){
             assign = redBench;
-            numberPieces = redCharacter;
+//            numberPieces = redCharacter;
         }else{
             assign = blueBench;
             numberPieces = blueCharacter;
@@ -492,6 +500,102 @@ public class StrategoGameState extends GameState {
             return false;
         }
 
+    }
+
+    /**
+     *
+     * Notes
+     *  Right now this does no error checking for if the given row and col have anything on them
+     *  or if the player is placing in the right area.
+     *  Also need to check if all the players pieces have been placed
+     *
+     * @param player
+     * @param value
+     * @param row
+     * @param col
+     * @return
+     */
+    public boolean placeChosenPiece(GamePlayer player, int value, int row, int col){
+        int myId;
+
+        if(player instanceof GameComputerPlayer){
+            //place the computers piece
+            //first, we need to decrement
+            return true;
+        }else if(player instanceof HumanPlayer){
+            //place the human players piece
+
+            //first, we need to get a reference to the passed in player. Using their ID decrement
+            //either red (0) or blue (1)
+            myId = ((HumanPlayer)player).getHumanPlayerID();
+
+            //decrement the counter for number of pieces left
+            if(myId == 0){
+                //check to make sure the row and column is in correct territory
+                if(row < 6){
+                    //red must place in rows 6-9
+                    return false;
+                }else{
+                    return checkPlace(myId, value, row, col);
+                }
+
+            }else{
+                if(row > 3){
+                    //blue must place in rows 0-3
+                    return false;
+                }else {
+                    return checkPlace(myId, value, row, col);
+                }
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    public boolean checkPlace(int id, int value, int row, int col){
+        //if the id is 0, we are red, and need to stick on reds side
+        int[] numTroops;
+        ArrayList<Piece> toUsePieces;
+
+        if(id == 0){
+            numTroops = redCharacter;
+            toUsePieces = redBench;
+        }else{
+            numTroops = blueCharacter;
+            toUsePieces = blueBench;
+        }
+
+
+        //then, using the instanced pieces, we need to actually place the piece on the baord
+        int loop = 0;
+        //loop through instantiated pieces till we find the one with the right value
+        do{
+            if(numTroops[value] <= 0){
+                return false;
+            }
+            try{
+                if(board[row][col] != null){
+                    //re increase the number of troops
+                    numTroops[board[row][col].getValue()]++;
+                    Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer());
+                    toUsePieces.add(returnToBin);
+                }
+                board[row][col] = toUsePieces.get(loop);
+            }catch(Exception ex){
+                //will probably throw an out of bounds exception...
+                return false;
+            }
+            loop++;
+        }while(board[row][col].getValue() != value && !(loop > toUsePieces.size()));
+
+        //dec
+        numTroops[value]--;
+
+        toUsePieces.remove(loop);
+        loop = 0;
+
+        return true;
     }
 
     /**

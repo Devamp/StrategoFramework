@@ -16,6 +16,7 @@ import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
@@ -47,6 +48,11 @@ import java.util.TimerTask;
  * I think I mixed up the undo turn and undo move
  * Don't lock the player out if they make an invalid move. They should get a warning and be
  *      allowed to keep making moves until a valid one is selected
+ * Hitting null space, null space for movement causes app to crash
+ *
+ * Placing piece works but is incredibly buggy. Can place negative amount of pieces,
+ * can place over lakes and opponents pieces. Places the wrong pieces. Doesn't check
+ * once we have placed all pieces. Many errors. But it works.
  */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
@@ -70,6 +76,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
+    //create the buttons for placing pieces
+    private ImageButton[] piecesRemain = new ImageButton[12];
+
+    //create labels for number pieces remaining
+    private TextView[] piecesRemainLabel = new TextView[12];
+
     //A move action is created when this is true because a piece has already been selected
     //to move
     private boolean selectedFirst = false;
@@ -88,6 +100,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     //if this is true, then no other moves can be made.
     private boolean hasMoved = false;
+
+    //if this is true, we have a piece ready to place and the next click places it
+    private boolean selectToPlace = false;
+
+    private int myPhase = 0;
 
     /**
      * constructor
@@ -131,8 +148,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 //        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
         toUse = new StrategoGameState((StrategoGameState) info);
 
-        //set reversion gameState
-//        revertState = new StrategoGameState((StrategoGameState) info); //this might not work?
+        myPhase = toUse.getPhase();
 
 //        setTurnColor(t)
 
@@ -159,6 +175,20 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
             endTurn.setVisibility(View.INVISIBLE);
             undoTurn.setVisibility(View.INVISIBLE);
+        }
+
+        int[] troopNumbers;
+        if(humanPlayerID == 0){
+            //if the player is 0, they are red
+            troopNumbers = toUse.getRedCharacter();
+        }else{
+            troopNumbers = toUse.getBlueCharacter();
+        }
+
+        //set the number of captured pieces
+        for(int i = 0; i < piecesRemainLabel.length; i++){
+            String multi = "x" + troopNumbers[i];
+            piecesRemainLabel[i].setText(multi);
         }
     }
 
@@ -209,6 +239,38 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
+        //hardcode references to all the bin buttons
+        piecesRemain[0] = (ImageButton) activity.findViewById(R.id.flagTracker);
+        piecesRemain[1] = (ImageButton) activity.findViewById(R.id.marshallTracker);
+        piecesRemain[2] = (ImageButton) activity.findViewById(R.id.generalTracker);
+        piecesRemain[3] = (ImageButton) activity.findViewById(R.id.colonelTracker);
+        piecesRemain[4] = (ImageButton) activity.findViewById(R.id.majorTracker);
+        piecesRemain[5] = (ImageButton) activity.findViewById(R.id.captainTracker);
+        piecesRemain[6] = (ImageButton) activity.findViewById(R.id.lieutenantTracker);
+        piecesRemain[7] = (ImageButton) activity.findViewById(R.id.sergeantTracker);
+        piecesRemain[8] = (ImageButton) activity.findViewById(R.id.minerTracker);
+        piecesRemain[9] = (ImageButton) activity.findViewById(R.id.scoutTracker);
+        piecesRemain[10] = (ImageButton) activity.findViewById(R.id.bombTracker);
+        piecesRemain[11] = (ImageButton) activity.findViewById(R.id.spyTracker);
+
+        for(int i = 0; i < piecesRemain.length; i++){
+            piecesRemain[i].setOnClickListener(this);
+        }
+
+        //hardcode references to labels for number pieces remaining
+        piecesRemainLabel[0] = (TextView) activity.findViewById(R.id.flagMult);
+        piecesRemainLabel[1] = (TextView) activity.findViewById(R.id.marshallMultiplier);
+        piecesRemainLabel[2] = (TextView) activity.findViewById(R.id.generalMult);
+        piecesRemainLabel[3] = (TextView) activity.findViewById(R.id.colonelMult);
+        piecesRemainLabel[4] = (TextView) activity.findViewById(R.id.majorMult);
+        piecesRemainLabel[5] = (TextView) activity.findViewById(R.id.captainMult);
+        piecesRemainLabel[6] = (TextView) activity.findViewById(R.id.lieutenantMult);
+        piecesRemainLabel[7] = (TextView) activity.findViewById(R.id.sergentMult);
+        piecesRemainLabel[8] = (TextView) activity.findViewById(R.id.minerMult);
+        piecesRemainLabel[9] = (TextView) activity.findViewById(R.id.scoutMult);
+        piecesRemainLabel[10] = (TextView) activity.findViewById(R.id.bombMult);
+        piecesRemainLabel[11] = (TextView) activity.findViewById(R.id.spyMult);
+
     }
 
     @Override
@@ -245,6 +307,20 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
         }
 
+        //If we are in the movement phase, we want to call a method to deal with the movement
+        if(myPhase == 1){
+            buttonClickMove(v, clickedRow, clickedCol);
+        }else if(myPhase == 0){
+            //If we are in the placement phase, we want to call a method to deal with the placement
+            buttonClickPlace(v, clickedRow, clickedCol);
+        }else{
+
+        }
+
+
+    }
+
+    public void buttonClickMove(View v, int clickedRow, int clickedCol){
         if(selectedFirst){
             toX = clickedRow;
             toY = clickedCol;
@@ -258,8 +334,74 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             fromY = clickedCol;
             selectedFirst = true;
         }
+    }
 
+    //use this variable to hold what piece is selected to place
+    int placePieceVal = -1;
 
+    public void buttonClickPlace(View v, int clickedRow, int clickedCol){
+        if(selectToPlace){
+            toX = clickedRow;
+            toY = clickedCol;
+            if(placePieceVal != -1) {
+                game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
+            }
+            selectToPlace = false;
+        }else{
+            //load the value of the piece we want to place. Will use given value to find correct
+            //piece in instantiated pieces ArrayList
+            placePieceVal = getTheValue(v);
+            selectToPlace = true;
+        }
+    }
+
+    private int getTheValue(View v){
+        //seriously, what's the way to do this without the switch statement? Hash table?
+        switch(v.getId()){
+            case R.id.flagTracker:
+                return 0;
+//                break;
+            case R.id.marshallTracker:
+                return 1;
+//                break;
+            case R.id.generalTracker:
+                return 2;
+//                break;
+            case R.id.colonelTracker:
+                return 3;
+//                break;
+            case R.id.majorTracker:
+                return 4;
+//                break;
+            case R.id.captainTracker:
+                return 5;
+//                break;
+            case R.id.lieutenantTracker:
+                return 6;
+//                break;
+            case R.id.sergeantTracker:
+                return 7;
+//                break;
+            case R.id.minerTracker:
+                return 8;
+//                break;
+            case R.id.scoutTracker:
+                return 9;
+//                break;
+            case R.id.bombTracker:
+                return 10;
+//                break;
+            case R.id.spyTracker:
+                return 11;
+//                break;
+            default:
+                return -1;
+//                break;
+        }
+    }
+
+    public int getHumanPlayerID(){
+        return humanPlayerID;
     }
 
     /**
