@@ -183,4 +183,8 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         return null;
     }
 
+    public int getPlayerID(){
+        return 1;
+    }
+
 }
