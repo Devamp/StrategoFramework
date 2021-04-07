@@ -128,10 +128,6 @@ public class StrategoGameState extends GameState {
         instancePieces(0);
         instancePieces(1);
 
-
-        //place(0);
-        place(1);
-
     }
 
     /**
