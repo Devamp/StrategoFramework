@@ -92,6 +92,7 @@ public class StrategoGameStateTest {
 
     @Test
     public void getPhase() {
+
     }
 
     @Test
@@ -104,6 +105,7 @@ public class StrategoGameStateTest {
 
     @Test
     public void setTimer() {
+
     }
 
     @Test
