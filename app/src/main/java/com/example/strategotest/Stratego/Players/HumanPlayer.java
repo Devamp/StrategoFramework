@@ -27,6 +27,9 @@ import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
 import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * @author Gareth Rice
  *
@@ -59,7 +62,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //this will be invisible until Beta
     private Button undoMove = null;
 
-    private TextView time = null;
+    private TextView timerText = null;
+    private Timer timer;
+    TimerTask timerTask;
+    Double time = 0.0;
     private ImageView whoseTurn = null;
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
@@ -185,7 +191,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         undoTurn.setVisibility(View.INVISIBLE);
 
         //get timer view
-        time = (TextView) activity.findViewById(R.id.timerTextView);
+        timerText = (TextView) activity.findViewById(R.id.timerTextView);
+        timer = new Timer();
+        startTimer();
 
         whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
 
@@ -254,5 +262,64 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
 
+    }
+
+    /**
+     * Starts the timer by creating a TimerTask object and have it increment and change the
+     * timerText during runtime.
+     *
+     * Resources: https://stackoverflow.com/questions/33979132/cannot-resolve-method-runonuithread
+     * Problem: (1.) The app kept crashing within the first couple of seconds that the timer starts to tick
+     *          (2.) Cannot resolve method .runOnUiThread
+     * Solution:(1.) Added 'runOnUiThread' so that the TimerTask object would run its specified action on the UI thread
+     *          (2.) added 'getActivity().' right before runOnUiThread
+     */
+    private void startTimer()
+    {
+        timerTask = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        time++;
+                        timerText.setText(getTimerText());
+                    }
+                });
+            }
+
+        };
+        // Start the timer with no delay upon launch of the main game and
+        // change it every 1000 milliseconds (1 second)
+        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+    }
+
+    /**
+     * Handles the calculations for seconds and minutes to be displayed on TimerText
+     *
+     * @return formatTime(seconds, minutes)
+     */
+    private String getTimerText() {
+        int rounded = (int) Math.round(time);
+
+        int seconds = ((rounded % 86400) % 3600) % 60;
+        int minutes = ((rounded % 86400) % 3600) / 60;
+
+        return formatTime(seconds, minutes);
+    }
+
+    /**
+     * Properly formats the time so it would return TIME: minutes : seconds
+     *
+     * @param seconds
+     * @param minutes
+     * @return "TIME: " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds)
+     */
+    private String formatTime(int seconds, int minutes) {
+        return "TIME: " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
     }
 }

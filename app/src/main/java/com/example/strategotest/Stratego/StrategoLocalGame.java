@@ -71,10 +71,30 @@ public class StrategoLocalGame extends LocalGame {
             }
 
             //check win by checking if either array of pieces has maxed out, indicating all troops have been captured
-            if((((StrategoGameState)state).getBlueCharacter())[1] == 1){
-                //check the max troop limit for each piece, use && in if statement possibly?
+            boolean redL = true;
+            boolean blueL = true;
+            //Loop through all the movable pieces
+           for(int i = 0; i < 12; i++){
+               if(i > 0 && i <10 || i == 11){
+                   if(((StrategoGameState)state).getBlueCharacter()[i] != 0){
+                       blueL = false;
+
+                   }
+                   if(((StrategoGameState)state).getRedCharacter()[i] != 0){
+                       redL = false;
+
+                   }
+               }
+           }
+           //Return the result
+            if(redL){
+                return("Blue wins!");
+            }
+            if(blueL){
+                return("Red wins!");
             }
         }
+
         return null;
     }
 
