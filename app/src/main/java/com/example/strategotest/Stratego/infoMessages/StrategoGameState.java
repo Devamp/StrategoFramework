@@ -495,6 +495,7 @@ public class StrategoGameState extends GameState {
      * @param col- col to place piece
      * @return returns true if piece is removed or placed, false if failure
      */
+
     public boolean placeRemoveComputer(int value, int row, int col){
         if(phase == 0){
             if(board[row][col] == null || board[row][col] != null){
@@ -722,7 +723,7 @@ public class StrategoGameState extends GameState {
 //         if (gameState.turn == 0) {
         if(this.turn == 0){
 //             gameState.turn = 1;
-             this.turn = 0;
+             this.turn = 1;
              isTrue = true;
          }
          // Player 2 (represented by 1) ended turn
