@@ -200,6 +200,10 @@ public class StrategoGameState extends GameState {
 
     }
 
+    public ArrayList getRedBench(){
+        return redBench;
+    }
+
     public void saveBackup(){
         backup = new StrategoGameState(this);
     }
