@@ -76,8 +76,8 @@ public class StrategoGameStateTest {
     //Caden's Test
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
-        assertEquals(s.setIcon(1), R.drawable.marsh);
-        assertEquals(s.setIcon(10), R.drawable.bomb);
+        assertEquals(s.setIcon(1),R.drawable.marsh);
+        assertEquals(s.setIcon(10),R.drawable.bomb);
 
     }
 
@@ -175,7 +175,8 @@ public class StrategoGameStateTest {
 
         StrategoGameState state = new StrategoGameState();
 
-        assertEquals(state.getRedCharacter()[0], 0); // character should be at 0 because the flag should be placed
+        assertEquals(state.getRedCharacter()[0], 0); // character should be at 0 because they should all be placed
+
         state.increaseCap(0,0); // increase the piece value by 1
 
         assertEquals(state.getRedCharacter()[0], 1); // now it should equal to 1
@@ -205,6 +206,7 @@ public class StrategoGameStateTest {
 
     @Test
     public void getPhase() {
+
     }
 
     @Test
@@ -217,14 +219,35 @@ public class StrategoGameStateTest {
 
     @Test
     public void setTimer() {
+
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Returns the number of Blue pieces for a certain Piece class. Check if getter method
+     * is properly returning the number of pieces using the setter method to create an array
+     * and test if the array returns the actual value in assertEquals
+     */
     public void getBlueCharacter() {
+        StrategoGameState state = new StrategoGameState();
+        state.setInBlueCharacter(9, 5);
+        assertEquals(state.getBlueCharacter()[9], 5);
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Returns the number of Red pieces for a certain Piece class. Check if getter method
+     * is properly returning the number of pieces using the setter method to create an array
+     * and test if the array returns the actual value in assertEquals
+     */
     public void getRedCharacter() {
+        StrategoGameState state = new StrategoGameState();
+        state.setInBlueCharacter(10, 7);
+        assertEquals(state.getBlueCharacter()[10], 7);
     }
 
     @Test
@@ -236,10 +259,28 @@ public class StrategoGameStateTest {
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Creates a new GameState object and checks if method is setting properly
+     * using setFilledRedCharacters in assertEquals.
+     */
     public void getFilledRedCharacters() {
+        StrategoGameState state = new StrategoGameState();
+        state.setFilledRedCharacters(5, 6);
+        assertEquals(state.getFilledRedCharacters()[5], 6);
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Creates a new GameState object and checks if method is setting properly
+     * using getFilledRedCharacters in assertEquals.
+     */
     public void setFilledRedCharacters() {
+        StrategoGameState state = new StrategoGameState();
+        state.setFilledRedCharacters(3, 2);
+        assertEquals(state.getFilledRedCharacters()[3], 2);
     }
 }
