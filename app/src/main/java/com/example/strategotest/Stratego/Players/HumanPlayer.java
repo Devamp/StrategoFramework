@@ -98,6 +98,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         super(name);
         this.layoutID = layoutID;
         humanPlayerID = playerID;
+
     }
 
     
