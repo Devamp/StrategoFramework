@@ -25,6 +25,7 @@ public class StrategoGameStateTest {
     }
 
     @Test
+    //Caden's Test
     public void setName() {
         StrategoGameState s = new StrategoGameState();
         assertEquals(s.setName(1),"Marshall");
@@ -32,6 +33,7 @@ public class StrategoGameStateTest {
     }
 
     @Test
+    //Caden's Test
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
         assertEquals(s.setIcon(1),R.drawable.marsh);
@@ -74,6 +76,7 @@ public class StrategoGameStateTest {
     }
 
     @Test
+    //Caden's Test
     public void endTurn() {
         StrategoGameState s = new StrategoGameState();
         s.endTurn();
