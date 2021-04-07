@@ -9,6 +9,7 @@ package com.example.strategotest.Stratego.Players;
 import android.view.inputmethod.CorrectionInfo;
 
 import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -45,6 +46,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     protected void receiveInfo(GameInfo info) {
 
         StrategoGameState gameState = new StrategoGameState((StrategoGameState) info);
+        PassTurnAction pass = new PassTurnAction(this);
 
         if (gameState.getTurn() != playerNum) { //not the computer's turn
             return;
@@ -60,11 +62,11 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     }
                 }
 
-                gameState.setPhase(1); // after placement, update the game phase to play phase
+                game.sendAction(pass); // end turn
 
             } else if (gameState.getPhase() == 1) { // we are in play phase
-
-
+                StrategoMoveAction move = new StrategoMoveAction(this,6,0,5,0);
+                game.sendAction(move);
             }
 
         }
@@ -123,10 +125,6 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
     }
 
-    /**
-     * @param playerID
-     * @return
-     */
 
     public StrategoMoveAction getMoveAction(int playerID, StrategoGameState state) {
         Random gen = new Random();
@@ -154,47 +152,101 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             } else if (playerID == 1) {
                 row = gen.nextInt(4);
             }
-
             col = gen.nextInt(10); // generate a new col
 
 
-            if (myBoard[row][col] != null) { //if non-empty spot is found, break the loop!
-                break;
+            if (myBoard[row][col] != null) { //if non-empty spot is found
+
+                int picker = gen.nextInt(4) + 1; // pick between 1 - 4 to decide on random move to one of four sides
+
+                // call helper method to see which side is open to move and return a move action
+                switch (picker) { // one single move
+                    case 1: // start with move down one
+                        if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row + 1, col);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 2: //start with move to the right one
+                        if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 3: //start with move to the left one
+                        if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 4: // move up one
+                        if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    default:
+                        break; // break the loop
+                }
+
+                //break // break while loop
+
             } else { // otherwise, update old variables and keep looking
                 oldRow = row;
                 oldCol = col;
             }
+
         }
 
-        // set original location of piece that will be moved
-        int fromX = row;
-        int fromY = col;
-
-        // now find and set the new location of the where the piece will be moved to
-        int toX = 0;
-        int toY = 0;
-
-        int picker = gen.nextInt(4) + 1; // pick between 1 - 4
-
-        switch (picker) { // one single move
-            case 1: // move down one
-                toX = row + 1;
-                toY = col;
-                break;
-            case 2: //move to the right one
-                toX = row;
-                toY = col + 1;
-            case 3: // move to the left one
-                toX = row;
-                toY = col - 1;
-            case 4: // move up one
-                toX = row - 1;
-                toY = col;
-            default:
-                break;
-        }
-
-        return new StrategoMoveAction(this, fromX, fromY, toX, toY);
+        return null;
     }
 
+
+    public boolean checkSurrounding(Piece[][] board, int fromX, int fromY, String toWhere) {
+
+        if (toWhere.equalsIgnoreCase("Below")) {
+            if (board[fromX + 1][fromY] == null) { // if spot below is empty
+                return true;
+            }
+        } else if (toWhere.equalsIgnoreCase("Right")) {
+            if (board[fromX][fromY + 1] == null) { // if spot right is empty
+                return true;
+            }
+        } else if (toWhere.equalsIgnoreCase("Left")) {
+            if (board[fromX][fromY - 1] == null) { // if spot to left is empty
+                return true;
+            }
+
+        } else if (toWhere.equalsIgnoreCase("Above")) {
+            if (board[fromX - 1][fromY] == null) { // if spot above is empty
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

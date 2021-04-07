@@ -106,8 +106,9 @@ public class StrategoLocalGame extends LocalGame {
             return true;
 
         }else if(action instanceof StrategoMoveAction){
-            StrategoMoveAction toUse = (StrategoMoveAction) action;
-           boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+            //StrategoMoveAction toUse = (StrategoMoveAction) action;
+           //boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+            ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
@@ -117,7 +118,8 @@ public class StrategoLocalGame extends LocalGame {
                 //it also check if all the pieces have been captured, or did we do that in the
                 //action method?
             }
-            return worked;
+            return true;
+            //return worked;
 
         }else if(action instanceof StrategoUndoTurnAction){
             super.state = ((StrategoGameState)state).getBackup();
@@ -125,12 +127,11 @@ public class StrategoLocalGame extends LocalGame {
         }else if(action instanceof StrategoBackupAction){
             ((StrategoGameState)state).saveBackup();
             return true;
+
         }else if (action instanceof StrategoPlaceAction) {
-//            ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
-            ((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
+            ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
+            //((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
             return true;
-        } else if (action instanceof StrategoMoveAction){
-            ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
         }
             return false;
 
