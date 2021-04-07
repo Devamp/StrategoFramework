@@ -149,6 +149,28 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         toUse = new StrategoGameState((StrategoGameState) info);
 
         myPhase = toUse.getPhase();
+        if(myPhase == 0){
+            boolean blueP = true;
+            boolean redP = true;
+
+            for(int i = 0; i < 12; i++){
+                    if(toUse.getBlueCharacter()[i] != 0){
+                        blueP = false;
+
+                    }
+                    if(toUse.getRedCharacter()[i] != 0){
+                        redP = false;
+
+                    }
+                }
+                if(humanPlayerID == 1 && blueP){
+                    endTurn.setVisibility(View.VISIBLE);
+                }
+                else if(humanPlayerID == 0 && redP){
+                    endTurn.setVisibility(View.VISIBLE);
+                }
+
+        }
 
 //        setTurnColor(t)
 
@@ -288,6 +310,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }else if(v.getId() == R.id.endTurnButton){
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
+                endTurn.setVisibility(View.INVISIBLE);
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
                 game.sendAction(new StrategoUndoTurnAction(this));
