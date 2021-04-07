@@ -1,6 +1,7 @@
 package com.example.strategotest.Stratego.infoMessages;
 
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.Piece;
 
 import org.junit.Test;
 
@@ -63,8 +64,6 @@ public class StrategoGameStateTest {
 
     @Test
     public void action() {
-
-
     }
 
     @Test
@@ -73,6 +72,7 @@ public class StrategoGameStateTest {
 
     @Test
     public void testToString() {
+
     }
 
     @Test
