@@ -1,5 +1,6 @@
 package com.example.strategotest.game.GameFramework;
 
+import com.example.strategotest.R;
 import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.game.GameFramework.actionMessage.GameOverAckAction;
@@ -20,6 +21,7 @@ import com.example.strategotest.game.GameFramework.utilities.Logger;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.TextView;
 
 import com.example.strategotest.game.GameFramework.utilities.Tickable;
 
@@ -65,6 +67,9 @@ public abstract class LocalGame implements Game, Tickable {
     private int playerFinishedCount = 0; // number of player who have so acknowledged
 
     // this game's timer and timer action
+    private static final long START_TIME_IN_MILLIS = 6000;
+    TextView timerText;
+    boolean hasTimerStarted = true;
     private GameTimer myTimer = new GameTimer(this);
 
     // the game's state

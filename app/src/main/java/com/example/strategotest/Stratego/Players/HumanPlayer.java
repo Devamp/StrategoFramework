@@ -27,6 +27,9 @@ import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
 import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * @author Gareth Rice
  *
@@ -59,7 +62,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //this will be invisible until Beta
     private Button undoMove = null;
 
-    private TextView time = null;
+    private TextView timerText = null;
+    private Timer timer;
+    TimerTask timerTask;
+    Double time = 0.0;
     private ImageView whoseTurn = null;
 
     private ImageButton[][] boardButtons = new ImageButton[10][10];
@@ -184,7 +190,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         undoTurn.setVisibility(View.INVISIBLE);
 
         //get timer view
-        time = (TextView) activity.findViewById(R.id.timerTextView);
+        timerText = (TextView) activity.findViewById(R.id.timerTextView);
+        timer = new Timer();
+        startTimer();
 
         whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
 
@@ -253,5 +261,42 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
 
+    }
+
+    private void startTimer()
+    {
+        timerTask = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        time++;
+                        timerText.setText(getTimerText());
+                    }
+                });
+            }
+
+        };
+        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+    }
+
+    private String getTimerText() {
+        int rounded = (int) Math.round(time);
+
+        int seconds = ((rounded % 86400) % 3600) % 60;
+        int minutes = ((rounded % 86400) % 3600) / 60;
+        int hours = ((rounded % 86400) / 3600);
+
+
+        return formatTime(seconds, minutes, hours);
+    }
+
+    private String formatTime(int seconds, int minutes, int hours) {
+        return "TIME: " + String.format("%02d", hours) + " : " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
     }
 }
