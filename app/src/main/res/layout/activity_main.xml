@@ -1241,13 +1241,13 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/captureFLayout"
+                            android:id="@+id/captureFlagLayout"
                             android:layout_width="match_parent"
                             android:layout_height="49sp"
                             android:orientation="horizontal">
 
                             <ImageButton
-                                android:id="@+id/imageButton12"
+                                android:id="@+id/flagTracker"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="50sp"
@@ -1257,6 +1257,32 @@
 
                             <TextView
                                 android:id="@+id/flagMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/mult_zero"
+                                android:textSize="36sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/capture11Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/spyTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                android:src="@drawable/spy" />
+
+                            <TextView
+                                android:id="@+id/spyMult"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

@@ -126,8 +126,8 @@ public class StrategoLocalGame extends LocalGame {
             ((StrategoGameState)state).saveBackup();
             return true;
         }else if (action instanceof StrategoPlaceAction) {
-            ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
-
+//            ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
+            ((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
             return true;
         } else if (action instanceof StrategoMoveAction){
             ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
