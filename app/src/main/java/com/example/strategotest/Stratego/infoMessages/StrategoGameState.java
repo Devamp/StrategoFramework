@@ -247,12 +247,16 @@ public class StrategoGameState extends GameState {
      */
     public boolean instancePieces(int player){
         ArrayList<Piece> assign;
-        int[] numberPieces;
+        int[] numberPieces = new int[12];
         String name;
+
+        for(int i = 0; i < numberPieces.length; i++){
+            numberPieces[i] = redCharacter[i];
+        }
 
         if(player == 0){
             assign = redBench;
-            numberPieces = redCharacter;
+//            numberPieces = redCharacter;
         }else{
             assign = blueBench;
             numberPieces = blueCharacter;
@@ -524,16 +528,37 @@ public class StrategoGameState extends GameState {
                 redCharacter[value]--;
 
                 //then, using the instanced pieces, we need to actually place the piece on the baord
-                board[row][col] = redBench.get(value);
+                int loop = 0;
+                //loop through instantiated pieces till we find the one with the right value
+                do{
+                    try{
+                        board[row][col] = redBench.get(loop);
+                    }catch(Exception ex){
+                        //will probably throw an out of bounds exception...
+                        return false;
+                    }
+                    loop++;
+                }while(board[row][col].getValue() != value);
+                redBench.remove(loop);
+                loop = 0;
+
             }else{
                 //dec blue
                 blueCharacter[value]--;
 
                 //use blueBench to assign blue piece to the board spot
-                board[row][col] = blueBench.get(value);
+                //then, using the instanced pieces, we need to actually place the piece on the baord
+                int loop = 0;
+                //loop through instantiated pieces till we find the one with the right value
+                do{
+                    try{
+                        board[row][col] = blueBench.get(loop);
+                    }catch(Exception ex){
+                        //will probably throw an out of bounds exception...
+                        return false;
+                    }
+                }while(board[row][col].getValue() != value);
             }
-
-
 
             return true;
         }else{
