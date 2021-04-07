@@ -380,13 +380,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 return 8;
 //                break;
             case R.id.scoutTracker:
-                return 8;
-//                break;
-            case R.id.bombTracker:
                 return 9;
 //                break;
-            case R.id.spyTracker:
+            case R.id.bombTracker:
                 return 10;
+//                break;
+            case R.id.spyTracker:
+                return 11;
 //                break;
             default:
                 return -1;
