@@ -1,5 +1,7 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import com.example.strategotest.R;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -24,10 +26,17 @@ public class StrategoGameStateTest {
 
     @Test
     public void setName() {
+        StrategoGameState s = new StrategoGameState();
+        assertEquals(s.setName(1),"Marshall");
+        assertEquals(s.setName(10),"Bomb");
     }
 
     @Test
     public void setIcon() {
+        StrategoGameState s = new StrategoGameState();
+        assertEquals(s.setIcon(1),R.drawable.marsh);
+        assertEquals(s.setIcon(10),R.drawable.bomb);
+
     }
 
     @Test
@@ -52,6 +61,8 @@ public class StrategoGameStateTest {
 
     @Test
     public void action() {
+
+
     }
 
     @Test
@@ -64,6 +75,9 @@ public class StrategoGameStateTest {
 
     @Test
     public void endTurn() {
+        StrategoGameState s = new StrategoGameState();
+        s.endTurn();
+        assertEquals(s.getTurn(),1);
     }
 
     @Test
