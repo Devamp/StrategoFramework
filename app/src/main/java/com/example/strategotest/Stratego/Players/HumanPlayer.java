@@ -143,8 +143,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 //        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
         toUse = new StrategoGameState((StrategoGameState) info);
 
-        //set reversion gameState
-//        revertState = new StrategoGameState((StrategoGameState) info); //this might not work?
+        myPhase = toUse.getPhase();
 
 //        setTurnColor(t)
 
@@ -338,7 +337,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         if(selectToPlace){
             toX = clickedRow;
             toY = clickedCol;
-            game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
+            if(placePieceVal != -1) {
+                game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
+            }
             selectToPlace = false;
         }else{
             //load the value of the piece we want to place. Will use given value to find correct

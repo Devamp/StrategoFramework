@@ -524,13 +524,15 @@ public class StrategoGameState extends GameState {
 
             //decrement the counter for number of pieces left
             if(myId == 0){
-                //dec red
-                redCharacter[value]--;
+
 
                 //then, using the instanced pieces, we need to actually place the piece on the baord
                 int loop = 0;
                 //loop through instantiated pieces till we find the one with the right value
                 do{
+                    if(redCharacter[value] <= 0){
+                        return false;
+                    }
                     try{
                         board[row][col] = redBench.get(loop);
                     }catch(Exception ex){
@@ -538,7 +540,11 @@ public class StrategoGameState extends GameState {
                         return false;
                     }
                     loop++;
-                }while(board[row][col].getValue() != value);
+                }while(board[row][col].getValue() != value && !redBench.isEmpty());
+
+                //dec red
+                redCharacter[value]--;
+
                 redBench.remove(loop);
                 loop = 0;
 
