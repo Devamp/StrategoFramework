@@ -78,6 +78,13 @@ public class StrategoGameStateTest {
 
     @Test
     public void action() {
+        StrategoGameState state = new StrategoGameState();
+        assertEquals(state.action(6,9,5,9), true);
+        assertEquals(state.action(5,9,4,8), false);
+        assertEquals(state.getBoard()[5][9].getValue(),5);
+        assertEquals(state.action(5,9,5,8), true);
+        assertEquals(state.action(5,8,5,7), false);
+
     }
 
     @Test
