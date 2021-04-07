@@ -43,7 +43,7 @@
                 android:text="@string/timer_value"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <Button
@@ -997,7 +997,7 @@
                         <LinearLayout
                             android:id="@+id/capture1Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1022,7 +1022,7 @@
                         <LinearLayout
                             android:id="@+id/captureTwoLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1047,7 +1047,7 @@
                         <LinearLayout
                             android:id="@+id/capture3Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1072,7 +1072,7 @@
                         <LinearLayout
                             android:id="@+id/capture4Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1097,7 +1097,7 @@
                         <LinearLayout
                             android:id="@+id/capture5Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1121,7 +1121,7 @@
                         <LinearLayout
                             android:id="@+id/capture6Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1145,7 +1145,7 @@
                         <LinearLayout
                             android:id="@+id/capture7Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1170,7 +1170,7 @@
                         <LinearLayout
                             android:id="@+id/capture8Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1195,7 +1195,7 @@
                         <LinearLayout
                             android:id="@+id/capture9Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1219,7 +1219,7 @@
                         <LinearLayout
                             android:id="@+id/captureBLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1243,7 +1243,7 @@
                         <LinearLayout
                             android:id="@+id/captureFLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="49sp"
+                            android:layout_height="45sp"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -1258,11 +1258,35 @@
                             <TextView
                                 android:id="@+id/flagMult"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:text="@string/mult_zero"
                                 android:textSize="36sp" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/captureSpyLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="45sp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/spyTracker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50sp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#FFFFFF"
+                                android:src="@drawable/spy" />
+
+                            <TextView
+                                android:id="@+id/spyMult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="x1"
+                                android:textSize="36sp" />
                         </LinearLayout>
 
                     </LinearLayout>
