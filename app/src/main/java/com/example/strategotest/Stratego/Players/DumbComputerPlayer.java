@@ -225,6 +225,10 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         return null;
     }
 
+    public int getPlayerID(){
+        return 1;
+    }
+
 
     public boolean checkSurrounding(Piece[][] board, int fromX, int fromY, String toWhere) {
 

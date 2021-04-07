@@ -3,6 +3,7 @@ package com.example.strategotest.Stratego.infoMessages;
 import android.widget.ImageButton;
 
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
 import com.example.strategotest.Stratego.Players.HumanPlayer;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
@@ -516,36 +517,36 @@ public class StrategoGameState extends GameState {
         if(player instanceof GameComputerPlayer){
             //place the computers piece
             //first, we need to decrement
-            return true;
+            myId = ((DumbComputerPlayer)player).getPlayerID();
         }else if(player instanceof HumanPlayer){
             //place the human players piece
-
             //first, we need to get a reference to the passed in player. Using their ID decrement
             //either red (0) or blue (1)
             myId = ((HumanPlayer)player).getHumanPlayerID();
 
-            //decrement the counter for number of pieces left
-            if(myId == 0){
-                //check to make sure the row and column is in correct territory
-                if(row < 6){
-                    //red must place in rows 6-9
-                    return false;
-                }else{
-                    return checkPlace(myId, value, row, col);
-                }
-
-            }else{
-                if(row > 3){
-                    //blue must place in rows 0-3
-                    return false;
-                }else {
-                    return checkPlace(myId, value, row, col);
-                }
-            }
-
         }else{
             return false;
         }
+
+        //decrement the counter for number of pieces left
+        if(myId == 0){
+            //check to make sure the row and column is in correct territory
+            if(row < 6){
+                //red must place in rows 6-9
+                return false;
+            }else{
+                return checkPlace(myId, value, row, col);
+            }
+
+        }else{
+            if(row > 3){
+                //blue must place in rows 0-3
+                return false;
+            }else {
+                return checkPlace(myId, value, row, col);
+            }
+        }
+
     }
 
     public boolean checkPlace(int id, int value, int row, int col) {
