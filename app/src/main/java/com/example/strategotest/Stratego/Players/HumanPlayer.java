@@ -121,10 +121,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     @Override
     public void receiveInfo(GameInfo info) {
-
         if(!(info instanceof StrategoGameState)){
             int myColor = Color.rgb(255, 0, 0);
-            flash(myColor, 1000);
+            flash(myColor, 10000);
             return;
         }
 
@@ -157,7 +156,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }else{
             //backup the current board so we can revert to it if we want to undo
 //            toUse.saveBackup();
-
             game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
             endTurn.setVisibility(View.INVISIBLE);
             undoTurn.setVisibility(View.INVISIBLE);

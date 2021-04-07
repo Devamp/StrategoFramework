@@ -26,12 +26,14 @@ import java.util.ArrayList;
  */
 
 public class StrategoGameState extends GameState {
+
     //Number of characters of each color
     //0 - spy, 10 - bomb, 11 - flag
     private int[] blueCharacter;
     private int[] redCharacter;
 
     private int[] filledRedCharacters = new int[12];
+
 
 
 
@@ -395,6 +397,7 @@ public class StrategoGameState extends GameState {
     public void  setInRedCharacter(int p, int v){
      redCharacter[p] = v;
     }
+
     /**
      * Change an individual element of the blue character array
      * @param p - piece #

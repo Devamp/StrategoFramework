@@ -100,15 +100,16 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
+
         if(action instanceof PassTurnAction){
 //            officialState.endTurn();
             ((StrategoGameState)state).endTurn();
             return true;
 
-        }else if(action instanceof StrategoMoveAction){
+        }
+        else if(action instanceof StrategoMoveAction){
             StrategoMoveAction toUse = (StrategoMoveAction) action;
            boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
-
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
             if(endGameString != null){
@@ -118,19 +119,23 @@ public class StrategoLocalGame extends LocalGame {
                 //action method?
             }
             return worked;
-
-        }else if(action instanceof StrategoUndoTurnAction){
+        }
+        else if(action instanceof StrategoUndoTurnAction){
             super.state = ((StrategoGameState)state).getBackup();
             return true;
-        }else if(action instanceof StrategoBackupAction){
+        }
+        else if(action instanceof StrategoBackupAction){
             ((StrategoGameState)state).saveBackup();
             return true;
-        }else if (action instanceof StrategoPlaceAction) {
+        }
+        else if (action instanceof StrategoPlaceAction) {
             ((StrategoGameState)state).placeRemoveComputer(((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
 
             return true;
         }
             return false;
+
+
 
     }
 }

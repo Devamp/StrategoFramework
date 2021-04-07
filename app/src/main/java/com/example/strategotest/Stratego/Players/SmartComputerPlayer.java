@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class SmartComputerPlayer extends GameComputerPlayer {
     private boolean placed[][] = new boolean[10][10];
+    private int pieces[][] = new int[10][10];
 
     /**
      * constructor
@@ -44,6 +45,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                 /**
                  * flag placement here
                  */
+
 
 
             //Place other pieces
