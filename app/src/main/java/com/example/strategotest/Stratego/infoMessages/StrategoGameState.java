@@ -524,52 +524,71 @@ public class StrategoGameState extends GameState {
 
             //decrement the counter for number of pieces left
             if(myId == 0){
-
-
-                //then, using the instanced pieces, we need to actually place the piece on the baord
-                int loop = 0;
-                //loop through instantiated pieces till we find the one with the right value
-                do{
-                    if(redCharacter[value] <= 0){
-                        return false;
-                    }
-                    try{
-                        board[row][col] = redBench.get(loop);
-                    }catch(Exception ex){
-                        //will probably throw an out of bounds exception...
-                        return false;
-                    }
-                    loop++;
-                }while(board[row][col].getValue() != value && !redBench.isEmpty());
-
-                //dec red
-                redCharacter[value]--;
-
-                redBench.remove(loop);
-                loop = 0;
+                //check to make sure the row and column is in correct territory
+                if(row < 6){
+                    //red must place in rows 6-9
+                    return false;
+                }else{
+                    return checkPlace(myId, value, row, col);
+                }
 
             }else{
-                //dec blue
-                blueCharacter[value]--;
-
-                //use blueBench to assign blue piece to the board spot
-                //then, using the instanced pieces, we need to actually place the piece on the baord
-                int loop = 0;
-                //loop through instantiated pieces till we find the one with the right value
-                do{
-                    try{
-                        board[row][col] = blueBench.get(loop);
-                    }catch(Exception ex){
-                        //will probably throw an out of bounds exception...
-                        return false;
-                    }
-                }while(board[row][col].getValue() != value);
+                if(row > 3){
+                    //blue must place in rows 0-3
+                    return false;
+                }else {
+                    return checkPlace(myId, value, row, col);
+                }
             }
 
-            return true;
         }else{
             return false;
         }
+    }
+
+    public boolean checkPlace(int id, int value, int row, int col){
+        //if the id is 0, we are red, and need to stick on reds side
+        int[] numTroops;
+        ArrayList<Piece> toUsePieces;
+
+        if(id == 0){
+            numTroops = redCharacter;
+            toUsePieces = redBench;
+        }else{
+            numTroops = blueCharacter;
+            toUsePieces = blueBench;
+        }
+
+
+        //then, using the instanced pieces, we need to actually place the piece on the baord
+        int loop = 0;
+        //loop through instantiated pieces till we find the one with the right value
+        do{
+            if(numTroops[value] <= 0){
+                return false;
+            }
+            try{
+                if(board[row][col] != null){
+                    //re increase the number of troops
+                    numTroops[board[row][col].getValue()]++;
+                    Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer());
+                    toUsePieces.add(returnToBin);
+                }
+                board[row][col] = toUsePieces.get(loop);
+            }catch(Exception ex){
+                //will probably throw an out of bounds exception...
+                return false;
+            }
+            loop++;
+        }while(board[row][col].getValue() != value && !(loop > toUsePieces.size()));
+
+        //dec
+        numTroops[value]--;
+
+        toUsePieces.remove(loop);
+        loop = 0;
+
+        return true;
     }
 
     /**
