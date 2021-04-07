@@ -548,15 +548,15 @@ public class StrategoGameState extends GameState {
         }
     }
 
-    public boolean checkPlace(int id, int value, int row, int col){
+    public boolean checkPlace(int id, int value, int row, int col) {
         //if the id is 0, we are red, and need to stick on reds side
         int[] numTroops;
         ArrayList<Piece> toUsePieces;
 
-        if(id == 0){
+        if (id == 0) {
             numTroops = redCharacter;
             toUsePieces = redBench;
-        }else{
+        } else {
             numTroops = blueCharacter;
             toUsePieces = blueBench;
         }
@@ -565,24 +565,30 @@ public class StrategoGameState extends GameState {
         //then, using the instanced pieces, we need to actually place the piece on the baord
         int loop = 0;
         //loop through instantiated pieces till we find the one with the right value
-        do{
-            if(numTroops[value] <= 0){
+        do {
+            if (numTroops[value] <= 0) {
                 return false;
             }
-            try{
-                if(board[row][col] != null){
-                    //re increase the number of troops
-                    numTroops[board[row][col].getValue()]++;
-                    Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer());
-                    toUsePieces.add(returnToBin);
+//            try {
+                if (toUsePieces.get(loop).getValue() == value) {
+                    if (board[row][col] != null) {
+                        //re increase the number of troops
+                        numTroops[board[row][col].getValue()]++;
+                        Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer());
+                        toUsePieces.add(returnToBin);
+
+                    }
+                    board[row][col] = toUsePieces.get(loop);
+                    break;
                 }
-                board[row][col] = toUsePieces.get(loop);
-            }catch(Exception ex){
-                //will probably throw an out of bounds exception...
-                return false;
-            }
+//            } catch (Exception ex) {
+//                //will probably throw an out of bounds exception...
+//                //but I just fixed that in the while loop itself...
+//                return false;
+//            }
             loop++;
-        }while(board[row][col].getValue() != value && !(loop > toUsePieces.size()));
+        //} while (board[row][col].getValue() != value && !(loop > toUsePieces.size()));
+        }while(!(loop > toUsePieces.size()));
 
         //dec
         numTroops[value]--;
