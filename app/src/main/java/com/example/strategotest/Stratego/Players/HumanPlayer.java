@@ -62,6 +62,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //this will be invisible until Beta
     private Button undoMove = null;
 
+    // initialize the variables needed for the game Timer
     private TextView timerText = null;
     private Timer timer;
     TimerTask timerTask;
@@ -315,8 +316,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     /**
      * Properly formats the time so it would return TIME: minutes : seconds
      *
-     * @param seconds
-     * @param minutes
+     * @param seconds the number of seconds that have passed
+     * @param minutes the number of minutes that have passed
      * @return "TIME: " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds)
      */
     private String formatTime(int seconds, int minutes) {
