@@ -251,16 +251,19 @@ public class StrategoGameState extends GameState {
         int[] numberPieces = new int[12];
         String name;
 
-        for(int i = 0; i < numberPieces.length; i++){
-            numberPieces[i] = redCharacter[i];
-        }
+
 
         if(player == 0){
             assign = redBench;
 //            numberPieces = redCharacter;
+            for(int i = 0; i < numberPieces.length; i++){
+                numberPieces[i] = redCharacter[i];
+            }
         }else{
             assign = blueBench;
-            numberPieces = blueCharacter;
+            for(int i = 0; i < numberPieces.length; i++){
+                numberPieces[i] = blueCharacter[i];
+            }
         }
 
         //iterate over the 12 types of pieces
