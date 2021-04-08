@@ -832,6 +832,10 @@ public class StrategoGameState extends GameState {
     }
 
     public boolean endTurn() {
+        if(phase == 0 && this.turn == 1){
+            phase = 1;
+        }
+
         boolean isTrue = false;
         // Player 1 (represented by 0) ended turn
 //         if (gameState.turn == 0) {
