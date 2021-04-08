@@ -36,9 +36,6 @@ public class StrategoGameState extends GameState {
 
     private int[] filledRedCharacters = new int[12];
 
-
-
-
     //turn indicator // red = 0, blue = 1
     private int turn;
     //Board: -1 = empty space, -2 = impassable space (lake), -3 = invisible character (other army)
