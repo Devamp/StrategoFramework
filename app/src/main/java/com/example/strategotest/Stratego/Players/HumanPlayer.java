@@ -68,6 +68,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //this will be invisible until Beta
     private Button undoMove = null;
 
+    // initialize the variables needed for the game Timer
     private TextView timerText = null;
     private Timer timer;
     TimerTask timerTask;
@@ -138,10 +139,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     @Override
     public void receiveInfo(GameInfo info) {
-
         if(!(info instanceof StrategoGameState)){
             int myColor = Color.rgb(255, 0, 0);
-            flash(myColor, 1000);
+            flash(myColor, 10000);
             return;
         }
 
@@ -150,6 +150,27 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         toUse = new StrategoGameState((StrategoGameState) info);
 
         myPhase = toUse.getPhase();
+
+        if(myPhase == 0){
+            boolean blueP = true;
+            boolean redP = true;
+            for(int i = 0; i < 12; i++){
+                    if(toUse.getBlueCharacter()[i] != 0){
+                        blueP = false;
+
+                    }
+                    if(toUse.getRedCharacter()[i] != 0){
+                        redP = false;
+
+                    }
+                }
+                if(humanPlayerID == 1 && blueP){
+                    endTurn.setVisibility(View.VISIBLE);
+                }
+                else if(humanPlayerID == 0 && redP){
+                    endTurn.setVisibility(View.VISIBLE);
+                }
+        }
 
 //        setTurnColor(t)
 
@@ -167,16 +188,17 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         toUse.showBoard(boardButtons);
 
         //if the player has made a move, undoTurn and endTurn become available
-        if(hasMoved){
-            endTurn.setVisibility(View.VISIBLE);
-            undoTurn.setVisibility(View.VISIBLE);
-        }else{
-            //backup the current board so we can revert to it if we want to undo
+        if(myPhase != 0) {
+            if (hasMoved) {
+                endTurn.setVisibility(View.VISIBLE);
+                undoTurn.setVisibility(View.VISIBLE);
+            } else {
+                //backup the current board so we can revert to it if we want to undo
 //            toUse.saveBackup();
-
-            game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
-            endTurn.setVisibility(View.INVISIBLE);
-            undoTurn.setVisibility(View.INVISIBLE);
+                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+                endTurn.setVisibility(View.INVISIBLE);
+                undoTurn.setVisibility(View.INVISIBLE);
+            }
         }
 
         int[] troopNumbers;
@@ -290,6 +312,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }else if(v.getId() == R.id.endTurnButton){
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
+                endTurn.setVisibility(View.INVISIBLE);
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
                 game.sendAction(new StrategoUndoTurnAction(this));
@@ -457,8 +480,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     /**
      * Properly formats the time so it would return TIME: minutes : seconds
      *
-     * @param seconds
-     * @param minutes
+     * @param seconds the number of seconds that have passed
+     * @param minutes the number of minutes that have passed
      * @return "TIME: " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds)
      */
     private String formatTime(int seconds, int minutes) {

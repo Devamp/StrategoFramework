@@ -94,7 +94,6 @@ public class StrategoLocalGame extends LocalGame {
                 return("Red wins!");
             }
         }
-
         return null;
     }
 
@@ -133,6 +132,8 @@ public class StrategoLocalGame extends LocalGame {
             return true;
         }
             return false;
+
+
 
     }
 }
