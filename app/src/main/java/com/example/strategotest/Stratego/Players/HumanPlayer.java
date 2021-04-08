@@ -150,10 +150,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         toUse = new StrategoGameState((StrategoGameState) info);
 
         myPhase = toUse.getPhase();
+
         if(myPhase == 0){
             boolean blueP = true;
             boolean redP = true;
-
             for(int i = 0; i < 12; i++){
                     if(toUse.getBlueCharacter()[i] != 0){
                         blueP = false;
@@ -170,7 +170,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 else if(humanPlayerID == 0 && redP){
                     endTurn.setVisibility(View.VISIBLE);
                 }
-
         }
 
 //        setTurnColor(t)
@@ -189,15 +188,17 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         toUse.showBoard(boardButtons);
 
         //if the player has made a move, undoTurn and endTurn become available
-        if(hasMoved){
-            endTurn.setVisibility(View.VISIBLE);
-            undoTurn.setVisibility(View.VISIBLE);
-        }else{
-            //backup the current board so we can revert to it if we want to undo
+        if(myPhase != 0) {
+            if (hasMoved) {
+                endTurn.setVisibility(View.VISIBLE);
+                undoTurn.setVisibility(View.VISIBLE);
+            } else {
+                //backup the current board so we can revert to it if we want to undo
 //            toUse.saveBackup();
-            game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
-            endTurn.setVisibility(View.INVISIBLE);
-            undoTurn.setVisibility(View.INVISIBLE);
+                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+                endTurn.setVisibility(View.INVISIBLE);
+                undoTurn.setVisibility(View.INVISIBLE);
+            }
         }
 
         int[] troopNumbers;
