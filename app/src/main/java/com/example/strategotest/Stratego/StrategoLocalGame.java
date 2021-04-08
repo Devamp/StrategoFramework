@@ -75,7 +75,7 @@ public class StrategoLocalGame extends LocalGame {
             boolean blueL = true;
             //Loop through all the movable pieces
            for(int i = 0; i < 12; i++){
-               if(i > 0 && i <10 || i == 11){
+               if(i > 0 && i < 10 || i == 11){
                    if(((StrategoGameState)state).getBlueCharacter()[i] != 0){
                        blueL = false;
 

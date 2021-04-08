@@ -53,7 +53,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         } else {
 
-            // make sure we are in placement phas
+            // make sure we are in placement phase
             if (gameState.getPhase() == 0) {
 
                 for (int piece = 0; piece < 12; piece++) { // loop through each of the 12 types of pieces
@@ -67,6 +67,8 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             } else if (gameState.getPhase() == 1) { // we are in play phase
                 StrategoMoveAction move = new StrategoMoveAction(this,6,0,5,0);
                 game.sendAction(move);
+
+                game.sendAction(pass);
             }
 
         }
@@ -226,7 +228,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     }
 
     public int getPlayerID(){
-        return 1;
+        return playerNum;
     }
 
 
