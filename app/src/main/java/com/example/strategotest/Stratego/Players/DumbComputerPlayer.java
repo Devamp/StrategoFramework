@@ -226,7 +226,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     }
 
     public int getPlayerID(){
-        return 1;
+        return playerNum;
     }
 
 

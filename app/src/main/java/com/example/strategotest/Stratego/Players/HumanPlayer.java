@@ -145,6 +145,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             return;
         }
 
+        humanPlayerID = playerNum;
+
         //get working gameState
 //        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
         toUse = new StrategoGameState((StrategoGameState) info);
