@@ -17,21 +17,22 @@ public class StrategoLocalGame extends LocalGame {
     StrategoGameState officialState;
 
 
+
     /**
      * Constructor for the StrategoLocalGame
+     *
      */
-    public StrategoLocalGame() {
-        super();
-        super.state = new StrategoGameState();
+    public StrategoLocalGame(){
+    super();
+    super.state = new StrategoGameState();
 
     }
 
     /**
      * Constructor for the StrategoLocalGame with loaded StrategoGameState
-     *
      * @param stState
      */
-    public StrategoLocalGame(StrategoGameState stState) {
+    public StrategoLocalGame(StrategoGameState stState){
         super();
         super.state = new StrategoGameState(stState);
         officialState = new StrategoGameState(stState);
@@ -43,7 +44,8 @@ public class StrategoLocalGame extends LocalGame {
      * this method should remove any information from the game that the player is not
      * allowed to know.
      *
-     * @param p the player to notify
+     * @param p
+     * 			the player to notify
      */
 
     @Override
@@ -53,7 +55,7 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return playerIdx == ((StrategoGameState) state).getTurn();
+        return playerIdx == ((StrategoGameState)state).getTurn();
     }
 
     @Override
@@ -72,24 +74,24 @@ public class StrategoLocalGame extends LocalGame {
             boolean redL = true;
             boolean blueL = true;
             //Loop through all the movable pieces
-            for (int i = 0; i < 12; i++) {
-                if (i > 0 && i < 10 || i == 11) {
-                    if (((StrategoGameState) state).getBlueCharacter()[i] != 0) {
-                        blueL = false;
+           for(int i = 0; i < 12; i++){
+               if(i > 0 && i <10 || i == 11){
+                   if(((StrategoGameState)state).getBlueCharacter()[i] != ((StrategoGameState)state).getFilledRedCharacters()[i]){
+                       blueL = false;
 
-                    }
-                    if (((StrategoGameState) state).getRedCharacter()[i] != 0) {
-                        redL = false;
+                   }
+                   if(((StrategoGameState)state).getRedCharacter()[i] != ((StrategoGameState)state).getFilledRedCharacters()[i]){
+                       redL = false;
 
-                    }
-                }
+                   }
+               }
+           }
+           //Return the result
+            if(redL){
+                return("Blue wins!");
             }
-            //Return the result
-            if (redL) {
-                return ("Blue wins!");
-            }
-            if (blueL) {
-                return ("Red wins!");
+            if(blueL){
+                return("Red wins!");
             }
         }
         return null;
@@ -97,19 +99,19 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
-        if (action instanceof PassTurnAction) {
+        if(action instanceof PassTurnAction){
 //            officialState.endTurn();
-            ((StrategoGameState) state).endTurn();
+            ((StrategoGameState)state).endTurn();
             return true;
 
-        } else if (action instanceof StrategoMoveAction) {
+        }else if(action instanceof StrategoMoveAction){
             //StrategoMoveAction toUse = (StrategoMoveAction) action;
-            //boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
-            ((StrategoGameState) state).action(((StrategoMoveAction) action).getFromX(), ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(), ((StrategoMoveAction) action).getToY());
+           //boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+            ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
-            if (endGameString != null) {
+            if(endGameString != null){
                 //need to somehow see if game is over. Maybe put the checkIfGameOver method in the
                 //human player class and pass in StrategoGameState toUse as an argument. Should
                 //it also check if all the pieces have been captured, or did we do that in the
@@ -118,18 +120,19 @@ public class StrategoLocalGame extends LocalGame {
             return true;
             //return worked;
 
-        } else if (action instanceof StrategoUndoTurnAction) {
-            super.state = ((StrategoGameState) state).getBackup();
+        }else if(action instanceof StrategoUndoTurnAction){
+            super.state = ((StrategoGameState)state).getBackup();
             return true;
-        } else if (action instanceof StrategoBackupAction) {
-            ((StrategoGameState) state).saveBackup();
+        }else if(action instanceof StrategoBackupAction){
+            ((StrategoGameState)state).saveBackup();
             return true;
 
-        } else if (action instanceof StrategoPlaceAction) {
-            ((StrategoGameState) state).placeChosenPiece(((StrategoPlaceAction) action).getPlayer(), ((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol());
+        }else if (action instanceof StrategoPlaceAction) {
+            ((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
             return true;
         }
-        return false;
+            return false;
+
 
 
     }
