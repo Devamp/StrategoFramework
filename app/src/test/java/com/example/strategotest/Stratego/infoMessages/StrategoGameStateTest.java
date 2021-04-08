@@ -30,7 +30,6 @@ public class StrategoGameStateTest {
 
         assertNotEquals(backUp, gameStateNewCopy);
 
-
     }
 
     @Test

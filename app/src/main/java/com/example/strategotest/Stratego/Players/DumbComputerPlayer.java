@@ -1,5 +1,4 @@
 /**
- *
  * DumbComputerPlayer -
  *
  * @Author Devam Patel
@@ -10,6 +9,7 @@ package com.example.strategotest.Stratego.Players;
 import android.view.inputmethod.CorrectionInfo;
 
 import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -46,72 +46,71 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     protected void receiveInfo(GameInfo info) {
 
         StrategoGameState gameState = new StrategoGameState((StrategoGameState) info);
+        PassTurnAction pass = new PassTurnAction(this);
 
         if (gameState.getTurn() != playerNum) { //not the computer's turn
             return;
 
         } else {
 
-            // make sure we are in placement phase
+            // make sure we are in placement phas
             if (gameState.getPhase() == 0) {
 
-                for(int piece = 0; piece < 12; piece++){ // loop through each of the 12 types of pieces
-                    for(int numberOfPieces = 0; numberOfPieces < gameState.getFilledRedCharacters()[piece]; numberOfPieces++){ // loop to max number of each single piece (Ex. 6 times for 6 bombs)
+                for (int piece = 0; piece < 12; piece++) { // loop through each of the 12 types of pieces
+                    for (int numberOfPieces = 0; numberOfPieces < gameState.getFilledRedCharacters()[piece]; numberOfPieces++) { // loop to max number of each single piece (Ex. 6 times for 6 bombs)
                         game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
                     }
                 }
 
-                gameState.setPhase(1); // after placement, update the game phase to play phase
-
+                game.sendAction(pass); // end turn
 
             } else if (gameState.getPhase() == 1) { // we are in play phase
-
-
+                StrategoMoveAction move = new StrategoMoveAction(this,6,0,5,0);
+                game.sendAction(move);
             }
 
         }
     }
 
     /**
-     *
      * getPlaceAction - this is a helper method which helps the computer place its pieces randomly on their side of the board
      *
      * @param playerID - player id of the computer
-     * @param value - rank of the piece to be placed
+     * @param value    - rank of the piece to be placed
      * @return - returns the place action that will be sent to the game
      */
-    public StrategoPlaceAction getPlaceAction(int playerID, int value){
+    public StrategoPlaceAction getPlaceAction(int playerID, int value) {
         Random gen = new Random(); // random generator to help with randomize row and column values
 
         int row = 0; // initially set to 0
 
-        if(playerID == 0) { //computer is on the bottom side of the board (Player 1)
-             row = gen.nextInt(10-6) + 6; // generate random row value between 6 - 9
-        } else if ( playerID == 1){ // computer is on the top side of the board (Player 2)
-             row = gen.nextInt(4); // generate random row value between 0 - 3
+        if (playerID == 0) { //computer is on the bottom side of the board (Player 1)
+            row = gen.nextInt(10 - 6) + 6; // generate random row value between 6 - 9
+        } else if (playerID == 1) { // computer is on the top side of the board (Player 2)
+            row = gen.nextInt(4); // generate random row value between 0 - 3
         }
 
         int col = gen.nextInt(10); // generate random col value between 0 - 9
 
         // verify that the generated row and column indices aren't already in use
-        if(usedIndices[row][col]){ // if same row or column values are found, generate new ones
+        if (usedIndices[row][col]) { // if same row or column values are found, generate new ones
 
             // save original row and column values
             int oldRow = row;
             int oldCol = col;
 
-            while(usedIndices[oldRow][oldCol]){ // loop until the loop is broken by finding an empty spot
+            while (usedIndices[oldRow][oldCol]) { // loop until the loop is broken by finding an empty spot
 
                 // generate new row and column values
-                if(playerID == 0) { //computer is on the bottom side of the board (Player 1)
-                    row = gen.nextInt(10-6) + 6; // generate random row value between 6 - 9
-                } else if ( playerID == 1){ // computer is on the top side of the board (Player 2)
+                if (playerID == 0) { //computer is on the bottom side of the board (Player 1)
+                    row = gen.nextInt(10 - 6) + 6; // generate random row value between 6 - 9
+                } else if (playerID == 1) { // computer is on the top side of the board (Player 2)
                     row = gen.nextInt(4); // generate random row value between 0 - 3
                 }
 
                 col = gen.nextInt(10);
 
-                if(!usedIndices[row][col]){ //if empty spot is found, break the loop!
+                if (!usedIndices[row][col]) { //if empty spot is found, break the loop!
                     break;
 
                 } else { // otherwise, update old variables and keep generating
@@ -126,61 +125,132 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
     }
 
-    /**
-     *
-     * @param playerID
-     * @return
-     */
-    public StrategoMoveAction getMoveAction(int playerID, StrategoGameState state){
+
+    public StrategoMoveAction getMoveAction(int playerID, StrategoGameState state) {
         Random gen = new Random();
         Piece[][] myBoard = state.getBoard();
 
 
         int row = 0; // initially set to 0
 
-        if(playerID == 0) { //computer is on the bottom side of the board (Player 1)
-            row = gen.nextInt(10-6) + 6; // generate random row value between 6 - 9
-        } else if ( playerID == 1){ // computer is on the top side of the board (Player 2)
+        if (playerID == 0) { //computer is on the bottom side of the board (Player 1)
+            row = gen.nextInt(10 - 6) + 6; // generate random row value between 6 - 9
+        } else if (playerID == 1) { // computer is on the top side of the board (Player 2)
             row = gen.nextInt(4); // generate random row value between 0 - 3
         }
 
         int col = gen.nextInt(10); // generate random col value between 0 - 9
 
-        if(myBoard[row][col] != null){ //if square is not empty
+        //store original values
+        int oldRow = row;
+        int oldCol = col;
 
-            // set original location of piece that will be moved
-            int fromX = row;
-            int fromY = col;
+        while (myBoard[oldRow][oldCol] == null) { // while the generated square is empty, loop until we find a non-empty square
 
-            int toX = 0;
-            int toY = 0;
+            if (playerID == 0) { // generate a new row depending on the player
+                row = gen.nextInt(10 - 6) + 6;
+            } else if (playerID == 1) {
+                row = gen.nextInt(4);
+            }
+            col = gen.nextInt(10); // generate a new col
 
-            int picker = gen.nextInt(4) + 1; // pick between 1 - 4
 
-            switch (picker) { // one single move
-                case 1: // move down one
-                     toX = row+1;
-                     toY = col;
-                    break;
-                case 2: //move to the right one
-                     toX = row;
-                     toY = col+1;
-                case 3: // move to the left one
-                    toX = row;
-                    toY = col-1;
-                case 4: // move up one
-                    toX = row-1;
-                    toY = col;
-                default:
-                    break;
+            if (myBoard[row][col] != null) { //if non-empty spot is found
+
+                int picker = gen.nextInt(4) + 1; // pick between 1 - 4 to decide on random move to one of four sides
+
+                // call helper method to see which side is open to move and return a move action
+                switch (picker) { // one single move
+                    case 1: // start with move down one
+                        if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row + 1, col);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 2: //start with move to the right one
+                        if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 3: //start with move to the left one
+                        if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    case 4: // move up one
+                        if (checkSurrounding(myBoard, row, col, "Above")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        } else if (checkSurrounding(myBoard, row, col, "Right")) {
+                            return new StrategoMoveAction(this, row, col, row, col + 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Left")) {
+                            return new StrategoMoveAction(this, row, col, row, col - 1);
+                        } else if (checkSurrounding(myBoard, row, col, "Below")) {
+                            return new StrategoMoveAction(this, row, col, row - 1, col);
+                        }
+                        break; // else break the loop
+
+                    default:
+                        break; // break the loop
+                }
+
+                //break // break while loop
+
+            } else { // otherwise, update old variables and keep looking
+                oldRow = row;
+                oldCol = col;
             }
 
-            return new StrategoMoveAction(this, fromX, fromY, toX,toY);
-        } else {
-            row = gen.nextInt(gen.nextInt(10-6) + 6);
         }
 
         return null;
     }
 
+    public int getPlayerID(){
+        return 1;
+    }
+
+
+    public boolean checkSurrounding(Piece[][] board, int fromX, int fromY, String toWhere) {
+
+        if (toWhere.equalsIgnoreCase("Below")) {
+            if (board[fromX + 1][fromY] == null) { // if spot below is empty
+                return true;
+            }
+        } else if (toWhere.equalsIgnoreCase("Right")) {
+            if (board[fromX][fromY + 1] == null) { // if spot right is empty
+                return true;
+            }
+        } else if (toWhere.equalsIgnoreCase("Left")) {
+            if (board[fromX][fromY - 1] == null) { // if spot to left is empty
+                return true;
+            }
+
+        } else if (toWhere.equalsIgnoreCase("Above")) {
+            if (board[fromX - 1][fromY] == null) { // if spot above is empty
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
