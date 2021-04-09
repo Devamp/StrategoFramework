@@ -75,9 +75,24 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
                     int fromX = gen.nextInt(10);
                     int fromY = gen.nextInt(10);
-                    int toX = gen.nextInt(10);
-                    int toY = gen.nextInt(10);
-
+                    int toX = fromX;
+                    int toY = fromY;
+                    switch(gen.nextInt(4)){
+                        case 0:
+                            toX++;
+                            break;
+                        case 1:
+                            toX--;
+                            break;
+                        case 2:
+                            fromY--;
+                            break;
+                        case 3:
+                            fromY++;
+                            break;
+                    }
+                    StrategoMoveAction move = new StrategoMoveAction(this, fromX, fromY, toX, toY);
+                    game.sendAction(move);
 
                 }
 
