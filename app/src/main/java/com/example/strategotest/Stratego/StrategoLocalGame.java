@@ -2,6 +2,7 @@ package com.example.strategotest.Stratego;
 
 import android.util.Log;
 
+import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
@@ -50,7 +51,7 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-        p.sendInfo(new StrategoGameState((StrategoGameState) state));
+            p.sendInfo(new StrategoGameState((StrategoGameState) state));
     }
 
     @Override
@@ -99,14 +100,17 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
+
+
         if(action instanceof PassTurnAction){
 //            officialState.endTurn();
             ((StrategoGameState)state).endTurn();
+
+
             return true;
 
         }else if(action instanceof StrategoMoveAction){
-            //StrategoMoveAction toUse = (StrategoMoveAction) action;
-           //boolean worked =  ((StrategoGameState)state).action(toUse.getFromX(), toUse.getFromY(), toUse.getToX(), toUse.getToY());
+
             ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
 
             //after move is made, see if flag has been captured
@@ -123,17 +127,17 @@ public class StrategoLocalGame extends LocalGame {
         }else if(action instanceof StrategoUndoTurnAction){
             super.state = ((StrategoGameState)state).getBackup();
             return true;
+
         }else if(action instanceof StrategoBackupAction){
             ((StrategoGameState)state).saveBackup();
             return true;
 
         }else if (action instanceof StrategoPlaceAction) {
             ((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
+
             return true;
         }
             return false;
-
-
 
     }
 }
