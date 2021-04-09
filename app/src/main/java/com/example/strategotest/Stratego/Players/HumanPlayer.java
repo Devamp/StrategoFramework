@@ -315,6 +315,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
                 endTurn.setVisibility(View.INVISIBLE);
+                hasMoved = false;
+                undoTurn.setVisibility(View.INVISIBLE);
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
                 game.sendAction(new StrategoUndoTurnAction(this));
