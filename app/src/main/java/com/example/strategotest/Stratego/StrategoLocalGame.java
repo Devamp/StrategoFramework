@@ -115,6 +115,10 @@ public class StrategoLocalGame extends LocalGame {
         } else if (action instanceof StrategoMoveAction) {
 
             if (gameState.action(((StrategoMoveAction) action).getFromX(), ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(), ((StrategoMoveAction) action).getToY())) {
+                DumbComputerPlayer p = new DumbComputerPlayer("test");
+                if(gameState.getTurn() ==  p.getPlayerID()){
+                    gameState.endTurn();
+                }
                 return true;
             }
 
