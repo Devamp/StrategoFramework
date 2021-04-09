@@ -197,7 +197,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             } else {
                 //backup the current board so we can revert to it if we want to undo
 //            toUse.saveBackup();
-                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+                //game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
                 endTurn.setVisibility(View.INVISIBLE);
                 undoTurn.setVisibility(View.INVISIBLE);
             }

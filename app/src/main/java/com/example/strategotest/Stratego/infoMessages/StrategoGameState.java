@@ -634,15 +634,17 @@ public class StrategoGameState extends GameState {
     public boolean action(int fromX, int fromY, int toX, int toY) {
         int whoseE = (turn + 1) % 2;
         boolean success = false;
+
+        if (board[fromX][fromY] == null) {
+            return false;
+        }
+
         //Make sure you can't move opponent piece
         if (board[fromX][fromY].getPlayer() != turn) {
             return false;
         }
         //Make sure you can't move lake
         if (board[fromX][fromY].getValue() < 0) {
-            return false;
-        }
-        if (board[fromX][fromY] == null) {
             return false;
         }
         //check to make sure movement is not greater than 1 and not diagonal

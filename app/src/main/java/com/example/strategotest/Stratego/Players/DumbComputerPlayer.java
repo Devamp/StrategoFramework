@@ -63,14 +63,12 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                             game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
                         }
                     }
-
-                    game.sendAction(getMoveAction(gameState));
-
+                    //game.sendAction(getMoveAction(gameState));
 
                 } else { // we are in play phase
 
                     StrategoMoveAction move = new StrategoMoveAction(this, 3, 0, 4, 0);
-                    game.sendAction(move);
+                    //game.sendAction(move);
 
                     game.sendAction(getMoveAction(gameState));
 
@@ -148,7 +146,6 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     public StrategoMoveAction getMoveAction(StrategoGameState state) {
         Random gen = new Random();
         Piece[][] myBoard = state.getBoard();
-
 
         int row = gen.nextInt(10); // generate random row value between 0 - 9
         int col = gen.nextInt(10); // generate random col value between 0 - 9
