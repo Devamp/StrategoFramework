@@ -1,14 +1,19 @@
 package com.example.strategotest.Stratego.Players;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
@@ -17,10 +22,13 @@ import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
+import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.GameOverInfo;
 import com.example.strategotest.game.GameFramework.infoMessage.IllegalMoveInfo;
+import com.example.strategotest.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.strategotest.game.GameFramework.players.GameHumanPlayer;
+import com.example.strategotest.game.GameFramework.utilities.MessageBox;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +55,9 @@ import java.util.TimerTask;
  * Placing piece works but is incredibly buggy. Can place negative amount of pieces,
  * can place over lakes and opponents pieces. Places the wrong pieces. Doesn't check
  * once we have placed all pieces. Many errors. But it works.
+ *
+ * Make textView on top of captured box to be place pieces in the place phase (instead of captured
+ * pieces)
  */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
@@ -147,65 +158,27 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         humanPlayerID = playerNum;
 
         //get working gameState
-//        StrategoGameState toUse = new StrategoGameState((StrategoGameState) info);
         toUse = new StrategoGameState((StrategoGameState) info);
 
         myPhase = toUse.getPhase();
 
-        if(myPhase == 0){
-            boolean blueP = true;
-            boolean redP = true;
-            for(int i = 0; i < 12; i++){
-                    if(toUse.getBlueCharacter()[i] != 0){
-                        blueP = false;
+        //see if the player has placed all their pieces. Make pass visible if so
+        allPiecesPlaced(myPhase);
 
-                    }
-                    if(toUse.getRedCharacter()[i] != 0){
-                        redP = false;
-
-                    }
-                }
-                if(humanPlayerID == 1 && blueP){
-                    endTurn.setVisibility(View.VISIBLE);
-                }
-                else if(humanPlayerID == 0 && redP){
-                    endTurn.setVisibility(View.VISIBLE);
-                }
-        }
-
-//        setTurnColor(t)
-
-        //set turn color to whatever players turn it is
-        if(toUse.getTurn() == 0){
-            //red players turn
-            whoseTurn.setImageResource(R.drawable.redsquare);
-        }else if(toUse.getTurn() == 1){
-            //blue player is turn 1
-            whoseTurn.setImageResource(R.drawable.bluetile);
-        }else{
-            whoseTurn.setImageResource(R.drawable.redsquare);
-        }
+        //When the turn is passed, display whose turn in the upper right corner
+        setTurnColor(toUse);
 
         toUse.showBoard(boardButtons);
+
+        //Set visibility of ranPlace button
         if(myPhase == 0){
             ranPlace.setVisibility(View.VISIBLE);
         }
         else{
             ranPlace.setVisibility(View.INVISIBLE);
         }
-        //if the player has made a move, undoTurn and endTurn become available
-        if(myPhase != 0) {
-            if (hasMoved) {
-                endTurn.setVisibility(View.VISIBLE);
-                undoTurn.setVisibility(View.VISIBLE);
-            } else {
-                //backup the current board so we can revert to it if we want to undo
-//            toUse.saveBackup();
-                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
-                endTurn.setVisibility(View.INVISIBLE);
-                undoTurn.setVisibility(View.INVISIBLE);
-            }
-        }
+
+        setEndUndoVisibility(myPhase);
 
         int[] troopNumbers;
         if(humanPlayerID == 0){
@@ -219,6 +192,74 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         for(int i = 0; i < piecesRemainLabel.length; i++){
             String multi = "x" + troopNumbers[i];
             piecesRemainLabel[i].setText(multi);
+        }
+    }
+
+    /**
+     * check if all the players pieces have been placed. If they have, make pass turn available
+     *
+     * @param myPhase
+     */
+    public void allPiecesPlaced(int myPhase){
+        //check to see if all the players pieces have been placed
+        if(myPhase == 0){
+            boolean blueP = true;
+            boolean redP = true;
+            for(int i = 0; i < 12; i++){
+                if(toUse.getBlueCharacter()[i] != 0){
+                    blueP = false;
+
+                }
+                if(toUse.getRedCharacter()[i] != 0){
+                    redP = false;
+
+                }
+            }
+            if(humanPlayerID == 1 && blueP){
+                endTurn.setVisibility(View.VISIBLE);
+            }
+            else if(humanPlayerID == 0 && redP){
+                endTurn.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    /**
+     * sets the visibility of the endTurn and undoTurn buttons when appropriate
+     *
+     * @param myPhase
+     */
+    public void setEndUndoVisibility(int myPhase){
+        //if the player has made a move, undoTurn and endTurn become available
+        if(myPhase != 0) {
+            if (hasMoved) {
+                endTurn.setVisibility(View.VISIBLE);
+                undoTurn.setVisibility(View.VISIBLE);
+            } else {
+                //backup the current board so we can revert to it if we want to undo
+                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+
+                endTurn.setVisibility(View.INVISIBLE);
+                undoTurn.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    /**
+     * setTurnColor makes the Turn indicator the appropriate color
+     *
+     * @param state
+     */
+    public void setTurnColor(StrategoGameState state){
+        //set turn color to whatever players turn it is
+        if(toUse.getTurn() == 0){
+            //red players turn
+            whoseTurn.setImageResource(R.drawable.redsquare);
+        }else if(toUse.getTurn() == 1){
+            //blue player is turn 1
+            whoseTurn.setImageResource(R.drawable.bluetile);
+        }else{
+            whoseTurn.setImageResource(R.drawable.redsquare);
         }
     }
 
@@ -303,6 +344,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     }
 
+    /**
+     * determines if a button was pressed, and calls appropriate method if imageButton or Button
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if(v instanceof Button){
@@ -312,6 +358,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
     }
 
+    /**
+     * If a normal button was clicked it sends appropriate action
+     *
+     * @param v
+     */
     public void buttonOnClick(View v){
             if(v.getId() == R.id.surrenderButton){
                 sendInfo(new GameOverInfo("Player has surrendered"));
@@ -330,6 +381,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     }
 
+    /**
+     * If an image button was clicked get clicked row and col. Then call move or place method
+     * depending on what we need
+     *
+     * @param v
+     */
     public void imageButtonOnClick(View v){
         int clickedRow = -1;
         int clickedCol = -1;
@@ -355,6 +412,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     }
 
+    /**
+     * if we have an image button moved, need to send appropriate move action
+     *
+     * @param v
+     * @param clickedRow
+     * @param clickedCol
+     */
     public void buttonClickMove(View v, int clickedRow, int clickedCol){
         if(selectedFirst){
             toX = clickedRow;
@@ -374,6 +438,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //use this variable to hold what piece is selected to place
     int placePieceVal = -1;
 
+    /**
+     * send place action when we have piece loaded in register
+     *
+     * @param v
+     * @param clickedRow
+     * @param clickedCol
+     */
     public void buttonClickPlace(View v, int clickedRow, int clickedCol){
         if(selectToPlace){
             toX = clickedRow;
@@ -390,6 +461,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
     }
 
+    /**
+     * return the value of button in the captured pieces bin for placing
+     *
+     * @param v
+     * @return
+     */
     private int getTheValue(View v){
         //seriously, what's the way to do this without the switch statement? Hash table?
         switch(v.getId()){
@@ -435,6 +512,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHumanPlayerID(){
         return humanPlayerID;
     }

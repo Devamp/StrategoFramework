@@ -25,7 +25,6 @@ import java.util.Random;
 public class DumbComputerPlayer extends GameComputerPlayer {
 
     private boolean[][] usedIndices = new boolean[10][10]; // 2D boolean array to help store used up indices
-//    private StrategoGameState gameState;
     StrategoGameState gameState = null;
 
     /**
@@ -53,65 +52,45 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         boolean shouldPass = true;
 
-            gameState = new StrategoGameState((StrategoGameState) info);
-            PassTurnAction pass = new PassTurnAction(this);
+        gameState = new StrategoGameState((StrategoGameState) info);
+        PassTurnAction pass = new PassTurnAction(this);
+        int[] temp;
 
-            if (gameState.getTurn() != playerNum) { //not the computer's turn
-                return;
+        if (gameState.getTurn() != playerNum) { //not the computer's turn
+            return;
 
-            } else {
+        } else {
 
-                // make sure we are in placement phase
-                if (gameState.getPhase() == 0) {
+            // make sure we are in placement phase
+            if (gameState.getPhase() == 0) {
 
-//                    for (int piece = 0; piece < 12; piece++) { // loop through each of the 12 types of pieces
-//                        for (int numberOfPieces = 0; numberOfPieces < gameState.getFilledRedCharacters()[piece]; numberOfPieces++) { // loop to max number of each single piece (Ex. 6 times for 6 bombs)
-//                            gameState.setBlueCharacterValue(piece, gameState.getBlueCharacter()[piece] - 1);
-                                                int piece;
-                    for(piece = 0; piece < 12; piece++){
-                        if (gameState.getBlueCharacter()[piece] != 0){
-                            game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
-                            if(piece != 11){
-                                shouldPass = false;
-                            }
+                int piece;
+                for (piece = 0; piece < 12; piece++) {
 
-                            break;
-                        }
+                    if(playerNum == 0){
+                        temp = gameState.getRedCharacter();
+                    } else {
+                        temp = gameState.getBlueCharacter();
                     }
 
+                    if (temp[piece] != 0) {
+                        game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
+                        if (piece != 11) {
+                            shouldPass = false;
+                        }
 
-//                        }
-//                    }
-
-//                    game.sendAction(getMoveAction(gameState));
-
-//                    for(int i = 0; i < 12; i++){
-//                        if(gameState.getBlueCharacter()[i] != 0 && i != 11){
-//                            shouldPass = false;
-//                            break;
-//                        }
-//                    }
-
-                } else { // we are in play phase
-
-//                    StrategoMoveAction move = new StrategoMoveAction(this, 3, 0, 4, 0);
-//                    game.sendAction(move);
-
-
-                    game.sendAction(getMoveAction(gameState));
-
+                        break;
+                    }
                 }
 
-
-
-                if(shouldPass){
-                    game.sendAction(pass); // end turn after an action
-                }
-
-
+            } else { // we are in play phase
+                game.sendAction(getMoveAction(gameState));
             }
-//        }
 
+            if (shouldPass) {
+                game.sendAction(pass); // end turn after an action
+            }
+        }
     }
 
     /**
@@ -250,7 +229,6 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     break; // break the loop
             }
 
-
             // the piece was not moveable, we must rerun the loop with new values and find another piece
             row = gen.nextInt(10);
             col = gen.nextInt(10);
@@ -277,9 +255,10 @@ public class DumbComputerPlayer extends GameComputerPlayer {
      * @param toWhere - string indication on which direction to move in
      * @return boolean depending on where the new location is moveable or not
      */
+
     public boolean checkSurrounding(Piece[][] board, int fromX, int fromY, String toWhere) {
 
-        if(board[fromX][fromY].getValue() == 10 || board[fromX][fromY].getValue() == 0){ // if bomb or flag - cannot move
+        if (board[fromX][fromY].getValue() == 10 || board[fromX][fromY].getValue() == 0) { // if bomb or flag - cannot move
             return false;
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
@@ -291,7 +270,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
-            if ( fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
+            if (fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
                 return true;
             }
 
