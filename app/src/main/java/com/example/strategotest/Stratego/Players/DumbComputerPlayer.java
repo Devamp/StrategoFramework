@@ -193,7 +193,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     if (checkSurrounding(myBoard, row, col, "Right")) {
                         return new StrategoMoveAction(this, row, col, row, col + 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row, col + 1);
+                        return new StrategoMoveAction(this, row, col, row+1, col);
                     } else if (checkSurrounding(myBoard, row, col, "Left")) {
                         return new StrategoMoveAction(this, row, col, row, col - 1);
                     } else if (checkSurrounding(myBoard, row, col, "Above")) {
@@ -207,7 +207,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     } else if (checkSurrounding(myBoard, row, col, "Right")) {
                         return new StrategoMoveAction(this, row, col, row, col + 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row, col - 1);
+                        return new StrategoMoveAction(this, row, col, row+1, col);
                     } else if (checkSurrounding(myBoard, row, col, "Above")) {
                         return new StrategoMoveAction(this, row, col, row - 1, col);
                     }
@@ -221,7 +221,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     } else if (checkSurrounding(myBoard, row, col, "Left")) {
                         return new StrategoMoveAction(this, row, col, row, col - 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row - 1, col);
+                        return new StrategoMoveAction(this, row, col, row + 1, col);
                     }
                     break; // else break the loop
 
@@ -254,6 +254,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
      * @param fromY   - original col index
      * @param toWhere - string indication on which direction to move in
      * @return boolean depending on where the new location is moveable or not
+     *
      */
 
     public boolean checkSurrounding(Piece[][] board, int fromX, int fromY, String toWhere) {
@@ -262,13 +263,13 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             return false;
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
+
             if (fromX != 9 && board[fromX + 1][fromY] == null) { // if spot below is empty
-                if(fromX+1 > 9){
-                    return false;
-                }
                 return true;
             }
+
         } else if (toWhere.equalsIgnoreCase("Right")) {
+
             if (fromY != 9 && board[fromX][fromY + 1] == null) { // if spot right is empty
                 if(fromY+1 > 9){
                     return false;
@@ -276,6 +277,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
+
             if (fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
                 if(fromY-1 < 0){
                     return false;
@@ -284,6 +286,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
+
             if (fromX != 0 && board[fromX - 1][fromY] == null) { // if spot above is empty
                 if(fromX-1 < 0){
                     return false;

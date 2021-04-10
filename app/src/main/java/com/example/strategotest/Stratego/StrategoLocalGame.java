@@ -63,40 +63,40 @@ public class StrategoLocalGame extends LocalGame {
 
     @Override
     protected String checkIfGameOver() {
-//
-//        if (((StrategoGameState) state).getPhase() != 0) { // make sure game phase is not in placement
-//
-//            //check win by checking if flag has been captured
-//            if ((((StrategoGameState) state).getBlueCharacter())[0] == 1) { // if flag counter is 1, that means a flag has been captured
-//                return "Congratulations! " + playerNames[0] + "has captured the enemy flag and has won the game!"; // blue flag has been captured, so red won the game
-//            } else if ((((StrategoGameState) state).getRedCharacter())[0] == 1) {
-//                return "Congratulations! " + playerNames[1] + "has captured the enemy flag and has won the game!"; // red flag has been captured, so blue won the game
-//            }
-//
-//            //check win by checking if either array of pieces has maxed out, indicating all troops have been captured
-//            boolean redL = true;
-//            boolean blueL = true;
-//            //Loop through all the movable pieces
-//            for (int i = 0; i < 12; i++) {
-//                if (i > 0 && i < 10 || i == 11) {
-//                    if (((StrategoGameState) state).getBlueCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
-//                        blueL = false;
-//
-//                    }
-//                    if (((StrategoGameState) state).getRedCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
-//                        redL = false;
-//
-//                    }
-//                }
-//            }
-//            //Return the result
-//            if (redL) {
-//                return ("Blue wins!");
-//            }
-//            if (blueL) {
-//                return ("Red wins!");
-//            }
-//        }
+
+        if (((StrategoGameState) state).getPhase() != 0) { // make sure game phase is not in placement
+
+            //check win by checking if flag has been captured
+            if ((((StrategoGameState) state).getBlueCharacter())[0] == 1) { // if flag counter is 1, that means a flag has been captured
+                return "Congratulations! " + playerNames[0] + "has captured the enemy flag and has won the game!"; // blue flag has been captured, so red won the game
+            } else if ((((StrategoGameState) state).getRedCharacter())[0] == 1) {
+                return "Congratulations! " + playerNames[1] + "has captured the enemy flag and has won the game!"; // red flag has been captured, so blue won the game
+            }
+
+            //check win by checking if either array of pieces has maxed out, indicating all troops have been captured
+            boolean redL = true;
+            boolean blueL = true;
+            //Loop through all the movable pieces
+            for (int i = 0; i < 12; i++) {
+                if (i > 0 && i < 10 || i == 11) {
+                    if (((StrategoGameState) state).getBlueCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
+                        blueL = false;
+
+                    }
+                    if (((StrategoGameState) state).getRedCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
+                        redL = false;
+
+                    }
+                }
+            }
+            //Return the result
+            if (redL) {
+                return ("Blue wins!");
+            }
+            if (blueL) {
+                return ("Red wins!");
+            }
+        }
         return null;
     }
 
@@ -146,9 +146,8 @@ public class StrategoLocalGame extends LocalGame {
             }
             return false;
 
-        }
-        else if(action instanceof StrategoRandomPlace){
-            return ((StrategoGameState)state).place(0);
+        } else if (action instanceof StrategoRandomPlace) {
+            return ((StrategoGameState) state).place(0);
         }
 
         return false;
