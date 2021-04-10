@@ -449,12 +449,14 @@ public class StrategoGameState extends GameState {
 
                 //set the index i j to a random piece from specific players arrayList of
                 //instantiated pieces
-                randomIndex = (int) (Math.random() * currentArmy.size());
+                if(board[i][j] == null) {
+                    randomIndex = (int) (Math.random() * currentArmy.size());
 
-                //set that board index to the random index
-                board[i][j] = currentArmy.get(randomIndex);
-                //once placed from bench it should be removed as its now on the board
-                currentArmy.remove(randomIndex);
+                    //set that board index to the random index
+                    board[i][j] = currentArmy.get(randomIndex);
+                    //once placed from bench it should be removed as its now on the board
+                    currentArmy.remove(randomIndex);
+                }
 
 
 
