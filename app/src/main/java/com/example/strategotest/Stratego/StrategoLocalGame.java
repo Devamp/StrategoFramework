@@ -147,7 +147,7 @@ public class StrategoLocalGame extends LocalGame {
             return false;
 
         } else if (action instanceof StrategoRandomPlace) {
-            return ((StrategoGameState) state).place(0);
+            return ((StrategoGameState) state).place(((StrategoRandomPlace)action).getPId());
         }
 
         return false;
