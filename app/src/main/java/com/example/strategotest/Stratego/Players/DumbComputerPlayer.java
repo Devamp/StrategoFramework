@@ -67,7 +67,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                 int piece;
                 for (piece = 0; piece < 12; piece++) {
 
-                    if(playerNum == 0){
+                    if (playerNum == 0) {
                         temp = gameState.getRedCharacter();
                     } else {
                         temp = gameState.getBlueCharacter();
@@ -193,7 +193,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     if (checkSurrounding(myBoard, row, col, "Right")) {
                         return new StrategoMoveAction(this, row, col, row, col + 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row, col + 1);
+                        return new StrategoMoveAction(this, row, col, row + 1, col);
                     } else if (checkSurrounding(myBoard, row, col, "Left")) {
                         return new StrategoMoveAction(this, row, col, row, col - 1);
                     } else if (checkSurrounding(myBoard, row, col, "Above")) {
@@ -207,7 +207,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     } else if (checkSurrounding(myBoard, row, col, "Right")) {
                         return new StrategoMoveAction(this, row, col, row, col + 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row, col - 1);
+                        return new StrategoMoveAction(this, row, col, row + 1, col);
                     } else if (checkSurrounding(myBoard, row, col, "Above")) {
                         return new StrategoMoveAction(this, row, col, row - 1, col);
                     }
@@ -221,7 +221,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     } else if (checkSurrounding(myBoard, row, col, "Left")) {
                         return new StrategoMoveAction(this, row, col, row, col - 1);
                     } else if (checkSurrounding(myBoard, row, col, "Below")) {
-                        return new StrategoMoveAction(this, row, col, row - 1, col);
+                        return new StrategoMoveAction(this, row, col, row + 1, col);
                     }
                     break; // else break the loop
 
@@ -262,25 +262,42 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             return false;
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
-            if (fromX != 9 && board[fromX + 1][fromY] == null) { // if spot below is empty
-                return true;
+            if (fromX != 9) { // if spot below is empty
+                if (board[fromX + 1][fromY] == null) {
+                    return true;
+                } else if (board[fromX + 1][fromY].getPlayer() != this.getPlayerID()) {
+                    return true;
+                }
             }
         } else if (toWhere.equalsIgnoreCase("Right")) {
-            if (fromY != 9 && board[fromX][fromY + 1] == null) { // if spot right is empty
-                return true;
+            if (fromY != 9) { // if spot right is empty
+                if (board[fromX][fromY + 1] == null) {
+                    return true;
+                } else if (board[fromX][fromY + 1].getPlayer() != this.getPlayerID()) {
+                    return true;
+                }
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
-            if (fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
-                return true;
+            if (fromY != 0) { // if spot to left is empty
+                if (board[fromX][fromY - 1] == null) {
+                    return true;
+                } else if (board[fromX][fromY - 1].getPlayer() != this.getPlayerID()) {
+                    return true;
+                }
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
-            if (fromX != 0 && board[fromX - 1][fromY] == null) { // if spot above is empty
-                return true;
+            if (fromX != 0) { // if spot above is empty
+                if (board[fromX - 1][fromY] == null) {
+                    return true;
+                } else if (board[fromX - 1][fromY].getPlayer() != this.getPlayerID()) {
+                    return true;
+                }
             }
         }
 
         return false;
+
     }
 
     public int getPlayerID() {
