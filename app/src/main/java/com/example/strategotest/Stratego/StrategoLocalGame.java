@@ -114,13 +114,10 @@ public class StrategoLocalGame extends LocalGame {
 
         } else if (action instanceof StrategoMoveAction) {
 
-            if (gameState.action(((StrategoMoveAction) action).getFromX(), ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(), ((StrategoMoveAction) action).getToY())) {
-                DumbComputerPlayer p = new DumbComputerPlayer("test");
-                if(gameState.getTurn() ==  p.getPlayerID()){
-                    gameState.endTurn();
-                }
-                return true;
-            }
+            boolean toReturn = false;
+            toReturn = gameState.action(((StrategoMoveAction) action).getFromX(),
+                    ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(),
+                    ((StrategoMoveAction) action).getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
@@ -131,8 +128,7 @@ public class StrategoLocalGame extends LocalGame {
                 //action method?
             }
 
-            return false;
-            //return worked;
+            return toReturn;
 
         } else if (action instanceof StrategoUndoTurnAction) {
             //super.state = ((StrategoGameState)state).getBackup();
