@@ -263,19 +263,31 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
             if (fromX != 9 && board[fromX + 1][fromY] == null) { // if spot below is empty
+                if(fromX+1 > 9){
+                    return false;
+                }
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Right")) {
             if (fromY != 9 && board[fromX][fromY + 1] == null) { // if spot right is empty
+                if(fromY+1 > 9){
+                    return false;
+                }
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
             if (fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
+                if(fromY-1 < 0){
+                    return false;
+                }
                 return true;
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
             if (fromX != 0 && board[fromX - 1][fromY] == null) { // if spot above is empty
+                if(fromX-1 < 0){
+                    return false;
+                }
                 return true;
             }
         }

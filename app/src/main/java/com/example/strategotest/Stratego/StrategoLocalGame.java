@@ -114,11 +114,11 @@ public class StrategoLocalGame extends LocalGame {
 
         } else if (action instanceof StrategoMoveAction) {
 
+            //if(((StrategoMoveAction) action).getFromX() < 0 || ((StrategoMoveAction) action).getFromY() < 0 || ((StrategoMoveAction) action).getToX() < 0 || ((StrategoMoveAction) action).getToY() < 0){
+             //   return false;
+           // }
+
             if (gameState.action(((StrategoMoveAction) action).getFromX(), ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(), ((StrategoMoveAction) action).getToY())) {
-                DumbComputerPlayer p = new DumbComputerPlayer("test");
-                if(gameState.getTurn() ==  p.getPlayerID()){
-                    gameState.endTurn();
-                }
                 return true;
             }
 
