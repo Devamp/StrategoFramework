@@ -263,9 +263,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
 
-            if(board[fromX+1][fromY].getPlayer() == playerNum){ // piece below is a friendly piece
-                return false;
-            } else if (board[fromX+1][fromY] != null && board[fromX+1][fromY].)
+            //if(board[fromX+1][fromY].getPlayer() == playerNum){ // piece below is a friendly piece
+           //     return false;
+            //} else if (board[fromX+1][fromY] != null && board[fromX+1][fromY].)
 
             if (fromX != 9 && board[fromX + 1][fromY] == null && (fromX+1 >= 0 && fromX < 10)) { // if spot below is empty
                 return true;
