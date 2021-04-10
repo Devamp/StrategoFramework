@@ -262,25 +262,20 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             return false;
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
-
-            //if(board[fromX+1][fromY].getPlayer() == playerNum){ // piece below is a friendly piece
-           //     return false;
-            //} else if (board[fromX+1][fromY] != null && board[fromX+1][fromY].)
-
-            if (fromX != 9 && board[fromX + 1][fromY] == null && (fromX+1 >= 0 && fromX < 10)) { // if spot below is empty
+            if (fromX != 9 && board[fromX + 1][fromY] == null) { // if spot below is empty
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Right")) {
-            if (fromY != 9 && board[fromX][fromY + 1] == null && (fromY+1 >= 0 && fromY < 10)) { // if spot right is empty
+            if (fromY != 9 && board[fromX][fromY + 1] == null) { // if spot right is empty
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
-            if (fromY != 0 && board[fromX][fromY - 1] == null  && (fromY-1 >= 0 && fromY < 10)) { // if spot to left is empty
+            if (fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
                 return true;
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
-            if (fromX != 0 && board[fromX - 1][fromY] == null && (fromX-1 >= 0 && fromX < 10)) { // if spot above is empty
+            if (fromX != 0 && board[fromX - 1][fromY] == null) { // if spot above is empty
                 return true;
             }
         }
