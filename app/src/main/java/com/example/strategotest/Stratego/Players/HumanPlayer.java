@@ -259,7 +259,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             whoseTurn.setImageResource(R.drawable.redsquare);
         }else if(toUse.getTurn() == 1){
             //blue player is turn 1
-            whoseTurn.setImageResource(R.drawable.bluetile);
+            whoseTurn.setImageResource(R.drawable.bluesquare);
         }else{
             whoseTurn.setImageResource(R.drawable.redsquare);
         }

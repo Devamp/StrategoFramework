@@ -263,9 +263,12 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
             if (fromX != 9) { // if spot below is empty
+
                 if (board[fromX + 1][fromY] == null) {
                     return true;
-                } else if (board[fromX + 1][fromY].getPlayer() != this.getPlayerID()) {
+                } else if (board[fromX + 1][fromY].getPlayer() == -1) {
+                    return false;
+                } else if (board[fromX + 1][fromY].getPlayer() == playerNum + 1 % 2) {
                     return true;
                 }
             }
@@ -273,7 +276,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromY != 9) { // if spot right is empty
                 if (board[fromX][fromY + 1] == null) {
                     return true;
-                } else if (board[fromX][fromY + 1].getPlayer() != this.getPlayerID()) {
+                } else if (board[fromX][fromY+1].getPlayer() == -1) {
+                    return false;
+                } else if (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2) {
                     return true;
                 }
             }
@@ -281,7 +286,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromY != 0) { // if spot to left is empty
                 if (board[fromX][fromY - 1] == null) {
                     return true;
-                } else if (board[fromX][fromY - 1].getPlayer() != this.getPlayerID()) {
+                } else if (board[fromX][fromY - 1].getPlayer() == -1) {
+                    return false;
+                } else if (board[fromX][fromY - 1].getPlayer() == playerNum + 1 % 2) {
                     return true;
                 }
             }
@@ -290,7 +297,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromX != 0) { // if spot above is empty
                 if (board[fromX - 1][fromY] == null) {
                     return true;
-                } else if (board[fromX - 1][fromY].getPlayer() != this.getPlayerID()) {
+                } else if (board[fromX - 1][fromY].getPlayer() == -1) {
+                    return false;
+                } else if (board[fromX - 1][fromY].getPlayer() == playerNum + 1 % 2) {
                     return true;
                 }
             }
