@@ -3,10 +3,12 @@ package com.example.strategotest.Stratego;
 import android.util.Log;
 
 import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
+import com.example.strategotest.Stratego.Players.HumanPlayer;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
@@ -136,6 +138,9 @@ public class StrategoLocalGame extends LocalGame {
             ((StrategoGameState)state).placeChosenPiece(((StrategoPlaceAction)action).getPlayer(), ((StrategoPlaceAction)action).getValue(), ((StrategoPlaceAction)action).getRow(), ((StrategoPlaceAction)action).getCol());
 
             return true;
+        }
+        else if(action instanceof StrategoRandomPlace){
+           return ((StrategoGameState)state).place(0);
         }
             return false;
 
