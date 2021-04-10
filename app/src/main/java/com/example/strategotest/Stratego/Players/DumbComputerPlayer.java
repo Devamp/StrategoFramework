@@ -25,7 +25,8 @@ import java.util.Random;
 public class DumbComputerPlayer extends GameComputerPlayer {
 
     private boolean[][] usedIndices = new boolean[10][10]; // 2D boolean array to help store used up indices
-    private StrategoGameState gameState;
+//    private StrategoGameState gameState;
+    StrategoGameState gameState = null;
 
     /**
      * constructor
@@ -46,7 +47,12 @@ public class DumbComputerPlayer extends GameComputerPlayer {
     @Override
     protected void receiveInfo(GameInfo info) {
 
-        if (info instanceof StrategoGameState) {
+        if (!(info instanceof StrategoGameState)) {
+            return;
+        }
+
+        boolean shouldPass = true;
+
             gameState = new StrategoGameState((StrategoGameState) info);
             PassTurnAction pass = new PassTurnAction(this);
 
@@ -58,28 +64,53 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                 // make sure we are in placement phase
                 if (gameState.getPhase() == 0) {
 
-                    for (int piece = 0; piece < 12; piece++) { // loop through each of the 12 types of pieces
-                        for (int numberOfPieces = 0; numberOfPieces < gameState.getFilledRedCharacters()[piece]; numberOfPieces++) { // loop to max number of each single piece (Ex. 6 times for 6 bombs)
+//                    for (int piece = 0; piece < 12; piece++) { // loop through each of the 12 types of pieces
+//                        for (int numberOfPieces = 0; numberOfPieces < gameState.getFilledRedCharacters()[piece]; numberOfPieces++) { // loop to max number of each single piece (Ex. 6 times for 6 bombs)
+//                            gameState.setBlueCharacterValue(piece, gameState.getBlueCharacter()[piece] - 1);
+                                                int piece;
+                    for(piece = 0; piece < 12; piece++){
+                        if (gameState.getBlueCharacter()[piece] != 0){
                             game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
+                            if(piece != 11){
+                                shouldPass = false;
+                            }
+
+                            break;
                         }
                     }
 
-                    game.sendAction(getMoveAction(gameState));
 
+//                        }
+//                    }
+
+//                    game.sendAction(getMoveAction(gameState));
+
+//                    for(int i = 0; i < 12; i++){
+//                        if(gameState.getBlueCharacter()[i] != 0 && i != 11){
+//                            shouldPass = false;
+//                            break;
+//                        }
+//                    }
 
                 } else { // we are in play phase
 
-                    StrategoMoveAction move = new StrategoMoveAction(this, 3, 0, 4, 0);
-                    game.sendAction(move);
+//                    StrategoMoveAction move = new StrategoMoveAction(this, 3, 0, 4, 0);
+//                    game.sendAction(move);
+
 
                     game.sendAction(getMoveAction(gameState));
 
                 }
 
-                game.sendAction(pass); // end turn after an action
+
+
+                if(shouldPass){
+                    game.sendAction(pass); // end turn after an action
+                }
+
 
             }
-        }
+//        }
 
     }
 
@@ -252,20 +283,20 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             return false;
 
         } else if (toWhere.equalsIgnoreCase("Below")) {
-            if (board[fromX + 1][fromY] == null) { // if spot below is empty
+            if (fromX != 9 && board[fromX + 1][fromY] == null) { // if spot below is empty
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Right")) {
-            if (board[fromX][fromY + 1] == null) { // if spot right is empty
+            if (fromY != 9 && board[fromX][fromY + 1] == null) { // if spot right is empty
                 return true;
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
-            if (board[fromX][fromY - 1] == null) { // if spot to left is empty
+            if ( fromY != 0 && board[fromX][fromY - 1] == null) { // if spot to left is empty
                 return true;
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
-            if (board[fromX - 1][fromY] == null) { // if spot above is empty
+            if (fromX != 0 && board[fromX - 1][fromY] == null) { // if spot above is empty
                 return true;
             }
         }
