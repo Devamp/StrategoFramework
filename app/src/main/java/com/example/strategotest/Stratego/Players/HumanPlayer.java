@@ -168,7 +168,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //When the turn is passed, display whose turn in the upper right corner
         setTurnColor(toUse);
 
-        toUse.showBoard(boardButtons);
+        if(toUse.getTurn() == humanPlayerID){
+            toUse.showBoard(boardButtons);
+        }
 
         //Set visibility of ranPlace button
         if(myPhase == 0){
