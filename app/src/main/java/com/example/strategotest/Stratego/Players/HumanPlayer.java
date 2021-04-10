@@ -197,7 +197,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             } else {
                 //backup the current board so we can revert to it if we want to undo
 //            toUse.saveBackup();
-                //game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
                 endTurn.setVisibility(View.INVISIBLE);
                 undoTurn.setVisibility(View.INVISIBLE);
             }
@@ -303,7 +303,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     public void onClick(View v) {
         if(v instanceof Button){
             buttonOnClick(v);
-        }else if(v instanceof ImageButton && !hasMoved){
+        }else if(v instanceof ImageButton && !hasMoved){ //deleted && !hasMoved
             imageButtonOnClick(v);
         }
     }
@@ -315,8 +315,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
                 PassTurnAction newPass = new PassTurnAction(this);
                 game.sendAction(newPass);
                 endTurn.setVisibility(View.INVISIBLE);
+                //reset whether they've moved or not
                 hasMoved = false;
-                undoTurn.setVisibility(View.INVISIBLE);
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
                 game.sendAction(new StrategoUndoTurnAction(this));
