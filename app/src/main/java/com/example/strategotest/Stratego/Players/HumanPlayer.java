@@ -139,6 +139,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     @Override
     public void receiveInfo(GameInfo info) {
+
+        if((info instanceof IllegalMoveInfo)){
+          hasMoved = false;
+        }
+
         if(!(info instanceof StrategoGameState)){
             int myColor = Color.rgb(255, 0, 0);
             flash(myColor, 10000);

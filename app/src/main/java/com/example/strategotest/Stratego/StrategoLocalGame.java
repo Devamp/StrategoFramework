@@ -111,7 +111,7 @@ public class StrategoLocalGame extends LocalGame {
 
         }else if(action instanceof StrategoMoveAction){
 
-            ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
+            boolean move = ((StrategoGameState)state).action(((StrategoMoveAction)action).getFromX(),((StrategoMoveAction)action).getFromY(), ((StrategoMoveAction)action).getToX(), ((StrategoMoveAction)action).getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
@@ -121,7 +121,7 @@ public class StrategoLocalGame extends LocalGame {
                 //it also check if all the pieces have been captured, or did we do that in the
                 //action method?
             }
-            return true;
+            return move;
             //return worked;
 
         }else if(action instanceof StrategoUndoTurnAction){
