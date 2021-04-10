@@ -3,10 +3,12 @@ package com.example.strategotest.Stratego;
 import android.util.Log;
 
 import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
+import com.example.strategotest.Stratego.Players.HumanPlayer;
 import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.game.GameFramework.LocalGame;
 import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
@@ -114,13 +116,10 @@ public class StrategoLocalGame extends LocalGame {
 
         } else if (action instanceof StrategoMoveAction) {
 
-            //if(((StrategoMoveAction) action).getFromX() < 0 || ((StrategoMoveAction) action).getFromY() < 0 || ((StrategoMoveAction) action).getToX() < 0 || ((StrategoMoveAction) action).getToY() < 0){
-             //   return false;
-           // }
-
-            if (gameState.action(((StrategoMoveAction) action).getFromX(), ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(), ((StrategoMoveAction) action).getToY())) {
-                return true;
-            }
+            boolean toReturn = false;
+            toReturn = gameState.action(((StrategoMoveAction) action).getFromX(),
+                    ((StrategoMoveAction) action).getFromY(), ((StrategoMoveAction) action).getToX(),
+                    ((StrategoMoveAction) action).getToY());
 
             //after move is made, see if flag has been captured
             String endGameString = checkIfGameOver();
@@ -131,8 +130,7 @@ public class StrategoLocalGame extends LocalGame {
                 //action method?
             }
 
-            return false;
-            //return worked;
+            return toReturn;
 
         } else if (action instanceof StrategoUndoTurnAction) {
             //super.state = ((StrategoGameState)state).getBackup();
@@ -148,6 +146,9 @@ public class StrategoLocalGame extends LocalGame {
             }
             return false;
 
+        }
+        else if(action instanceof StrategoRandomPlace){
+            return ((StrategoGameState)state).place(0);
         }
 
         return false;

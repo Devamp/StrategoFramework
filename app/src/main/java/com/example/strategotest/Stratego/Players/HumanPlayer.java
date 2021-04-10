@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import com.example.strategotest.Stratego.actionMessage.PassTurnAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoBackupAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.actionMessage.StrategoUndoTurnAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.GameMainActivity;
@@ -69,7 +71,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     private Button undoTurn = null;
 
     //this will be invisible until Beta
-    private Button undoMove = null;
+    private Button ranPlace = null;
 
     // initialize the variables needed for the game Timer
     private TextView timerText = null;
@@ -142,6 +144,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     @Override
     public void receiveInfo(GameInfo info) {
+
+        if((info instanceof IllegalMoveInfo)){
+          hasMoved = false;
+        }
+
         if(!(info instanceof StrategoGameState)){
             int myColor = Color.rgb(255, 0, 0);
             flash(myColor, 10000);
@@ -162,6 +169,14 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         setTurnColor(toUse);
 
         toUse.showBoard(boardButtons);
+
+        //Set visibility of ranPlace button
+        if(myPhase == 0){
+            ranPlace.setVisibility(View.VISIBLE);
+        }
+        else{
+            ranPlace.setVisibility(View.INVISIBLE);
+        }
 
         setEndUndoVisibility(myPhase);
 
@@ -265,10 +280,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         endTurn.setOnClickListener(this);
         undoTurn = (Button) activity.findViewById(R.id.undoTurnButton);
         undoTurn.setOnClickListener(this);
-        undoMove = (Button) activity.findViewById(R.id.undoMoveButton);
-
+        ranPlace = (Button) activity.findViewById(R.id.randomPlace);
+        ranPlace.setOnClickListener(this);
         //we're not using undoMove button yet. I also mixed up undo move and undo turn
-        undoMove.setVisibility(View.INVISIBLE);
+        ranPlace.setVisibility(View.INVISIBLE);
 
         //set end and undo turn to invisible by default
         endTurn.setVisibility(View.INVISIBLE);
@@ -360,7 +375,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }else if(v.getId() == R.id.undoTurnButton){
                 hasMoved = false;
                 game.sendAction(new StrategoUndoTurnAction(this));
-            } else{}
+            } else if(v.getId() == R.id.randomPlace) {
+                game.sendAction(new StrategoRandomPlace(this, this.getHumanPlayerID()));
+            }
 
     }
 
