@@ -437,16 +437,16 @@ public class StrategoGameState extends GameState {
             for (int j = 0; j < board[i].length; j++) {
 
                 //place the flag in the last possible place
-                if (j == board[i].length - 1 && i == start + 3) {
+                /*if (j == board[i].length - 1 && i == start + 3) {
                     board[i][j] = currentArmy.get(0);
                     currentArmy.remove(0);
                 } else {
                     board[i][j] = currentArmy.get(1);
                     currentArmy.remove(1);
                 }
+*/
 
 
-                /*
                 //set the index i j to a random piece from specific players arrayList of
                 //instantiated pieces
                 randomIndex = (int) (Math.random() * currentArmy.size());
@@ -456,8 +456,18 @@ public class StrategoGameState extends GameState {
                 //once placed from bench it should be removed as its now on the board
                 currentArmy.remove(randomIndex);
 
-                 */
 
+
+            }
+        }
+        if(player == 0){
+            for(int i = 0; i < 12; i++){
+                redCharacter[i] = 0;
+            }
+        }
+        else{
+            for(int i = 0; i < 12; i++){
+                blueCharacter[i] = 0;
             }
         }
 

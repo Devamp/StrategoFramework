@@ -86,7 +86,7 @@
                 android:textSize="15sp" />
 
             <Button
-                android:id="@+id/undoMoveButton"
+                android:id="@+id/randomPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
@@ -95,8 +95,8 @@
                 android:backgroundTint="@color/sand"
                 android:paddingStart="20sp"
                 android:paddingEnd="20sp"
-                android:text="@string/undo_move_btn"
-                android:textSize="15sp" />
+                android:text="@string/random_place_btn"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/playerTurnText"
