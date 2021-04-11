@@ -24,9 +24,6 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  */
 public class StrategoLocalGame extends LocalGame {
 
-    StrategoGameState officialState;
-
-
     /**
      * Constructor for the StrategoLocalGame
      */
@@ -63,7 +60,7 @@ public class StrategoLocalGame extends LocalGame {
      */
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-        p.sendInfo(super.state);
+        p.sendInfo(new StrategoGameState((StrategoGameState) super.state));
 
     }
 
@@ -90,9 +87,9 @@ public class StrategoLocalGame extends LocalGame {
 
             //check win by checking if flag has been captured
             if ((((StrategoGameState) state).getBlueCharacter())[0] == 1) { // if flag counter is 1, that means a flag has been captured
-                return "Congratulations! " + playerNames[0] + "has captured the enemy flag and has won the game!"; // blue flag has been captured, so red won the game
+                return "Congratulations! " + playerNames[0] + " has captured the enemy flag and has won the game! "; // blue flag has been captured, so red won the game
             } else if ((((StrategoGameState) state).getRedCharacter())[0] == 1) {
-                return "Congratulations! " + playerNames[1] + "has captured the enemy flag and has won the game!"; // red flag has been captured, so blue won the game
+                return "Congratulations! " + playerNames[1] + " has captured the enemy flag and has won the game! "; // red flag has been captured, so blue won the game
             }
 
             //check win by checking if either array of pieces has maxed out, indicating all troops have been captured
@@ -130,7 +127,7 @@ public class StrategoLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
 
         StrategoGameState gameState = (StrategoGameState) super.state;
-
+        
         //Pass turn to next player
         if (action instanceof PassTurnAction) {
 //            officialState.endTurn();

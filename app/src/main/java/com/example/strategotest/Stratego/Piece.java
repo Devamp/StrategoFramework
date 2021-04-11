@@ -7,7 +7,6 @@ import com.example.strategotest.R;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 3/21
  */
 public class Piece {
@@ -28,7 +27,7 @@ public class Piece {
     //the res drawable icon for the piece
     private int icon; //doesn't work like I want it to. Maybe fix later?
 
-    public Piece(String name, int val, int player, int icon){
+    public Piece(String name, int val, int player, int icon) {
         this.value = val;
         this.player = player;
 
@@ -36,62 +35,62 @@ public class Piece {
         this.name = name;
     }
 
-    public Piece(String name, int val, int player){
+    public Piece(String name, int val, int player) {
         this.name = name;
         this.value = val;
 
         this.player = player;
     }
 
-    public String toString(){
+    public String toString() {
         String toReturn;
-        if(isVisible){
+        if (isVisible) {
 //            toReturn = "P:" + player + ", N:" + name + ", V:" + value;
             toReturn = " (" + name.substring(0, 2) + ", " + value + ") ";
-        }else{
+        } else {
             toReturn = " (INV) ";
         }
 
         return toReturn;
     }
 
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         isVisible = visible;
     }
 
-    public boolean getVisible(){
+    public boolean getVisible() {
         return isVisible;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setValue(int value){
+    public void setValue(int value) {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 
-    public void setPlayer(int player){
+    public void setPlayer(int player) {
         this.player = player;
     }
 
-    public int getPlayer(){
+    public int getPlayer() {
         return player;
     }
 
-    public void setIcon(int icon){
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 
-    public int getIcon(){
+    public int getIcon() {
         return icon;
     }
 
@@ -101,26 +100,26 @@ public class Piece {
      * @param toPlace
      * @return
      */
-    public boolean move(Piece toPlace){
+    public boolean move(Piece toPlace) {
         boolean toReturn = true;
         //prevent null point exception
-        if(toPlace == null){
+        if (toPlace == null) {
             return true;
         }
         //don't move bomb or flag
-        if(this.getValue() == 0 || this.getValue() == 10 || this.getPlayer() < 0){
+        if (this.getValue() == 0 || this.getValue() == 10 || this.getPlayer() < 0) {
             return false;
         }
         //Don't move on lake
-        if(toPlace.getPlayer() < 0){
+        if (toPlace.getPlayer() < 0) {
             return false;
         }
         //if a piece tries to move onto a space that is occupied by a friendly piece, can't move
-        if(this.getPlayer() == toPlace.getPlayer()){
+        if (this.getPlayer() == toPlace.getPlayer()) {
             toReturn = false;
         }
         //If lake cannot move there
-        else if(toPlace.getPlayer() == -1){
+        else if (toPlace.getPlayer() == -1) {
             toReturn = false;
         }
 
@@ -134,26 +133,20 @@ public class Piece {
      * @param toAttack
      * @return
      */
-    public boolean attack(Piece toAttack){
-        if(toAttack.getValue() == 0){
+    public boolean attack(Piece toAttack) {
+        if (toAttack.getValue() == 0) {
             return true;
-        }
-        else if(this.getValue() == 8 && toAttack.getValue() == 10){
+        } else if (this.getValue() == 8 && toAttack.getValue() == 10) {
             return true;
-        }
-        else if(toAttack.getValue() == 10){
-           return false;
-        }
-        else if(this.getValue() == 11  && toAttack.getValue() == 1){
+        } else if (toAttack.getValue() == 10) {
+            return false;
+        } else if (this.getValue() == 11 && toAttack.getValue() == 1) {
             return true;
-        }
-        else if(this.getValue() < toAttack.getValue()){
+        } else if (this.getValue() < toAttack.getValue()) {
             return true;
-        }
-        else if(this.getValue() > toAttack.getValue()){
-           return false;
-        }
-        else{
+        } else if (this.getValue() > toAttack.getValue()) {
+            return false;
+        } else {
             return true;
         }
     }
@@ -165,15 +158,14 @@ public class Piece {
      * @return true if the pieces are the same or false if the pieces are not
      */
     public boolean isEqual(Piece p) {
-        if(p.getValue() != this.getValue()){
+        if (p.getValue() != this.getValue()) {
             return false;
         }
-        if(p.getPlayer() != this.getPlayer()){
+        if (p.getPlayer() != this.getPlayer()) {
             return false;
         }
         return true;
     }
-
 
 
 }

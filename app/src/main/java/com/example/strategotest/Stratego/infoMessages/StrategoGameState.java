@@ -605,32 +605,6 @@ public class StrategoGameState extends GameState {
         return true;
     }
 
-    /**
-     * Duplicate of the placeRemove method, but edited to meet the computer's needs
-     *
-     * @param value - what the piece value is
-     * @param row   - row to place piece
-     * @param col-  col to place piece
-     * @return returns true if piece is removed or placed, false if failure
-     */
-    public boolean placeRemoveComputer(int value, int row, int col) {
-        if (phase == 0) {
-            if (board[row][col] == null || board[row][col] != null) {
-                String returnName = setName(value);
-                //Put piece in that spot
-                board[row][col] = new Piece(returnName, value, turn);
-                return true;
-            } else if (board[row][col].getValue() < 0 || board[row][col].getPlayer() < 0) {
-                //don't mess with lake
-                return false;
-
-            }
-        } else {
-            return false;
-        }
-        return false;
-    }
-
 
     /**
      * action: Preforms the attack and move methods depending on the situation
@@ -861,25 +835,6 @@ public class StrategoGameState extends GameState {
         return isTrue;
     }
 
-    /**
-     * setPhase: set the state of the Game State
-     *
-     * @param gameState - the state of the game
-     * @param newPhase  - the phase to be set onto the Game State
-     * @return returns isTrue, TRUE if phase is 0, 1, or 2; FALSE otherwise
-     */
-    public boolean setPhase(StrategoGameState gameState, int newPhase) {
-        boolean isTrue = false;
-
-        if (gameState.phase == 0 || gameState.phase == 1 || gameState.phase == 2) {
-            gameState.phase = newPhase;
-            isTrue = true;
-        } else {
-            isTrue = false;
-        }
-
-        return isTrue;
-    }
 
     /**
      * increaseCap - increase the captured pieces of the pieceValue type
@@ -924,9 +879,6 @@ public class StrategoGameState extends GameState {
         }
     }
 
-    public Piece[][] getBoard() {
-        return board;
-    }
 
     /**
      * equals - Checks if two GameStates are equal
@@ -948,10 +900,18 @@ public class StrategoGameState extends GameState {
         return true;
     }
 
+
+    /**
+     * Getters and setters for our instance variables within the gamestate class.
+     *
+     */
     public int getId() {
         return turn;
     }
 
+    public Piece[][] getBoard() {
+        return board;
+    }
 
     public int getPhase() {
         return phase;
