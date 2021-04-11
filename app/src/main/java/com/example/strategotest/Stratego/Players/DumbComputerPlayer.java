@@ -22,6 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Gareth Rice
+ * @author Caden Deutscher
+ * @author Hewlett De Lara
+ * @author Devam Patel
+ *
+ * 04/21
+ */
 public class DumbComputerPlayer extends GameComputerPlayer {
 
     private boolean[][] usedIndices = new boolean[10][10]; // 2D boolean array to help store used up indices

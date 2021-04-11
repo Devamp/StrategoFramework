@@ -9,7 +9,14 @@ import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
 
 import java.util.Random;
 
-
+/**
+ * @author Gareth Rice
+ * @author Caden Deutscher
+ * @author Hewlett De Lara
+ * @author Devam Patel
+ *
+ * @version 04/21
+ */
 public class SmartComputerPlayer extends GameComputerPlayer {
     private boolean placed[][] = new boolean[10][10];
     private int pieces[][] = new int[10][10];

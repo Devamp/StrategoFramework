@@ -15,6 +15,14 @@ import com.example.strategotest.game.GameFramework.actionMessage.GameAction;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
+/**
+ * @author Gareth Rice
+ * @author Caden Deutscher
+ * @author Hewlett De Lara
+ * @author Devam Patel
+ *
+ * @version 04/21
+ */
 public class StrategoLocalGame extends LocalGame {
 
     StrategoGameState officialState;
