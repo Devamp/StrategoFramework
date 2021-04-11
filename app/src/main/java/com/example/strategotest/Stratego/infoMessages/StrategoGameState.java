@@ -53,7 +53,7 @@ public class StrategoGameState extends GameState {
     StrategoGameState backup = null;
 
     /**
-     * ctor
+     * constructor for gamestate
      */
     public StrategoGameState() {
         //character array for each color
