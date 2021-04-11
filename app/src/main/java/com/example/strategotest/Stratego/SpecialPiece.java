@@ -22,11 +22,21 @@ public class SpecialPiece extends Piece {
         super(name, value, player, icon);
     }
 
+    /**
+     * move-sets movement to false for special pieces
+     * @param toPlace
+     * @return
+     */
     @Override
     public boolean move(Piece toPlace) {
         return false;
     }
 
+    /**
+     * attack-sets attack to false for special pieces
+     * @param toAttack
+     * @return
+     */
     @Override
     public boolean attack(Piece toAttack) {
         return false;

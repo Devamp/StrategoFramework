@@ -121,7 +121,7 @@ public class StrategoLocalGame extends LocalGame {
     }
 
     /**
-     * makeMove-make the move based on recieved action
+     * makeMove-make the move based on received action
      *
      * @param action The move that the player has sent to the game
      * @return
