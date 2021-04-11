@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
 import com.example.strategotest.Stratego.Players.HumanPlayer;
@@ -26,17 +27,15 @@ import java.util.ArrayList;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 3/21
- *
+ * <p>
  * Notes:
- *
+ * <p>
  * Change Captured Pieces field in GUI to be Place Pieces at appropriate time
  * Add field to show which teams pieces have been captured
- *
- *
+ * <p>
+ * <p>
  * ToDo:
- *
  */
 
 public class MainActivity extends GameMainActivity {
@@ -72,7 +71,7 @@ public class MainActivity extends GameMainActivity {
         });
 
         // Create a game configuration class for Stratego
-        GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Stratego", PORT_NUMBER);
+        GameConfig defaultConfig = new GameConfig(playerTypes, 2, 2, "Stratego", PORT_NUMBER);
 
         // Add the default players
         defaultConfig.addPlayer("Human", 0);
@@ -87,15 +86,14 @@ public class MainActivity extends GameMainActivity {
 
     @Override
     public LocalGame createLocalGame(GameState gameState) {
-        if(gameState == null) return new StrategoLocalGame();
+        if (gameState == null) return new StrategoLocalGame();
         return new StrategoLocalGame((StrategoGameState) gameState);
     }
 
     /**
      * saveGame, adds this games prepend to the filename
      *
-     * @param gameName
-     * 				Desired save name
+     * @param gameName Desired save name
      * @return String representation of the save
      */
 
@@ -106,12 +104,12 @@ public class MainActivity extends GameMainActivity {
 
     /**
      * loadGame, adds this games prepend to the desire file to open and creates the game specific state
-     * @param gameName
-     * 				The file to open
+     *
+     * @param gameName The file to open
      * @return The loaded GameState
      */
     @Override
-    public GameState loadGame(String gameName){
+    public GameState loadGame(String gameName) {
         String appName = getGameString(gameName);
         super.loadGame(appName);
         return (GameState) new StrategoGameState((StrategoGameState) Saving.readFromFile(appName, this.getApplicationContext()));

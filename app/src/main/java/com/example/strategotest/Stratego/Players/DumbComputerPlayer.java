@@ -27,7 +27,7 @@ import java.util.Random;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
+ * <p>
  * 04/21
  */
 public class DumbComputerPlayer extends GameComputerPlayer {
@@ -284,7 +284,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromY != 9) { // if spot right is empty
                 if (board[fromX][fromY + 1] == null) {
                     return true;
-                } else if (board[fromX][fromY+1].getPlayer() == -1) {
+                } else if (board[fromX][fromY + 1].getPlayer() == -1) {
                     return false;
                 } else if (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2) {
                     return true;

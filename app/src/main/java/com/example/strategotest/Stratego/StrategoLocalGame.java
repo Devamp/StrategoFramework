@@ -70,8 +70,7 @@ public class StrategoLocalGame extends LocalGame {
     /**
      * canMove -Check if the player can move
      *
-     * @param playerIdx
-     * 		the player's player-number (ID)
+     * @param playerIdx the player's player-number (ID)
      * @return
      */
     @Override
@@ -81,6 +80,7 @@ public class StrategoLocalGame extends LocalGame {
 
     /**
      * checkIfGameOver - check if the game is over and return the appropriate string
+     *
      * @return
      */
     @Override
@@ -123,8 +123,7 @@ public class StrategoLocalGame extends LocalGame {
     /**
      * makeMove-make the move based on recieved action
      *
-     * @param action
-     * 			The move that the player has sent to the game
+     * @param action The move that the player has sent to the game
      * @return
      */
     @Override
@@ -158,7 +157,7 @@ public class StrategoLocalGame extends LocalGame {
             }
 
             return toReturn;
-          //Undo turn
+            //Undo turn
         } else if (action instanceof StrategoUndoTurnAction) {
             //super.state = ((StrategoGameState)state).getBackup();
             return true;
@@ -172,7 +171,7 @@ public class StrategoLocalGame extends LocalGame {
                 return true;
             }
             return false;
-           //randomly place pieces
+            //randomly place pieces
         } else if (action instanceof StrategoRandomPlace) {
             return ((StrategoGameState) state).place(((StrategoRandomPlace) action).getPId());
         }

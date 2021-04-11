@@ -449,7 +449,7 @@ public class StrategoGameState extends GameState {
 
                 //set the index i j to a random piece from specific players arrayList of
                 //instantiated pieces
-                if(board[i][j] == null) {
+                if (board[i][j] == null) {
                     randomIndex = (int) (Math.random() * currentArmy.size());
 
                     //set that board index to the random index
@@ -459,16 +459,14 @@ public class StrategoGameState extends GameState {
                 }
 
 
-
             }
         }
-        if(player == 0){
-            for(int i = 0; i < 12; i++){
+        if (player == 0) {
+            for (int i = 0; i < 12; i++) {
                 redCharacter[i] = 0;
             }
-        }
-        else{
-            for(int i = 0; i < 12; i++){
+        } else {
+            for (int i = 0; i < 12; i++) {
                 blueCharacter[i] = 0;
             }
         }
@@ -646,7 +644,7 @@ public class StrategoGameState extends GameState {
     public boolean action(int fromX, int fromY, int toX, int toY) {
         int whoseE = (turn + 1) % 2;
         boolean success = false;
-        if(board[fromX][fromY] == null){
+        if (board[fromX][fromY] == null) {
             return false;
         }
         //Make sure you can't move opponent piece
@@ -975,7 +973,7 @@ public class StrategoGameState extends GameState {
         return blueCharacter;
     }
 
-    public void setBlueCharacterValue(int index, int value){
+    public void setBlueCharacterValue(int index, int value) {
         blueCharacter[index] = value;
     }
 

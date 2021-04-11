@@ -38,27 +38,26 @@ import java.util.TimerTask;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 4/21
- *
+ * <p>
  * Notes:
  * Make End turn and undo turn invisible until a move has been made
  * Lock out movement after a player has moved
  * Make opponents pieces invisible -- done
  * Can move the opponents pieces. Should probably fix that
  * If you click on an empty tile, and then try to click one of your pieces, it makes an illegal
- *      move action. Trying to then move the just clicked piece doesn't work and is confusing
- *      Maybe somehow highlight the currently selected piece
+ * move action. Trying to then move the just clicked piece doesn't work and is confusing
+ * Maybe somehow highlight the currently selected piece
  * Gotta reveal the piece that the player interacted with. Maybe that will be in beta?
  * I think I mixed up the undo turn and undo move
  * Don't lock the player out if they make an invalid move. They should get a warning and be
- *      allowed to keep making moves until a valid one is selected
+ * allowed to keep making moves until a valid one is selected
  * Hitting null space, null space for movement causes app to crash
- *
+ * <p>
  * Placing piece works but is incredibly buggy. Can place negative amount of pieces,
  * can place over lakes and opponents pieces. Places the wrong pieces. Doesn't check
  * once we have placed all pieces. Many errors. But it works.
- *
+ * <p>
  * Make textView on top of captured box to be place pieces in the place phase (instead of captured
  * pieces)
  */
@@ -127,12 +126,11 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     }
 
-    
+
     /**
      * returns the GUI's top view
      *
-     * @return
-     * 		the GUI's top view
+     * @return the GUI's top view
      */
     @Override
     public View getTopView() {
@@ -142,17 +140,16 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     /**
      * Callback method, called when player gets a message
      *
-     * @param info
-     * 		the message
+     * @param info the message
      */
     @Override
     public void receiveInfo(GameInfo info) {
 
-        if((info instanceof IllegalMoveInfo)){
-          hasMoved = false;
+        if ((info instanceof IllegalMoveInfo)) {
+            hasMoved = false;
         }
 
-        if(!(info instanceof StrategoGameState)){
+        if (!(info instanceof StrategoGameState)) {
             int myColor = Color.rgb(255, 0, 0);
             flash(myColor, 10000);
             return;
@@ -171,30 +168,29 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //When the turn is passed, display whose turn in the upper right corner
         setTurnColor(toUse);
 
-        if(toUse.getTurn() == humanPlayerID){
+        if (toUse.getTurn() == humanPlayerID) {
             toUse.showBoard(boardButtons);
         }
 
         //Set visibility of ranPlace button
-        if(myPhase == 0){
+        if (myPhase == 0) {
             ranPlace.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             ranPlace.setVisibility(View.INVISIBLE);
         }
 
         setEndUndoVisibility(myPhase);
 
         int[] troopNumbers;
-        if(humanPlayerID == 0){
+        if (humanPlayerID == 0) {
             //if the player is 0, they are red
             troopNumbers = toUse.getRedCharacter();
-        }else{
+        } else {
             troopNumbers = toUse.getBlueCharacter();
         }
 
         //set the number of captured pieces
-        for(int i = 0; i < piecesRemainLabel.length; i++){
+        for (int i = 0; i < piecesRemainLabel.length; i++) {
             String multi = "x" + troopNumbers[i];
             piecesRemainLabel[i].setText(multi);
         }
@@ -205,25 +201,24 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      *
      * @param myPhase
      */
-    public void allPiecesPlaced(int myPhase){
+    public void allPiecesPlaced(int myPhase) {
         //check to see if all the players pieces have been placed
-        if(myPhase == 0){
+        if (myPhase == 0) {
             boolean blueP = true;
             boolean redP = true;
-            for(int i = 0; i < 12; i++){
-                if(toUse.getBlueCharacter()[i] != 0){
+            for (int i = 0; i < 12; i++) {
+                if (toUse.getBlueCharacter()[i] != 0) {
                     blueP = false;
 
                 }
-                if(toUse.getRedCharacter()[i] != 0){
+                if (toUse.getRedCharacter()[i] != 0) {
                     redP = false;
 
                 }
             }
-            if(humanPlayerID == 1 && blueP){
+            if (humanPlayerID == 1 && blueP) {
                 endTurn.setVisibility(View.VISIBLE);
-            }
-            else if(humanPlayerID == 0 && redP){
+            } else if (humanPlayerID == 0 && redP) {
                 endTurn.setVisibility(View.VISIBLE);
             }
         }
@@ -234,9 +229,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      *
      * @param myPhase
      */
-    public void setEndUndoVisibility(int myPhase){
+    public void setEndUndoVisibility(int myPhase) {
         //if the player has made a move, undoTurn and endTurn become available
-        if(myPhase != 0) {
+        if (myPhase != 0) {
             if (hasMoved) {
                 endTurn.setVisibility(View.VISIBLE);
                 undoTurn.setVisibility(View.VISIBLE);
@@ -255,15 +250,15 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      *
      * @param state
      */
-    public void setTurnColor(StrategoGameState state){
+    public void setTurnColor(StrategoGameState state) {
         //set turn color to whatever players turn it is
-        if(toUse.getTurn() == 0){
+        if (toUse.getTurn() == 0) {
             //red players turn
             whoseTurn.setImageResource(R.drawable.redsquare);
-        }else if(toUse.getTurn() == 1){
+        } else if (toUse.getTurn() == 1) {
             //blue player is turn 1
             whoseTurn.setImageResource(R.drawable.bluesquare);
-        }else{
+        } else {
             whoseTurn.setImageResource(R.drawable.redsquare);
         }
     }
@@ -305,8 +300,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //https://www.technotalkative.com/android-findviewbyid-in-a-loop/
         //God bless ^^^^
         //Saved hours of tedious coding
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
                 String spaceID = "space" + (i) + (j);
 
                 int resID = myActivity.getResources().getIdentifier(spaceID, "id", myActivity.getPackageName());
@@ -329,7 +324,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         piecesRemain[10] = (ImageButton) activity.findViewById(R.id.bombTracker);
         piecesRemain[11] = (ImageButton) activity.findViewById(R.id.spyTracker);
 
-        for(int i = 0; i < piecesRemain.length; i++){
+        for (int i = 0; i < piecesRemain.length; i++) {
             piecesRemain[i].setOnClickListener(this);
         }
 
@@ -356,9 +351,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     @Override
     public void onClick(View v) {
-        if(v instanceof Button){
+        if (v instanceof Button) {
             buttonOnClick(v);
-        }else if(v instanceof ImageButton && !hasMoved){ //deleted && !hasMoved
+        } else if (v instanceof ImageButton && !hasMoved) { //deleted && !hasMoved
             imageButtonOnClick(v);
         }
     }
@@ -368,21 +363,21 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      *
      * @param v
      */
-    public void buttonOnClick(View v){
-            if(v.getId() == R.id.surrenderButton){
-                sendInfo(new GameOverInfo("Player has surrendered"));
-            }else if(v.getId() == R.id.endTurnButton){
-                PassTurnAction newPass = new PassTurnAction(this);
-                game.sendAction(newPass);
-                endTurn.setVisibility(View.INVISIBLE);
-                //reset whether they've moved or not
-                hasMoved = false;
-            }else if(v.getId() == R.id.undoTurnButton){
-                hasMoved = false;
-                game.sendAction(new StrategoUndoTurnAction(this));
-            } else if(v.getId() == R.id.randomPlace) {
-                game.sendAction(new StrategoRandomPlace(this, this.getHumanPlayerID()));
-            }
+    public void buttonOnClick(View v) {
+        if (v.getId() == R.id.surrenderButton) {
+            sendInfo(new GameOverInfo("Player has surrendered"));
+        } else if (v.getId() == R.id.endTurnButton) {
+            PassTurnAction newPass = new PassTurnAction(this);
+            game.sendAction(newPass);
+            endTurn.setVisibility(View.INVISIBLE);
+            //reset whether they've moved or not
+            hasMoved = false;
+        } else if (v.getId() == R.id.undoTurnButton) {
+            hasMoved = false;
+            game.sendAction(new StrategoUndoTurnAction(this));
+        } else if (v.getId() == R.id.randomPlace) {
+            game.sendAction(new StrategoRandomPlace(this, this.getHumanPlayerID()));
+        }
 
     }
 
@@ -392,12 +387,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      *
      * @param v
      */
-    public void imageButtonOnClick(View v){
+    public void imageButtonOnClick(View v) {
         int clickedRow = -1;
         int clickedCol = -1;
-        for(int row = 0; row < 10; row++){
-            for(int col= 0; col < 10; col++){
-                if(v.getId() == boardButtons[row][col].getId()){
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                if (v.getId() == boardButtons[row][col].getId()) {
                     clickedRow = row;
                     clickedCol = col;
                 }
@@ -405,12 +400,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
         //If we are in the movement phase, we want to call a method to deal with the movement
-        if(myPhase == 1){
+        if (myPhase == 1) {
             buttonClickMove(v, clickedRow, clickedCol);
-        }else if(myPhase == 0){
+        } else if (myPhase == 0) {
             //If we are in the placement phase, we want to call a method to deal with the placement
             buttonClickPlace(v, clickedRow, clickedCol);
-        }else{
+        } else {
 
         }
 
@@ -424,8 +419,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      * @param clickedRow
      * @param clickedCol
      */
-    public void buttonClickMove(View v, int clickedRow, int clickedCol){
-        if(selectedFirst){
+    public void buttonClickMove(View v, int clickedRow, int clickedCol) {
+        if (selectedFirst) {
             toX = clickedRow;
             toY = clickedCol;
             game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
@@ -433,7 +428,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
             //set the player to have moved so they can't move again
             hasMoved = true;
-        }else{
+        } else {
             fromX = clickedRow;
             fromY = clickedCol;
             selectedFirst = true;
@@ -450,15 +445,15 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      * @param clickedRow
      * @param clickedCol
      */
-    public void buttonClickPlace(View v, int clickedRow, int clickedCol){
-        if(selectToPlace){
+    public void buttonClickPlace(View v, int clickedRow, int clickedCol) {
+        if (selectToPlace) {
             toX = clickedRow;
             toY = clickedCol;
-            if(placePieceVal != -1) {
+            if (placePieceVal != -1) {
                 game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
             }
             selectToPlace = false;
-        }else{
+        } else {
             //load the value of the piece we want to place. Will use given value to find correct
             //piece in instantiated pieces ArrayList
             placePieceVal = getTheValue(v);
@@ -472,9 +467,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      * @param v
      * @return
      */
-    private int getTheValue(View v){
+    private int getTheValue(View v) {
         //seriously, what's the way to do this without the switch statement? Hash table?
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.flagTracker:
                 return 0;
 //                break;
@@ -518,35 +513,29 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     }
 
     /**
-     *
      * @return
      */
-    public int getHumanPlayerID(){
+    public int getHumanPlayerID() {
         return humanPlayerID;
     }
 
     /**
      * Starts the timer by creating a TimerTask object and have it increment and change the
      * timerText during runtime.
-     *
+     * <p>
      * Resources: https://stackoverflow.com/questions/33979132/cannot-resolve-method-runonuithread
      * Problem: (1.) The app kept crashing within the first couple of seconds that the timer starts to tick
-     *          (2.) Cannot resolve method .runOnUiThread
+     * (2.) Cannot resolve method .runOnUiThread
      * Solution:(1.) Added 'runOnUiThread' so that the TimerTask object would run its specified action on the UI thread
-     *          (2.) added 'getActivity().' right before runOnUiThread
+     * (2.) added 'getActivity().' right before runOnUiThread
      */
-    private void startTimer()
-    {
-        timerTask = new TimerTask()
-        {
+    private void startTimer() {
+        timerTask = new TimerTask() {
             @Override
-            public void run()
-            {
-                getActivity().runOnUiThread(new Runnable()
-                {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         time++;
                         timerText.setText(getTimerText());
                     }
@@ -556,7 +545,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         };
         // Start the timer with no delay upon launch of the main game and
         // change it every 1000 milliseconds (1 second)
-        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
     }
 
     /**
