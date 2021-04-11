@@ -20,7 +20,6 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
 public class StrategoLocalGame extends LocalGame {
@@ -57,18 +56,33 @@ public class StrategoLocalGame extends LocalGame {
      * @param p the player to notify
      */
 
-    // Updated this parameter = without typecast
+    /**
+     * sendUpdatedStateTo - send updated gamestate to a player
+     *
+     * @param p
+     */
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
         p.sendInfo(super.state);
 
     }
 
+    /**
+     * canMove -Check if the player can move
+     *
+     * @param playerIdx
+     * 		the player's player-number (ID)
+     * @return
+     */
     @Override
     protected boolean canMove(int playerIdx) {
         return playerIdx == ((StrategoGameState) state).getTurn();
     }
 
+    /**
+     * checkIfGameOver - check if the game is over and return the appropriate string
+     * @return
+     */
     @Override
     protected String checkIfGameOver() {
 
@@ -89,11 +103,9 @@ public class StrategoLocalGame extends LocalGame {
                 if (i > 0 && i < 10 || i == 11) {
                     if (((StrategoGameState) state).getBlueCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
                         blueL = false;
-
                     }
                     if (((StrategoGameState) state).getRedCharacter()[i] != ((StrategoGameState) state).getFilledRedCharacters()[i]) {
                         redL = false;
-
                     }
                 }
             }
@@ -108,12 +120,19 @@ public class StrategoLocalGame extends LocalGame {
         return null;
     }
 
+    /**
+     * makeMove-make the move based on recieved action
+     *
+     * @param action
+     * 			The move that the player has sent to the game
+     * @return
+     */
     @Override
     protected boolean makeMove(GameAction action) {
 
         StrategoGameState gameState = (StrategoGameState) super.state;
 
-
+        //Pass turn to next player
         if (action instanceof PassTurnAction) {
 //            officialState.endTurn();
             if (gameState.endTurn()) {
@@ -139,23 +158,23 @@ public class StrategoLocalGame extends LocalGame {
             }
 
             return toReturn;
-
+          //Undo turn
         } else if (action instanceof StrategoUndoTurnAction) {
             //super.state = ((StrategoGameState)state).getBackup();
             return true;
-
+            //Back up the board so you can undo turn
         } else if (action instanceof StrategoBackupAction) {
             gameState.saveBackup();
             return true;
-
+            //Place a piece
         } else if (action instanceof StrategoPlaceAction) {
             if (gameState.placeChosenPiece(((StrategoPlaceAction) action).getPlayer(), ((StrategoPlaceAction) action).getValue(), ((StrategoPlaceAction) action).getRow(), ((StrategoPlaceAction) action).getCol())) {
                 return true;
             }
             return false;
-
+           //randomly place pieces
         } else if (action instanceof StrategoRandomPlace) {
-            return ((StrategoGameState) state).place(((StrategoRandomPlace)action).getPId());
+            return ((StrategoGameState) state).place(((StrategoRandomPlace) action).getPId());
         }
 
         return false;
