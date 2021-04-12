@@ -19,8 +19,7 @@ public class GameOverInfo extends GameInfo {
     /**
      * constructor
      *
-     * @param msg
-     * 		a message that tells the result of the game
+     * @param msg a message that tells the result of the game
      */
     public GameOverInfo(String msg) {
         this.message = msg;
@@ -29,8 +28,7 @@ public class GameOverInfo extends GameInfo {
     /**
      * getter method for the message
      *
-     * @return
-     * 		the message, telling the result of the game
+     * @return the message, telling the result of the game
      */
     public String getMessage() {
         return message;

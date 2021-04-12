@@ -53,7 +53,7 @@ public class StrategoGameState extends GameState {
     StrategoGameState backup = null;
 
     /**
-     * ctor
+     * constructor for gamestate
      */
     public StrategoGameState() {
         //character array for each color
@@ -449,7 +449,7 @@ public class StrategoGameState extends GameState {
 
                 //set the index i j to a random piece from specific players arrayList of
                 //instantiated pieces
-                if(board[i][j] == null) {
+                if (board[i][j] == null) {
                     randomIndex = (int) (Math.random() * currentArmy.size());
 
                     //set that board index to the random index
@@ -459,16 +459,75 @@ public class StrategoGameState extends GameState {
                 }
 
 
+            }
+        }
+        if (player == 0) {
+            for (int i = 0; i < 12; i++) {
+                redCharacter[i] = 0;
+            }
+        } else {
+            for (int i = 0; i < 12; i++) {
+                blueCharacter[i] = 0;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * This is a method to test the action method
+     * @param player
+     * @return
+     */
+    public boolean placeNotRandom(int player) {
+        int start;
+        int randomIndex;
+        ArrayList<Piece> currentArmy;
+
+        //place red pieces on bottom of board
+        if (player == 0) {
+            start = 6;
+            currentArmy = redBench;
+        } else {
+            start = 0;
+            currentArmy = blueBench;
+        }
+
+        //iterate over the first 4, or last 4 rows depending on blue or red player
+        for (int i = start; i < start + 4; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+
+                //place the flag in the last possible place
+                if (j == board[i].length - 1 && i == start + 3) {
+                    board[i][j] = currentArmy.get(0);
+                    currentArmy.remove(0);
+                } else {
+                    board[i][j] = currentArmy.get(1);
+                    currentArmy.remove(1);
+                }
+
+
+
+                //set the index i j to a random piece from specific players arrayList of
+                //instantiated pieces
+               // if (board[i][j] == null) {
+                //    randomIndex = (int) (Math.random() * currentArmy.size());
+
+                    //set that board index to the random index
+                   // board[i][j] = currentArmy.get(randomIndex);
+                    //once placed from bench it should be removed as its now on the board
+                 //   currentArmy.remove(randomIndex);
+                //}
+
 
             }
         }
-        if(player == 0){
-            for(int i = 0; i < 12; i++){
+        if (player == 0) {
+            for (int i = 0; i < 12; i++) {
                 redCharacter[i] = 0;
             }
-        }
-        else{
-            for(int i = 0; i < 12; i++){
+        } else {
+            for (int i = 0; i < 12; i++) {
                 blueCharacter[i] = 0;
             }
         }
@@ -607,32 +666,6 @@ public class StrategoGameState extends GameState {
         return true;
     }
 
-    /**
-     * Duplicate of the placeRemove method, but edited to meet the computer's needs
-     *
-     * @param value - what the piece value is
-     * @param row   - row to place piece
-     * @param col-  col to place piece
-     * @return returns true if piece is removed or placed, false if failure
-     */
-    public boolean placeRemoveComputer(int value, int row, int col) {
-        if (phase == 0) {
-            if (board[row][col] == null || board[row][col] != null) {
-                String returnName = setName(value);
-                //Put piece in that spot
-                board[row][col] = new Piece(returnName, value, turn);
-                return true;
-            } else if (board[row][col].getValue() < 0 || board[row][col].getPlayer() < 0) {
-                //don't mess with lake
-                return false;
-
-            }
-        } else {
-            return false;
-        }
-        return false;
-    }
-
 
     /**
      * action: Preforms the attack and move methods depending on the situation
@@ -646,7 +679,7 @@ public class StrategoGameState extends GameState {
     public boolean action(int fromX, int fromY, int toX, int toY) {
         int whoseE = (turn + 1) % 2;
         boolean success = false;
-        if(board[fromX][fromY] == null){
+        if (board[fromX][fromY] == null) {
             return false;
         }
         //Make sure you can't move opponent piece
@@ -750,26 +783,6 @@ public class StrategoGameState extends GameState {
         return success;
     }
 
-    /**
-     * printBoard prints the pieces on the board with piece information and visibility
-     *
-     * @return
-     */
-    public String printBoard() {
-        String boardS = "";
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] != null) {
-                    boardS += board[i][j];
-
-                } else {
-                    boardS += "[null]";
-                }
-            }
-            boardS += "\n";
-        }
-        return boardS;
-    }
 
     //toString method print current state of the game as a String
     @Override
@@ -863,25 +876,6 @@ public class StrategoGameState extends GameState {
         return isTrue;
     }
 
-    /**
-     * setPhase: set the state of the Game State
-     *
-     * @param gameState - the state of the game
-     * @param newPhase  - the phase to be set onto the Game State
-     * @return returns isTrue, TRUE if phase is 0, 1, or 2; FALSE otherwise
-     */
-    public boolean setPhase(StrategoGameState gameState, int newPhase) {
-        boolean isTrue = false;
-
-        if (gameState.phase == 0 || gameState.phase == 1 || gameState.phase == 2) {
-            gameState.phase = newPhase;
-            isTrue = true;
-        } else {
-            isTrue = false;
-        }
-
-        return isTrue;
-    }
 
     /**
      * increaseCap - increase the captured pieces of the pieceValue type
@@ -926,9 +920,6 @@ public class StrategoGameState extends GameState {
         }
     }
 
-    public Piece[][] getBoard() {
-        return board;
-    }
 
     /**
      * equals - Checks if two GameStates are equal
@@ -950,10 +941,18 @@ public class StrategoGameState extends GameState {
         return true;
     }
 
+
+    /**
+     * Getters and setters for our instance variables within the gamestate class.
+     *
+     */
     public int getId() {
         return turn;
     }
 
+    public Piece[][] getBoard() {
+        return board;
+    }
 
     public int getPhase() {
         return phase;
@@ -975,7 +974,7 @@ public class StrategoGameState extends GameState {
         return blueCharacter;
     }
 
-    public void setBlueCharacterValue(int index, int value){
+    public void setBlueCharacterValue(int index, int value) {
         blueCharacter[index] = value;
     }
 

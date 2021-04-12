@@ -79,7 +79,9 @@ public class StrategoGameStateTest {
     }
 
     @Test
-    //Caden's Test
+    /**
+     * Caden-I did this
+     */
     public void setName() {
         StrategoGameState s = new StrategoGameState();
         assertEquals(s.setName(1),"Marshall");
@@ -88,9 +90,12 @@ public class StrategoGameStateTest {
 
 
     @Test
-    //Caden's Test
+    /**
+     * Caden - I did this
+     */
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
+        //Make sure two icons are set properly
         assertEquals(s.setIcon(1),R.drawable.marsh);
         assertEquals(s.setIcon(10),R.drawable.bomb);
 
@@ -150,19 +155,41 @@ public class StrategoGameStateTest {
     public void placeRemoveComputer() {
     }
 
+    /**
+     * Caden- I did this
+     */
     @Test
     public void action() {
         StrategoGameState state = new StrategoGameState();
+        //Place the pieces in a non-random fashion
+        state.placeNotRandom(0);
+        state.placeNotRandom(1);
+        //Move to a valid spot
         assertEquals(state.action(6,9,5,9), true);
+        //Try to make a diagonal move, this should fail
         assertEquals(state.action(5,9,4,8), false);
+        //Make sure the piece did not move
         assertEquals(state.getBoard()[5][9].getValue(),5);
+        //Make another valid move
         assertEquals(state.action(5,9,5,8), true);
+        //Try to move into a lake this should fail
         assertEquals(state.action(5,8,5,7), false);
+        //Make sure piece did not move
+        assertEquals(state.getBoard()[5][8].getValue(),5);
+        //Move forward again this should work
+        assertEquals(state.action(5,8,4,8), true);
+        //Move and take a piece
+        assertEquals(state.action(4,8,3,8), true);
+        //make sure the piece is there
+        assertEquals(state.getBoard()[3][8].getValue(),5);
+        //try and move opponents piece
+        assertEquals(state.action(3,9,4,9), false);
+        //Try to move your piece multiple spaces
+        assertEquals(state.action(3,8,5,8), false);
+        //make sure the piece is still there
+        assertEquals(state.getBoard()[3][8].getValue(),5);
 
-    }
 
-    @Test
-    public void printBoard() {
     }
 
     @Test
@@ -177,8 +204,16 @@ public class StrategoGameStateTest {
         assertEquals(s.getTurn(),1);
     }
 
+    /**
+     * Tested by: Caden Deutscher
+     */
     @Test
     public void setPhase() {
+        StrategoGameState state = new StrategoGameState();
+        //set phase
+        state.setPhase(1);
+        //check phase
+       assertEquals(state.getPhase(),1);
     }
 
     /**
@@ -207,16 +242,32 @@ public class StrategoGameStateTest {
     public void movePrint() {
     }
 
+    /**
+     * Tested by: Devam Patel
+     */
     @Test
     public void getBoard() {
+        StrategoGameState state = new StrategoGameState();
+        Piece[][] testBoard = state.getBoard(); // get the board from current state
+
+
+        //default piece at [4][2] should be a lake, i.e value "-1"
+        assertEquals(testBoard[4][2].getValue(), -1); // check to see if board has correct value at that position
+
     }
 
     @Test
     public void testEquals() {
     }
 
+    /**
+     * Caden - i did this
+     */
     @Test
     public void getId() {
+        StrategoGameState state = new StrategoGameState();
+        //Make sure the turn is 0 to start
+        assertEquals(state.getId(),0);
     }
 
     @Test
@@ -261,16 +312,32 @@ public class StrategoGameStateTest {
      */
     public void getRedCharacter() {
         StrategoGameState state = new StrategoGameState();
-        state.setInBlueCharacter(10, 7);
-        assertEquals(state.getBlueCharacter()[10], 7);
+        state.setInRedCharacter(10, 7);
+        assertEquals(state.getRedCharacter()[10], 7);
     }
 
+
+    /**
+     * Tested by: Devam Patel
+     */
     @Test
     public void getTurn() {
+        StrategoGameState state = new StrategoGameState();
+        assertEquals(state.getTurn(), 0); // default turn is 0
+        state.setTurn(1); // set turn to 1
+        assertEquals(state.getTurn(), 1);
+
     }
 
+    /**
+     * Tested by: Devam Patel
+     *
+     */
     @Test
     public void setTurn() {
+        StrategoGameState state = new StrategoGameState();
+        state.setTurn(1); // set turn to player 1
+        assertEquals(state.getTurn(), 1);
     }
 
     @Test
