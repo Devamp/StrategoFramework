@@ -274,9 +274,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
                 if (board[fromX + 1][fromY] == null) {
                     return true;
-                } else if (board[fromX + 1][fromY].getPlayer() == -1) {
+                } else if (board[fromX + 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX + 1][fromY].getPlayer() == playerNum + 1 % 2) {
+                } else if (board[fromX + 1][fromY].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
                     return true;
                 }
             }
@@ -284,9 +284,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromY != 9) { // if spot right is empty
                 if (board[fromX][fromY + 1] == null) {
                     return true;
-                } else if (board[fromX][fromY + 1].getPlayer() == -1) {
+                } else if (board[fromX][fromY + 1].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2) {
+                } else if (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
                     return true;
                 }
             }
@@ -294,9 +294,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromY != 0) { // if spot to left is empty
                 if (board[fromX][fromY - 1] == null) {
                     return true;
-                } else if (board[fromX][fromY - 1].getPlayer() == -1) {
+                } else if (board[fromX][fromY - 1].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX][fromY - 1].getPlayer() == playerNum + 1 % 2) {
+                } else if (board[fromX][fromY - 1].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
                     return true;
                 }
             }
@@ -305,9 +305,9 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             if (fromX != 0) { // if spot above is empty
                 if (board[fromX - 1][fromY] == null) {
                     return true;
-                } else if (board[fromX - 1][fromY].getPlayer() == -1) {
+                } else if (board[fromX - 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX - 1][fromY].getPlayer() == playerNum + 1 % 2) {
+                } else if (board[fromX - 1][fromY].getPlayer() == playerNum + 1 % 2) { // if its a enemy player, return true and attack!
                     return true;
                 }
             }
