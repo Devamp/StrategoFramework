@@ -146,10 +146,6 @@ public class StrategoGameStateTest {
     }
 
     @Test
-    public void printBoard() {
-    }
-
-    @Test
     public void testToString() {
     }
 
@@ -191,8 +187,18 @@ public class StrategoGameStateTest {
     public void movePrint() {
     }
 
+    /**
+     * Tested by: Devam Patel
+     */
     @Test
     public void getBoard() {
+        StrategoGameState state = new StrategoGameState();
+        Piece[][] testBoard = state.getBoard(); // get the board from current state
+
+
+        //default piece at [4][2] should be a lake, i.e value "-1"
+        assertEquals(testBoard[4][2].getValue(), -1); // check to see if board has correct value at that position
+
     }
 
     @Test
@@ -245,16 +251,32 @@ public class StrategoGameStateTest {
      */
     public void getRedCharacter() {
         StrategoGameState state = new StrategoGameState();
-        state.setInBlueCharacter(10, 7);
-        assertEquals(state.getBlueCharacter()[10], 7);
+        state.setInRedCharacter(10, 7);
+        assertEquals(state.getRedCharacter()[10], 7);
     }
 
+
+    /**
+     * Tested by: Devam Patel
+     */
     @Test
     public void getTurn() {
+        StrategoGameState state = new StrategoGameState();
+        assertEquals(state.getTurn(), 0); // default turn is 0
+        state.setTurn(1); // set turn to 1
+        assertEquals(state.getTurn(), 1);
+
     }
 
+    /**
+     * Tested by: Devam Patel
+     *
+     */
     @Test
     public void setTurn() {
+        StrategoGameState state = new StrategoGameState();
+        state.setTurn(1); // set turn to player 1
+        assertEquals(state.getTurn(), 1);
     }
 
     @Test

@@ -722,26 +722,6 @@ public class StrategoGameState extends GameState {
         return success;
     }
 
-    /**
-     * printBoard prints the pieces on the board with piece information and visibility
-     *
-     * @return
-     */
-    public String printBoard() {
-        String boardS = "";
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] != null) {
-                    boardS += board[i][j];
-
-                } else {
-                    boardS += "[null]";
-                }
-            }
-            boardS += "\n";
-        }
-        return boardS;
-    }
 
     //toString method print current state of the game as a String
     @Override
