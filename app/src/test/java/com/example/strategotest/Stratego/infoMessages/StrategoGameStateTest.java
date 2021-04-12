@@ -2,6 +2,7 @@ package com.example.strategotest.Stratego.infoMessages;
 
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.SpecialPiece;
 
 import org.junit.Test;
 
@@ -32,34 +33,49 @@ public class StrategoGameStateTest {
 
     }
 
+    /**
+     * @author Gareth Rice
+     */
     @Test
     public void getBackup() {
         StrategoGameState myState = new StrategoGameState();
 
         myState.saveBackup();
 
+        //Make a state to hold the backup
         StrategoGameState backup = new StrategoGameState();
         backup = myState.getBackup();
 
-        assertEquals(myState, backup);
+        //Make a copy of the myState field
+        StrategoGameState old = new StrategoGameState(myState);
+
+        assertEquals(old, backup);
     }
 
     @Test
     public void showBoard() {
     }
 
+    /**
+     * @author Gareth
+     *
+     * Makes sure the pieces that will be used to place are instanced correctly
+     * Comparison fails, but it says the two values are the same?
+     */
     @Test
     public void instancePieces() {
         StrategoGameState gameState = new StrategoGameState();
         //calling constructor should have already called instancePieces
 
-//        gameState.instancePieces(0);
+        Piece practicePiece = gameState.redBench.get(0);
+        //the first instanced piece of red should be flag with value zero for player 0
+        Piece practiceRed = new SpecialPiece("Flag", 0, 0);
 
-        ArrayList<Piece> redBench = gameState.getRedBench();
-        Piece practicePiece = gameState.redBench.get(1);
-        Piece practiceBlue = gameState.blueBench.get(1);
+        Piece lastPiece = gameState.redBench.get(39);
+        Piece practiceLast = new Piece("Spy", 11, 0);
 
-        assertEquals(practicePiece, practiceBlue);
+        assertEquals(practicePiece, practiceRed);
+        assertEquals(lastPiece, practiceLast);
     }
 
     @Test

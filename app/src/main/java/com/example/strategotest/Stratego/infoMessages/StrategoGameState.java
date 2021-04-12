@@ -250,7 +250,9 @@ public class StrategoGameState extends GameState {
 
         if (player == 0) {
             assign = redBench;
-//            numberPieces = redCharacter;
+
+            //deep copies number pieces so the official counts don't decrease until the piece
+            //is placed on the board
             for (int i = 0; i < numberPieces.length; i++) {
                 numberPieces[i] = redCharacter[i];
             }
@@ -273,10 +275,8 @@ public class StrategoGameState extends GameState {
                 //if the piece is flag or bomb, create special piece
                 if (i == 0 || i == 10) {
                     assign.add(new SpecialPiece(name, i, player));
-//                    assign.add(new SpecialPiece(name, i, player, theIcon));
                 } else {
                     //we can add conditions to add spy, miner, and scout special pieces
-//                    assign.add(new Piece(name, i, player, theIcon));
                     assign.add(new Piece(name, i, player));
                 }
 
