@@ -475,6 +475,67 @@ public class StrategoGameState extends GameState {
     }
 
     /**
+     * This is a method to test the action method
+     * @param player
+     * @return
+     */
+    public boolean placeNotRandom(int player) {
+        int start;
+        int randomIndex;
+        ArrayList<Piece> currentArmy;
+
+        //place red pieces on bottom of board
+        if (player == 0) {
+            start = 6;
+            currentArmy = redBench;
+        } else {
+            start = 0;
+            currentArmy = blueBench;
+        }
+
+        //iterate over the first 4, or last 4 rows depending on blue or red player
+        for (int i = start; i < start + 4; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+
+                //place the flag in the last possible place
+                if (j == board[i].length - 1 && i == start + 3) {
+                    board[i][j] = currentArmy.get(0);
+                    currentArmy.remove(0);
+                } else {
+                    board[i][j] = currentArmy.get(1);
+                    currentArmy.remove(1);
+                }
+
+
+
+                //set the index i j to a random piece from specific players arrayList of
+                //instantiated pieces
+               // if (board[i][j] == null) {
+                //    randomIndex = (int) (Math.random() * currentArmy.size());
+
+                    //set that board index to the random index
+                   // board[i][j] = currentArmy.get(randomIndex);
+                    //once placed from bench it should be removed as its now on the board
+                 //   currentArmy.remove(randomIndex);
+                //}
+
+
+            }
+        }
+        if (player == 0) {
+            for (int i = 0; i < 12; i++) {
+                redCharacter[i] = 0;
+            }
+        } else {
+            for (int i = 0; i < 12; i++) {
+                blueCharacter[i] = 0;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * placeRemove: places a single piece or removes a single piece
      *
      * @param value - what the piece value is
