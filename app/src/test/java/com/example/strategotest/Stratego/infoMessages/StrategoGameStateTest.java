@@ -151,9 +151,6 @@ public class StrategoGameStateTest {
 
     }
 
-    @Test
-    public void placeRemoveComputer() {
-    }
 
     /**
      * Caden- I did this
@@ -256,8 +253,16 @@ public class StrategoGameStateTest {
 
     }
 
+    /**
+     * Tested by: Devam Patel
+     *
+     */
     @Test
-    public void testEquals() {
+    public void Equals() {
+        StrategoGameState stateOne = new StrategoGameState();
+        StrategoGameState stateTwo = new StrategoGameState();
+
+
     }
 
     /**
