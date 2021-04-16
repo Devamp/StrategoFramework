@@ -3,12 +3,14 @@ package com.example.strategotest.Stratego.Players;
 import android.view.View;
 
 import com.example.strategotest.Stratego.Piece;
+import com.example.strategotest.Stratego.SmartHelper;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,6 +25,9 @@ import java.util.Random;
  */
 public class SmartComputerPlayer extends GameComputerPlayer {
     private StrategoGameState theState = null;
+    private ArrayList<SmartHelper> moveAttacks = new ArrayList<SmartHelper>();
+    private ArrayList<SmartHelper> moveEscape = new ArrayList<SmartHelper>();
+    private ArrayList<SmartHelper> moves = new ArrayList<SmartHelper>();
     /**
      * constructor
      *
@@ -75,6 +80,8 @@ public class SmartComputerPlayer extends GameComputerPlayer {
             game.sendAction(new StrategoRandomPlace(this,playerNum));
         }
         else if(theState.getPhase() == 1){
+            Piece[][] theBoard = theState.getBoard();
+
 
         }
 
@@ -98,6 +105,111 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         }
         return 0;
   }
+
+  public void checkPieces(Piece[][] board) {
+      for(int row = 0; row < 9; row++){
+          for(int col = 0; col< 9; col++){
+            if(board[row][col].getPlayer() == playerNum){
+
+            }
+          }
+      }
+  }
+
+  public void lookAround( Piece[][] board, int r, int c){
+      if(c < 9) {
+          switch (value(board[r][c + 1], board[r][c].getValue())) {
+              case 0:
+                  moves.add(new SmartHelper(r,c,r,c+1));
+                  break;
+              case 1:
+                  moveAttacks.add(new SmartHelper(r,c,r,c+1));
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              default:
+                  break;
+          }
+      }
+      if(c > 0) {
+          switch (value(board[r][c - 1], board[r][c].getValue())) {
+              case 0:
+                  moves.add(new SmartHelper(r,c,r,c-1));
+                  break;
+              case 1:
+                  moveAttacks.add(new SmartHelper(r,c,r,c-1));
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              default:
+                  break;
+          }
+      }
+      if(r > 0) {
+          switch (value(board[r - 1][c], board[r][c].getValue())) {
+              case 0:
+                  moves.add(new SmartHelper(r-1,c,r,c));
+                  break;
+              case 1:
+                  moveAttacks.add(new SmartHelper(r-1,c,r,c));
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              default:
+                  break;
+          }
+      }
+      if(r < 9) {
+          switch (value(board[r + 1][c], board[r][c].getValue())) {
+              case 0:
+                  moves.add(new SmartHelper(r+1,c,r,c));
+                  break;
+              case 1:
+                  moveAttacks.add(new SmartHelper(r+1,c,r,c));
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              default:
+                  break;
+          }
+      }
+
+  }
+
+    /**
+     * Determines the senario the spot in question is.
+     * @param p
+     * @return
+     */
+    public int value( Piece p, int v){
+      if(p == null){
+          return 0;
+      }
+      if(p.getPlayer() < 0){
+          return -1;
+      }
+      if(p.getVisible() == true && p.getPlayer() != playerNum){
+          if(p.getValue() < v || p.getValue() == 10 && v != 8){
+              return 3;
+          }
+         if(p.getValue() > v  && (p.getValue() != 10 || v == 8)){
+             return 1;
+         }
+      }
+        if(p.getVisible() == false && p.getPlayer() != playerNum){
+            return 2;
+        }
+      return  -1;
+    }
+
 
 
 
