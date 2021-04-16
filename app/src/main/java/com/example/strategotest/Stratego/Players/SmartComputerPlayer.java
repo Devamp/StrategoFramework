@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SmartHelper;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
 import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
@@ -81,11 +82,26 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         }
         else if(theState.getPhase() == 1){
             Piece[][] theBoard = theState.getBoard();
+            checkPieces(theBoard);
+            if(!moveAttacks.isEmpty()){
+
+                }
+
+            }
+            else if(!moves.isEmpty()){
+
+            }
+            else if(!worstCase.isEmpty()){
+
+            }
+            else{
+                ///Game Should have ended
+            }
 
 
         }
 
-    }
+
 
     /**
      * Checks to make sure bombs wont be out of bounds.
