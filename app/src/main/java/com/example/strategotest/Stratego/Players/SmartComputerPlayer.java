@@ -58,17 +58,17 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                     game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
                     game.sendAction(new StrategoPlaceAction(this, 10 , rand + 1, side ));
                     game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, side ));
-                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1)));
                     break;
                 case 1:
                     game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
                     game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, side ));
-                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1)));
                     break;
                 case 2:
                     game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
                     game.sendAction(new StrategoPlaceAction(this, 10 , rand + 1, side ));
-                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1)));
                     break;
             }
             //Place the rest of the pieces
