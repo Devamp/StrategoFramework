@@ -97,6 +97,9 @@ public class SmartComputerPlayer extends GameComputerPlayer {
             else{
                 ///Game Should have ended
             }
+            moveAttacks.clear();
+            moves.clear();
+            worstCase.clear();
 
 
         }
