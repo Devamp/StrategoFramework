@@ -2,7 +2,9 @@ package com.example.strategotest.Stratego.Players;
 
 import android.view.View;
 
+import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.actionMessage.StrategoPlaceAction;
+import com.example.strategotest.Stratego.actionMessage.StrategoRandomPlace;
 import com.example.strategotest.Stratego.infoMessages.StrategoGameState;
 import com.example.strategotest.game.GameFramework.infoMessage.GameInfo;
 import com.example.strategotest.game.GameFramework.players.GameComputerPlayer;
@@ -20,9 +22,7 @@ import java.util.Random;
  * The hard computer is not functional yet
  */
 public class SmartComputerPlayer extends GameComputerPlayer {
-    private boolean placed[][] = new boolean[10][10];
-    private int pieces[][] = new int[10][10];
-
+    private StrategoGameState theState = null;
     /**
      * constructor
      *
@@ -37,76 +37,70 @@ public class SmartComputerPlayer extends GameComputerPlayer {
      */
     @Override
     protected void receiveInfo(GameInfo info) {
-        StrategoGameState gameState = new StrategoGameState((StrategoGameState) info);
-
-        //Check to make sure it your turn
-        if (gameState.getTurn() != playerNum) {
+        if (!(info instanceof StrategoGameState)) {
             return;
         }
 
-        //in placement phase
-        if (gameState.getPhase() == 0) {
-            initializePlace();
-            //int r1 = (int)(Math.random()*3);
-
-            //Place Flag first
-            /**
-             * flag placement here
-             */
-
-
-            //Place other pieces
-            for (int p = 0; p < 11; p++) {
-                for (int n = 0; n < gameState.getRedCharacter()[p]; n++) {
-                    //Generate random values
-                    int rr = (int) (Math.random() * 4) + 6;
-                    int rc = (int) (Math.random() * 10);
-                    int four = 0;
-                    //Loop through to find an empty spot
-                    while (placed[rr][rc]) {
-                        four++;
-                        rr += ((rr + 1) + 6) % 10;
-                        if (four == 4) {
-                            rc += (rc + 1) % 10;
-                        }
-
-                    }
-                    //Place spy and 2
-                    if (p == 0) {
-                        game.sendAction(new StrategoPlaceAction(this, p, rr, rc));
-                        game.sendAction(new StrategoPlaceAction(this, p, rr, rc));
-                    }
-                    //randomly place all other pieces
-                    else {
-                        game.sendAction(new StrategoPlaceAction(this, p, rr, rc));
-                        placed[rr][rc] = true;
-                    }
-                }
+        if(theState.getPhase() == 0){
+            //Place flag
+            int rand = (int)(Math.random()*10);
+            int side;
+            //Determine which side to place things on
+            if(playerNum == 1){
+                side = 9;
             }
-        } else if (gameState.getPhase() == 1) {
+            else{
+                side = 0;
+            }
+            //Place flag with bombs around flag
+            switch(flagBoundaries(rand)){
+                case 0:
+                    game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand + 1, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    break;
+                case 1:
+                    game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    break;
+                case 2:
+                    game.sendAction(new StrategoPlaceAction(this, 0 , rand, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand + 1, side ));
+                    game.sendAction(new StrategoPlaceAction(this, 10 , rand - 1, Math.abs(side-1));
+                    break;
+            }
+            //Place the rest of the pieces
+            game.sendAction(new StrategoRandomPlace(this,playerNum));
+        }
+        else if(theState.getPhase() == 1){
 
         }
 
     }
 
     /**
-     * Initialize the the place variable to all false;
-     * This will check if a spot has been placed already;
+     * Checks to make sure bombs wont be out of bounds.
+     * @param row
+     * @return
+     * 1 if bomb would be greater
+     * 2 of bomb would be less than bounds
+     * 0 if bombs fit on both sides
      */
-    private void initializePlace() {
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 10; col++) {
-                placed[row][col] = false;
-            }
-        }
-    }
+  public int flagBoundaries( int row){
+        if(row + 1 > 9){
+            return 1;
 
-    private boolean isInBound(int r, int c) {
-        if (r > 9 || c > 9 || r < 0 || c < 0) {
-            return false;
         }
-        return true;
-    }
+        if(row - 1 < 0){
+            return 2;
+        }
+        return 0;
+  }
+
+
+
 
 
 }

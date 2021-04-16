@@ -11,5 +11,19 @@ public class SmartHelper {
         trow = tr;
         tcol = tr;
     }
+    public int getRow(){
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+    public int getTrow(){
+        return trow;
+    }
+    public int getTcol(){
+        return tcol;
+    }
+
 
 }
