@@ -26,8 +26,8 @@ import java.util.Random;
 public class SmartComputerPlayer extends GameComputerPlayer {
     private StrategoGameState theState = null;
     private ArrayList<SmartHelper> moveAttacks = new ArrayList<SmartHelper>();
-    private ArrayList<SmartHelper> moveEscape = new ArrayList<SmartHelper>();
     private ArrayList<SmartHelper> moves = new ArrayList<SmartHelper>();
+    private ArrayList<SmartHelper> worstCase = new ArrayList<SmartHelper>();
     /**
      * constructor
      *
@@ -106,16 +106,26 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         return 0;
   }
 
+    /**
+     * Find all of your pieces and  call look around on them
+     * @param board
+     */
   public void checkPieces(Piece[][] board) {
       for(int row = 0; row < 9; row++){
           for(int col = 0; col< 9; col++){
             if(board[row][col].getPlayer() == playerNum){
-
+                lookAround(board,row,col);
             }
           }
       }
   }
 
+    /**
+     * Depending on what is around you add the appropriate action to a arraylist
+     * @param board
+     * @param r
+     * @param c
+     */
   public void lookAround( Piece[][] board, int r, int c){
       if(c < 9) {
           switch (value(board[r][c + 1], board[r][c].getValue())) {
@@ -126,8 +136,15 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                   moveAttacks.add(new SmartHelper(r,c,r,c+1));
                   break;
               case 2:
+                  if(board[r][c].getValue() >= 5){
+                      moveAttacks.add(new SmartHelper(r,c,r,c+1));
+                  }
+                  else{
+                      worstCase.add(new SmartHelper(r,c,r,c+1));
+                  }
                   break;
               case 3:
+                  worstCase.add(new SmartHelper(r,c,r,c+1));
                   break;
               default:
                   break;
@@ -142,8 +159,15 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                   moveAttacks.add(new SmartHelper(r,c,r,c-1));
                   break;
               case 2:
+                  if(board[r][c].getValue() >= 5){
+                      moveAttacks.add(new SmartHelper(r,c,r,c-1));
+                  }
+                  else{
+                      worstCase.add(new SmartHelper(r,c,r,c-1));
+                  }
                   break;
               case 3:
+                  worstCase.add(new SmartHelper(r,c,r,c-1));
                   break;
               default:
                   break;
@@ -158,8 +182,15 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                   moveAttacks.add(new SmartHelper(r-1,c,r,c));
                   break;
               case 2:
+                  if(board[r][c].getValue() >= 5){
+                      moveAttacks.add(new SmartHelper(r-1,c,r,c));
+                  }
+                  else{
+                      worstCase.add(new SmartHelper(r-1,c,r,c));
+                  }
                   break;
               case 3:
+                  worstCase.add(new SmartHelper(r-1,c,r,c));
                   break;
               default:
                   break;
@@ -174,8 +205,16 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                   moveAttacks.add(new SmartHelper(r+1,c,r,c));
                   break;
               case 2:
+                  if(board[r][c].getValue() >= 5){
+                      moveAttacks.add(new SmartHelper(r+1,c,r,c));
+                  }
+                  else{
+                      worstCase.add(new SmartHelper(r+1,c,r,c));
+                  }
+
                   break;
               case 3:
+                  worstCase.add(new SmartHelper(r+1,c,r,c));
                   break;
               default:
                   break;
@@ -185,7 +224,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
   }
 
     /**
-     * Determines the senario the spot in question is.
+     * Determines the scenario the spot in question is.
      * @param p
      * @return
      */
@@ -197,12 +236,13 @@ public class SmartComputerPlayer extends GameComputerPlayer {
           return -1;
       }
       if(p.getVisible() == true && p.getPlayer() != playerNum){
-          if(p.getValue() < v || p.getValue() == 10 && v != 8){
-              return 3;
-          }
+
          if(p.getValue() > v  && (p.getValue() != 10 || v == 8)){
              return 1;
          }
+          if(p.getValue() > v  && (p.getValue() != 10 || v == 8)){
+              return 3;
+          }
       }
         if(p.getVisible() == false && p.getPlayer() != playerNum){
             return 2;
