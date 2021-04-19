@@ -82,6 +82,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     Double time = 0.0;
     private ImageView whoseTurn = null;
 
+    private TextView capturePiecesText;
+
     private ImageButton[][] boardButtons = new ImageButton[10][10];
 
     //create the buttons for placing pieces
@@ -179,6 +181,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         if (myPhase == 0) {
             ranPlace.setVisibility(View.VISIBLE);
         } else {
+            capturePiecesText.setText("Captured Pieces");
             ranPlace.setVisibility(View.INVISIBLE);
         }
 
@@ -287,6 +290,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         ranPlace.setOnClickListener(this);
         //we're not using undoMove button yet. I also mixed up undo move and undo turn
         ranPlace.setVisibility(View.INVISIBLE);
+
+        capturePiecesText = (TextView) activity.findViewById(R.id.capturePiecesText);
+        capturePiecesText.setText("Place Pieces");
 
         //set end and undo turn to invisible by default
         endTurn.setVisibility(View.INVISIBLE);
@@ -406,7 +412,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
 
         //If we are in the movement phase, we want to call a method to deal with the movement
-        if (myPhase == 1) {
+        if (myPhase == 1 && clickedRow != -1 && clickedCol != -1) {
             buttonClickMove(v, clickedRow, clickedCol);
         } else if (myPhase == 0) {
             //If we are in the placement phase, we want to call a method to deal with the placement
