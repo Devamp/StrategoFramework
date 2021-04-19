@@ -23,6 +23,7 @@ public class Piece {
     private int value;
 
     private boolean isVisible = true;
+    private boolean wasSeen = false;
 
     //the res drawable icon for the piece
     private int icon; //doesn't work like I want it to. Maybe fix later?
@@ -35,11 +36,12 @@ public class Piece {
         this.name = name;
     }
 
-    public Piece(String name, int val, int player) {
+    public Piece(String name, int val, int player, boolean wasSeen) {
         this.name = name;
         this.value = val;
 
         this.player = player;
+        this.wasSeen = wasSeen;
     }
 
     public String toString() {
@@ -92,6 +94,14 @@ public class Piece {
 
     public int getIcon() {
         return icon;
+    }
+
+    public void setWasSeen(boolean wasSeen){
+        this.wasSeen = wasSeen;
+    }
+
+    public boolean getWasSeen(){
+        return wasSeen;
     }
 
     /**

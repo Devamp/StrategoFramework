@@ -72,8 +72,9 @@ public class StrategoGameStateTest {
         Piece practiceRed = new SpecialPiece("Flag", 0, 0);
 
         Piece lastPiece = gameState.redBench.get(39);
-        Piece practiceLast = new Piece("Spy", 11, 0);
+        Piece practiceLast = new Piece("Spy", 11, 0, false);
 
+        //write equals method
         assertEquals(practicePiece, practiceRed);
         assertEquals(lastPiece, practiceLast);
     }

@@ -112,7 +112,7 @@ public class StrategoGameState extends GameState {
                 //Make the lakes in the center of the board equal -2. Spaces with -2 can't
                 //be crossed/moved into
                 if ((i == 4 || i == 5) && (j == 2 || j == 3 || j == 6 || j == 7)) {
-                    board[i][j] = new Piece("Lake", -1, -1);
+                    board[i][j] = new Piece("Lake", -1, -1, true);
                 } else {
                     board[i][j] = null;
                 }
@@ -150,12 +150,12 @@ public class StrategoGameState extends GameState {
                 if (original.board[i][j] != null) {
                     //need to create a special piece if it's a bomb or flag
                     if (original.board[i][j].getName().equalsIgnoreCase("Bomb") || original.board[i][j].getName().equalsIgnoreCase("Flag")) {
-                        board[i][j] = new SpecialPiece(original.board[i][j].getName(), original.board[i][j].getValue(), original.board[i][j].getPlayer());
+                        board[i][j] = new SpecialPiece(original.board[i][j].getName(), original.board[i][j].getValue(), original.board[i][j].getPlayer(), original.board[i][j].getWasSeen());
                         board[i][j].setVisible(original.board[i][j].getVisible());
                     }
                     //need to create normal piece otherwise
                     else {
-                        board[i][j] = new Piece(original.board[i][j].getName(), original.board[i][j].getValue(), original.board[i][j].getPlayer());
+                        board[i][j] = new Piece(original.board[i][j].getName(), original.board[i][j].getValue(), original.board[i][j].getPlayer(), original.board[i][j].getWasSeen());
                         board[i][j].setVisible(original.board[i][j].getVisible());
                     }
                 } else {
@@ -164,11 +164,11 @@ public class StrategoGameState extends GameState {
 
                 if (board[i][j] != null) {
                     //If it's blue's turn and the piece is red, make red piece invisible
-                    if (board[i][j].getPlayer() == 1 && turn == 0) {
+                    if (board[i][j].getPlayer() == 1 && turn == 0 && !board[i][j].getWasSeen()) {
                         board[i][j].setVisible(false);
                     }
                     //if it's red's turn and the piece is blue, make blue piece invisible
-                    else if (board[i][j].getPlayer() == 0 && turn == 1) {
+                    else if (board[i][j].getPlayer() == 0 && turn == 1 && !board[i][j].getWasSeen()) {
                         board[i][j].setVisible(false);
                     } else { //assign the rest of the board state
                         board[i][j].setVisible(true);
@@ -223,10 +223,10 @@ public class StrategoGameState extends GameState {
                     boardButtons[i][j].setImageResource(R.drawable.test);
                 } else if (board[i][j].getValue() == -1) {
                     boardButtons[i][j].setImageResource(R.drawable.purple_delete_button);
-                } else if (turn == 0 && board[i][j].getPlayer() == 1) {
+                } else if (turn == 0 && board[i][j].getPlayer() == 1 && !board[i][j].getWasSeen()) {
                     //if it's the red players turn and the piece is blue, make it invisible blue
                     boardButtons[i][j].setImageResource(R.drawable.bluetile);
-                } else if (turn == 1 && board[i][j].getPlayer() == 0) {
+                } else if (turn == 1 && board[i][j].getPlayer() == 0 && !board[i][j].getWasSeen()) {
                     boardButtons[i][j].setImageResource(R.drawable.bluetile); //make this a red stratego tile
                 } else {
                     boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue()));
@@ -274,10 +274,10 @@ public class StrategoGameState extends GameState {
             while (numberPieces[i] > 0) {
                 //if the piece is flag or bomb, create special piece
                 if (i == 0 || i == 10) {
-                    assign.add(new SpecialPiece(name, i, player));
+                    assign.add(new SpecialPiece(name, i, player, false));
                 } else {
                     //we can add conditions to add spy, miner, and scout special pieces
-                    assign.add(new Piece(name, i, player));
+                    assign.add(new Piece(name, i, player, false));
                 }
 
                 numberPieces[i]--;
@@ -548,7 +548,7 @@ public class StrategoGameState extends GameState {
             if (board[row][col] == null) {
                 String returnName = setName(value);
                 //Put piece in that spot
-                board[row][col] = new Piece(returnName, value, turn);
+                board[row][col] = new Piece(returnName, value, turn, false);
                 return true;
             } else if (board[row][col].getValue() < 0 || board[row][col].getPlayer() < 0) {
                 //don't mess with lake
@@ -641,7 +641,7 @@ public class StrategoGameState extends GameState {
                 if (board[row][col] != null) {
                     //re increase the number of troops
                     numTroops[board[row][col].getValue()]++;
-                    Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer());
+                    Piece returnToBin = new Piece(board[row][col].getName(), board[row][col].getValue(), board[row][col].getPlayer(), board[row][col].getWasSeen());
                     toUsePieces.add(returnToBin);
 
                 }
@@ -705,12 +705,16 @@ public class StrategoGameState extends GameState {
         if (board[fromX][fromY].move(board[toX][toY])) {
             //Move(prevents null pointer exception)
             if (board[toX][toY] == null) {
-                board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer());
+                board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer(), board[fromX][fromY].getWasSeen());
                 board[fromX][fromY] = null;
                 success = true;
             }
             //Attack
             else if (board[fromX][fromY].getPlayer() != board[toX][toY].getPlayer() && board[toX][toY].getPlayer() != -1) {
+                //there's been an attack so set both pieces to wasSeen
+                board[fromX][fromY].setWasSeen(true);
+                board[toX][toY].setWasSeen(true);
+
                 //If pieces are the same value
                 if (board[fromX][fromY].getValue() == board[toX][toY].getValue()) {
                     //Increase captured by both
@@ -724,7 +728,7 @@ public class StrategoGameState extends GameState {
                 else if (board[fromX][fromY].attack(board[toX][toY])) {
                     //Increase num captured by attacker
                     increaseCap(whoseE, board[toX][toY].getValue());
-                    board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer());
+                    board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer(), board[fromX][fromY].getWasSeen());
                     board[fromX][fromY] = null;
 
                 }
@@ -775,7 +779,7 @@ public class StrategoGameState extends GameState {
 
                     }
                 }
-                board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer());
+                board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer(), board[fromX][fromY].getWasSeen());
                 board[fromX][fromY] = null;
                 success = true;
             }

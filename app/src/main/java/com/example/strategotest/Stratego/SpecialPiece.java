@@ -14,8 +14,8 @@ import com.example.strategotest.Stratego.Piece;
 public class SpecialPiece extends Piece {
 
 
-    public SpecialPiece(String name, int value, int player) {
-        super(name, value, player);
+    public SpecialPiece(String name, int value, int player, boolean wasSeen) {
+        super(name, value, player, wasSeen);
     }
 
     public SpecialPiece(String name, int value, int player, int icon) {
