@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -92,6 +91,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     //create labels for number pieces remaining
     private TextView[] piecesRemainLabel = new TextView[12];
+
+    //Tells User what happened
+    private TextView whatHappened = null;
 
     //A move action is created when this is true because a piece has already been selected
     //to move
@@ -303,6 +305,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
         whoseTurn = (ImageView) activity.findViewById(R.id.whoseTurnImage);
 
+        //Set up text View to explain to user what happens
+        whatHappened = (TextView) activity.findViewById(R.id.whatHappened);
+
         //connect all the buttons.
         //https://www.technotalkative.com/android-findviewbyid-in-a-loop/
         //God bless ^^^^
@@ -430,6 +435,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         if (selectedFirst) {
             toX = clickedRow;
             toY = clickedCol;
+            whatHappened.append("\nTo X: " + Integer.toString(toX) + " To Y: " + Integer.toString(toY));
             boardButtons[fromX][fromY].setBackgroundColor(Color.rgb(50, 100, 80));
             game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
             selectedFirst = false;
@@ -442,6 +448,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
             //highlight the piece
             boardButtons[fromX][fromY].setBackgroundColor(Color.rgb(0, 255, 0));
+            whatHappened.setText("");
+            whatHappened.append("\nfrom X: " + Integer.toString(fromX) + " from Y: " + Integer.toString(fromY));
             selectedFirst = true;
         }
     }
@@ -457,11 +465,20 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      * @param clickedCol
      */
     public void buttonClickPlace(View v, int clickedRow, int clickedCol) {
+        StrategoGameState s = new StrategoGameState();
+        if(getTheValue(v) != -1){
+            whatHappened.setText("");
+            placePieceVal = getTheValue(v);
+            whatHappened.append("\n Selected: " + s.setName(placePieceVal));
+        }
         if (selectToPlace) {
             toX = clickedRow;
             toY = clickedCol;
             if (placePieceVal != -1) {
                 game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
+                if(getTheValue(v) == -1) {
+                    whatHappened.append("\n Attempted to place: " + s.setName(placePieceVal) + " at: (" + Integer.toString(clickedRow) + "," + Integer.toString(clickedCol) + ")");
+                }
             }
             selectToPlace = false;
         } else {
@@ -469,7 +486,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
             //load the value of the piece we want to place. Will use given value to find correct
             //piece in instantiated pieces ArrayList
-            placePieceVal = getTheValue(v);
+            if(getTheValue(v) == 1) {
+                whatHappened.append("\n NO PIECE SELECTED.");
+            }
             selectToPlace = true;
         }
     }
