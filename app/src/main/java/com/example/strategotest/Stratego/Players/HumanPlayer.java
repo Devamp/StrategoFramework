@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -429,6 +430,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         if (selectedFirst) {
             toX = clickedRow;
             toY = clickedCol;
+            boardButtons[fromX][fromY].setBackgroundColor(Color.rgb(50, 100, 80));
             game.sendAction(new StrategoMoveAction(this, fromX, fromY, toX, toY));
             selectedFirst = false;
 
@@ -437,6 +439,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         } else {
             fromX = clickedRow;
             fromY = clickedCol;
+
+            //highlight the piece
+            boardButtons[fromX][fromY].setBackgroundColor(Color.rgb(0, 255, 0));
             selectedFirst = true;
         }
     }
@@ -460,6 +465,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
             selectToPlace = false;
         } else {
+
+
             //load the value of the piece we want to place. Will use given value to find correct
             //piece in instantiated pieces ArrayList
             placePieceVal = getTheValue(v);
