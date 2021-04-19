@@ -152,9 +152,6 @@ public class StrategoGameStateTest {
 
     }
 
-    @Test
-    public void placeRemoveComputer() {
-    }
 
     /**
      * Caden- I did this
@@ -257,8 +254,16 @@ public class StrategoGameStateTest {
 
     }
 
+    /**
+     * Tested by: Devam Patel
+     *
+     */
     @Test
-    public void testEquals() {
+    public void Equals() {
+        StrategoGameState stateOne = new StrategoGameState();
+        StrategoGameState stateTwo = new StrategoGameState();
+
+
     }
 
     /**
@@ -281,12 +286,31 @@ public class StrategoGameStateTest {
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Get the timer in the game state. Check if the getter method is properly
+     * getting the time (float number) using the setter method to set the time
+     * and test if the timer returns the expected value through the getTimer in assertEquals.
+     */
     public void getTimer() {
+        StrategoGameState state = new StrategoGameState();
+        state.setTimer(600);
+        assertEquals(state.getTimer(), 600, 1);
     }
 
     @Test
+    /**
+     * Hewlett
+     *
+     * Sets the timer in the game state. Check if the setter method is properly
+     * setting the time (float number) using the setter method to set the time
+     * and test if the timer returns the actual value through the getTimer in assertEquals.
+     */
     public void setTimer() {
-
+        StrategoGameState state = new StrategoGameState();
+        state.setTimer(300);
+        assertEquals(300, state.getTimer(), 1);
     }
 
     @Test
