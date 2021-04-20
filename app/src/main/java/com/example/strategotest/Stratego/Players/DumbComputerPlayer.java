@@ -272,43 +272,35 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         } else if (toWhere.equalsIgnoreCase("Below")) {
             if (fromX != 9) { // if spot below is empty
 
-                if (board[fromX + 1][fromY] == null) {
+                if (board[fromX + 1][fromY] == null || (board[fromX + 1][fromY].getPlayer() == playerNum + 1 % 2)) {
                     return true;
                 } else if (board[fromX + 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX + 1][fromY].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
-                    return true;
                 }
             }
         } else if (toWhere.equalsIgnoreCase("Right")) {
             if (fromY != 9) { // if spot right is empty
-                if (board[fromX][fromY + 1] == null) {
+                if (board[fromX][fromY + 1] == null || (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2)) {
                     return true;
                 } else if (board[fromX][fromY + 1].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX][fromY + 1].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
-                    return true;
                 }
             }
         } else if (toWhere.equalsIgnoreCase("Left")) {
             if (fromY != 0) { // if spot to left is empty
-                if (board[fromX][fromY - 1] == null) {
+                if (board[fromX][fromY - 1] == null || (board[fromX][fromY - 1].getPlayer() == playerNum + 1 % 2)) {
                     return true;
                 } else if (board[fromX][fromY - 1].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX][fromY - 1].getPlayer() == playerNum + 1 % 2) {  // if its a enemy player, return true and attack!
-                    return true;
                 }
             }
 
         } else if (toWhere.equalsIgnoreCase("Above")) {
             if (fromX != 0) { // if spot above is empty
-                if (board[fromX - 1][fromY] == null) {
+                if (board[fromX - 1][fromY] == null || (board[fromX - 1][fromY].getPlayer() == playerNum + 1 % 2)) {
                     return true;
                 } else if (board[fromX - 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;
-                } else if (board[fromX - 1][fromY].getPlayer() == playerNum + 1 % 2) { // if its a enemy player, return true and attack!
-                    return true;
                 }
             }
         }

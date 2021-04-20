@@ -41,7 +41,6 @@ public class StrategoLocalGame extends LocalGame {
     public StrategoLocalGame(StrategoGameState stState) {
         super();
         super.state = new StrategoGameState(stState);
-        //officialState = new StrategoGameState(stState);
     }
 
     /**

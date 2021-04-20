@@ -222,14 +222,14 @@ public class StrategoGameState extends GameState {
                 if (board[i][j] == null) {
                     boardButtons[i][j].setImageResource(R.drawable.test);
                 } else if (board[i][j].getValue() == -1) {
-                    boardButtons[i][j].setImageResource(R.drawable.purple_delete_button);
+                    boardButtons[i][j].setImageResource(R.drawable.water);
                 } else if (turn == 0 && board[i][j].getPlayer() == 1 && !board[i][j].getWasSeen()) {
                     //if it's the red players turn and the piece is blue, make it invisible blue
                     boardButtons[i][j].setImageResource(R.drawable.bluetile);
                 } else if (turn == 1 && board[i][j].getPlayer() == 0 && !board[i][j].getWasSeen()) {
                     boardButtons[i][j].setImageResource(R.drawable.bluetile); //make this a red stratego tile
                 } else {
-                    boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue()));
+                    boardButtons[i][j].setImageResource(setIcon(board[i][j].getValue(), board[i][j].getPlayer()));
                 }
 
             }
@@ -342,45 +342,94 @@ public class StrategoGameState extends GameState {
         return returnName;
     }
 
-    public int setIcon(int whichPiece) {
+    public int setIcon(int whichPiece, int playerID) {
         int returnDrawID;
 
         switch (whichPiece) {
             case 0:
-                returnDrawID = R.drawable.flag;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.flagr;
+                } else {
+                    returnDrawID = R.drawable.flagb;
+                }
+
                 break;
             case 1:
-                returnDrawID = R.drawable.marsh;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.marshr;
+                } else {
+                    returnDrawID = R.drawable.marshb;
+                }
                 break;
             case 2:
-                returnDrawID = R.drawable.gen;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.genr;
+                } else {
+                    returnDrawID = R.drawable.genb;
+                }
                 break;
             case 3:
-                returnDrawID = R.drawable.col;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.colr;
+                } else {
+                    returnDrawID = R.drawable.colb;
+                }
                 break;
             case 4:
-                returnDrawID = R.drawable.maj;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.majr;
+                } else {
+                    returnDrawID = R.drawable.majb;
+                }
                 break;
             case 5:
-                returnDrawID = R.drawable.capt;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.captr;
+                } else {
+                    returnDrawID = R.drawable.captb;
+                }
                 break;
             case 6:
-                returnDrawID = R.drawable.lt;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.ltr;
+                } else {
+                    returnDrawID = R.drawable.ltb;
+                }
                 break;
             case 7:
-                returnDrawID = R.drawable.serg;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.sergr;
+                } else {
+                    returnDrawID = R.drawable.sergb;
+                }
                 break;
             case 8:
-                returnDrawID = R.drawable.miner;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.minerr;
+                } else {
+                    returnDrawID = R.drawable.minerb;
+                }
                 break;
             case 9:
-                returnDrawID = R.drawable.scout;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.scoutr;
+                } else {
+                    returnDrawID = R.drawable.scoutb;
+                }
                 break;
             case 10:
-                returnDrawID = R.drawable.bomb;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.bombr;
+                } else {
+                    returnDrawID = R.drawable.bombb;
+                }
                 break;
             case 11:
-                returnDrawID = R.drawable.spy;
+                if(playerID == 0){
+                    returnDrawID = R.drawable.spyr;
+                } else {
+                    returnDrawID = R.drawable.spyb;
+                }
                 break;
             default:
                 returnDrawID = R.drawable.bluetile;
