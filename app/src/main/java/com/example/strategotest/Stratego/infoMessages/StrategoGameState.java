@@ -51,6 +51,8 @@ public class StrategoGameState extends GameState {
 
     //use this for the undo move
     StrategoGameState backup = null;
+    //message for user
+    private String message;
 
     /**
      * constructor for gamestate
@@ -126,6 +128,8 @@ public class StrategoGameState extends GameState {
         instancePieces(0);
         instancePieces(1);
 
+        message = null;
+
     }
 
     /**
@@ -193,6 +197,8 @@ public class StrategoGameState extends GameState {
 
         blueBench = original.blueBench;
         redBench = original.redBench;
+
+        message = original.message;
 
 
     }
@@ -729,25 +735,27 @@ public class StrategoGameState extends GameState {
         int whoseE = (turn + 1) % 2;
         boolean success = false;
         if (board[fromX][fromY] == null) {
+            message = null;
             return false;
         }
         //Make sure you can't move opponent piece
         if (board[fromX][fromY].getPlayer() != turn) {
+            message = null;
             return false;
         }
         //Make sure you can't move lake
         if (board[fromX][fromY].getValue() < 0) {
-            return false;
-        }
-        if (board[fromX][fromY] == null) {
+            message = null;
             return false;
         }
         //check to make sure movement is not greater than 1 and not diagonal
         if (Math.abs(fromY - toY) >= 1 && Math.abs(fromX - toX) >= 1) {
+            message = null;
             return false;
         }
         //If not 9
         if ((Math.abs(fromX - toX) > 1 || Math.abs(fromY - toY) > 1) && (board[fromX][fromY].getValue() != 9 || board[toX][toY] != null)) {
+            message = null;
             return false;
         }
 
@@ -769,25 +777,29 @@ public class StrategoGameState extends GameState {
                     //Increase captured by both
                     increaseCap(whoseE, board[toX][toY].getValue());
                     increaseCap(turn, board[fromX][fromY].getValue());
+                    message = setName(board[fromX][fromY].getValue()) + " attacked " + setName(board[toX][toY].getValue()) + " and they both died.";
                     board[fromX][fromY] = null;
                     board[toX][toY] = null;
                     return true;
                 }
                 //If piece attacking is successful
                 else if (board[fromX][fromY].attack(board[toX][toY])) {
+                    message = setName(board[fromX][fromY].getValue()) + " attacked " + setName(board[toX][toY].getValue()) + " and won.";
                     //Increase num captured by attacker
                     increaseCap(whoseE, board[toX][toY].getValue());
                     board[toX][toY] = new Piece(board[fromX][fromY].getName(), board[fromX][fromY].getValue(), board[fromX][fromY].getPlayer(), board[fromX][fromY].getWasSeen());
                     board[fromX][fromY] = null;
+                    return true;
 
                 }
                 //If piece defending is successful
                 else {
                     //Increase num captured by defender
+                    message = setName(board[fromX][fromY].getValue()) + " attacked " + setName(board[toX][toY].getValue()) + " and lost";
                     increaseCap(turn, board[fromX][fromY].getValue());
                     board[fromX][fromY] = null;
+                    return true;
                 }
-                success = true;
             }
             //Move
             else {
@@ -797,6 +809,7 @@ public class StrategoGameState extends GameState {
                         for (int i = fromX - 1; i >= toX; i--) {
                             if (board[i][fromY] != null) {
                                 //Invalid
+                                message = null;
                                 return false;
                             }
                         }
@@ -805,6 +818,7 @@ public class StrategoGameState extends GameState {
                         for (int i = fromY - 1; i >= toY; i--) {
                             if (board[fromX][i] != null) {
                                 //Invalid
+                                message = null;
                                 return false;
                             }
 
@@ -814,6 +828,7 @@ public class StrategoGameState extends GameState {
                         for (int i = fromY + 1; i <= toY; i++) {
                             if (board[fromX][i] != null) {
                                 //Invalid
+                                message = null;
                                 return false;
                             }
                         }
@@ -821,6 +836,7 @@ public class StrategoGameState extends GameState {
                         for (int i = fromX + 1; i <= toX; i++) {
                             if (board[i][fromY] != null) {
                                 //Invalid
+                                message = null;
                                 return false;
                             }
                         }
@@ -833,6 +849,7 @@ public class StrategoGameState extends GameState {
                 success = true;
             }
         }
+        message = null;
         return success;
     }
 
@@ -1049,6 +1066,10 @@ public class StrategoGameState extends GameState {
 
     public void setFilledRedCharacters(int index, int value) {
         filledRedCharacters[index] = value;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
 

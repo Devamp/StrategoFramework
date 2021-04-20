@@ -96,6 +96,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
             }
 
             if (shouldPass) {
+                sleep(0.5);
                 game.sendAction(pass); // end turn after an action
             }
         }
