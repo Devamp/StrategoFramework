@@ -155,7 +155,7 @@ public class StrategoLocalGame extends LocalGame {
             return toReturn;
             //Undo turn
         } else if (action instanceof StrategoUndoTurnAction) {
-            //super.state = ((StrategoGameState)state).getBackup();
+            super.state = ((StrategoGameState)state).getBackup();
             return true;
             //Back up the board so you can undo turn
         } else if (action instanceof StrategoBackupAction) {
