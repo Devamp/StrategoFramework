@@ -114,6 +114,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     //if this is true, then no other moves can be made.
     private boolean hasMoved = false;
 
+    private boolean happened = false;
+
     //if this is true, we have a piece ready to place and the next click places it
     private boolean selectToPlace = false;
 
@@ -164,6 +166,15 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
         //get working gameState
         toUse = new StrategoGameState((StrategoGameState) info);
+        if(whatHappened == null){
+
+        }
+        else {
+            if(toUse.getMessage() != null && !happened) {
+                whatHappened.append("\n" + toUse.getMessage());
+                happened = true;
+            }
+        }
 
         myPhase = toUse.getPhase();
 
@@ -384,6 +395,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             endTurn.setVisibility(View.INVISIBLE);
             //reset whether they've moved or not
             hasMoved = false;
+            happened = false;
         } else if (v.getId() == R.id.undoTurnButton) {
             hasMoved = false;
             game.sendAction(new StrategoUndoTurnAction(this));
