@@ -121,6 +121,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     private int myPhase = 0;
 
+    //use this variable to hold what piece is selected to place
+    int placePieceVal = -1;
+
     /**
      * constructor
      *
@@ -388,7 +391,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     public void buttonOnClick(View v) {
         if (v.getId() == R.id.surrenderButton) {
-            sendInfo(new GameOverInfo("Player has surrendered"));
+            sendInfo(new GameOverInfo("Player has surrendered. "));
         } else if (v.getId() == R.id.endTurnButton) {
             PassTurnAction newPass = new PassTurnAction(this);
             game.sendAction(newPass);
@@ -466,8 +469,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         }
     }
 
-    //use this variable to hold what piece is selected to place
-    int placePieceVal = -1;
+
 
     /**
      * send place action when we have piece loaded in register
@@ -483,6 +485,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             placePieceVal = getTheValue(v);
             whatHappened.append("\n Selected: " + s.setName(placePieceVal));
         }
+
         if (selectToPlace) {
             toX = clickedRow;
             toY = clickedCol;
@@ -494,7 +497,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             }
             selectToPlace = false;
         } else {
-
+            //piecesRemain[placePieceVal].setBackgroundColor(Color.rgb(0, 255, 0));
 
             //load the value of the piece we want to place. Will use given value to find correct
             //piece in instantiated pieces ArrayList
