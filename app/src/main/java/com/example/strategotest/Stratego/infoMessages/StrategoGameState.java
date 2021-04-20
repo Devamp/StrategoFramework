@@ -51,6 +51,8 @@ public class StrategoGameState extends GameState {
 
     //use this for the undo move
     StrategoGameState backup = null;
+    //message for user
+    private String message;
 
     /**
      * constructor for gamestate
@@ -126,6 +128,8 @@ public class StrategoGameState extends GameState {
         instancePieces(0);
         instancePieces(1);
 
+        message = null;
+
     }
 
     /**
@@ -193,6 +197,8 @@ public class StrategoGameState extends GameState {
 
         blueBench = original.blueBench;
         redBench = original.redBench;
+
+        message = original.message;
 
 
     }
@@ -1001,6 +1007,7 @@ public class StrategoGameState extends GameState {
     public void setFilledRedCharacters(int index, int value) {
         filledRedCharacters[index] = value;
     }
+
 
 
 }
