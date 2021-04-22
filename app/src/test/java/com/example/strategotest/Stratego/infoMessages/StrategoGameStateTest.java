@@ -203,10 +203,6 @@ public class StrategoGameStateTest {
     }
 
     @Test
-    public void testToString() {
-    }
-
-    @Test
     //Caden's Test
     public void endTurn() {
         StrategoGameState s = new StrategoGameState();
@@ -235,16 +231,11 @@ public class StrategoGameStateTest {
 
         StrategoGameState state = new StrategoGameState();
 
-        assertEquals(state.getRedCharacter()[0], 0); // character should be at 0 because they should all be placed
+        assertEquals(state.getRedCharacter()[0], 1); // character should be at 1 because there is 1 flag piece
 
         state.increaseCap(0,0); // increase the piece value by 1
 
-        assertEquals(state.getRedCharacter()[0], 1); // now it should equal to 1
-
-        assertEquals(state.getBlueCharacter()[10], 0); // character should be at 0 because all bombs should be placed
-        state.increaseCap(1, 10); // increase the piece value by 1
-        assertEquals(state.getBlueCharacter()[10], 1); // now it should be 1
-
+        assertEquals(state.getRedCharacter()[0], 2); // now it should equal to 2
 
     }
 
@@ -274,7 +265,6 @@ public class StrategoGameStateTest {
     public void Equals() {
         StrategoGameState stateOne = new StrategoGameState();
         StrategoGameState stateTwo = new StrategoGameState();
-
 
     }
 
