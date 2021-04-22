@@ -262,17 +262,6 @@ public class StrategoGameStateTest {
     }
 
     /**
-     * Tested by: Devam Patel
-     *
-     */
-    @Test
-    public void Equals() {
-        StrategoGameState stateOne = new StrategoGameState();
-        StrategoGameState stateTwo = new StrategoGameState();
-
-    }
-
-    /**
      * Caden - i did this
      */
     @Test
@@ -287,9 +276,6 @@ public class StrategoGameStateTest {
 
     }
 
-    @Test
-    public void testSetPhase() {
-    }
 
     @Test
     /**
