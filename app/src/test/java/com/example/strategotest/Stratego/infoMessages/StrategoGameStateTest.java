@@ -97,8 +97,12 @@ public class StrategoGameStateTest {
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
         //Make sure two icons are set properly
-        assertEquals(s.setIcon(1, 0),R.drawable.marsh);
-        assertEquals(s.setIcon(10, 0),R.drawable.bomb);
+        assertEquals(s.setIcon(1, 0), R.drawable.marshr); // test for red player set
+        assertEquals(s.setIcon(10, 0),R.drawable.bombr);
+
+        assertEquals(s.setIcon(1, 1), R.drawable.marshb); // test for blue player set
+        assertEquals(s.setIcon(10, 1),R.drawable.bombb);
+
 
     }
 
