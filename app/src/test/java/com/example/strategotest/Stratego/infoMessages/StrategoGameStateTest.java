@@ -69,7 +69,7 @@ public class StrategoGameStateTest {
 
         Piece practicePiece = gameState.redBench.get(0);
         //the first instanced piece of red should be flag with value zero for player 0
-        Piece practiceRed = new SpecialPiece("Flag", 0, 0);
+        Piece practiceRed = new SpecialPiece("Flag", 0, 0, false);
 
         Piece lastPiece = gameState.redBench.get(39);
         Piece practiceLast = new Piece("Spy", 11, 0, false);
@@ -97,8 +97,8 @@ public class StrategoGameStateTest {
     public void setIcon() {
         StrategoGameState s = new StrategoGameState();
         //Make sure two icons are set properly
-        assertEquals(s.setIcon(1),R.drawable.marsh);
-        assertEquals(s.setIcon(10),R.drawable.bomb);
+        assertEquals(s.setIcon(1, 0),R.drawable.marsh);
+        assertEquals(s.setIcon(10, 0),R.drawable.bomb);
 
     }
 
@@ -111,15 +111,27 @@ public class StrategoGameStateTest {
         StrategoGameState state = new StrategoGameState();
 
         // get original number of flag pieces
-        assertEquals(state.getRedCharacter()[0], 0); // should be 0
+        assertEquals(state.getRedCharacter()[0], 1); // should be 1 for 1 flag piece
 
         state.setInRedCharacter(0,10); // set number of flags to 10
 
         assertEquals(state.getRedCharacter()[0], 10); // now it should be updated to 10
     }
 
+    /**
+     *
+     * Tested by: Devam Patel
+     */
     @Test
     public void setInBlueCharacter() {
+        StrategoGameState state = new StrategoGameState();
+
+        // get original number of flag pieces
+        assertEquals(state.getBlueCharacter()[0], 1); // should be 1 for 1 flag piece
+
+        state.setInBlueCharacter(0,10); // set number of flags to 10
+
+        assertEquals(state.getBlueCharacter()[0], 10); // now it should be updated to 10
     }
 
     @Test

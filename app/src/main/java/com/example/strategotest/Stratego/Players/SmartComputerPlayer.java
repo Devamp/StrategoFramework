@@ -46,7 +46,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         if (!(info instanceof StrategoGameState)) {
             return;
         }
-
+        theState = new StrategoGameState((StrategoGameState) info);
         if(theState.getPhase() == 0){
             //Place flag
             int rand = (int)(Math.random()*10);
