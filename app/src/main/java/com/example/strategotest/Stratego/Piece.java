@@ -167,11 +167,14 @@ public class Piece {
      * @param p - the piece to check against
      * @return true if the pieces are the same or false if the pieces are not
      */
-    public boolean isEqual(Piece p) {
+    public boolean equals(Piece p) {
         if (p.getValue() != this.getValue()) {
             return false;
         }
         if (p.getPlayer() != this.getPlayer()) {
+            return false;
+        }
+        if(p.getVisible() != this.getVisible() || p.getWasSeen() != this.getWasSeen()){
             return false;
         }
         return true;

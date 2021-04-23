@@ -964,6 +964,27 @@ public class StrategoGameState extends GameState {
         }
     }
 
+    public boolean equals(Object obj){
+        if(! (obj instanceof StrategoGameState)){
+            return false;
+        }
+
+        StrategoGameState compState = (StrategoGameState) obj;
+        //check to see if the boards are the same
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                if(this.board[i][j] == null && compState.board[i][j] == null){
+                    continue;
+                }else if(this.board[i][j] == null || compState.board[i][j] == null){
+                    return false;
+                }else if(!this.board[i][j].equals(compState.board[i][j])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public String movePrint(int row, int col, int frow, int fcol) {
 
         boolean attacking = false;

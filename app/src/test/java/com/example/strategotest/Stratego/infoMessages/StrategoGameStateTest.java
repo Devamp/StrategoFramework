@@ -40,6 +40,8 @@ public class StrategoGameStateTest {
     public void getBackup() {
         StrategoGameState myState = new StrategoGameState();
 
+        //make sure if two turns have gone by, the backups aren't equal.
+
         myState.saveBackup();
 
         //Make a state to hold the backup
