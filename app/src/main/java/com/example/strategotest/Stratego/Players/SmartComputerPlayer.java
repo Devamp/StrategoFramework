@@ -139,6 +139,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
      * @param board
      */
     public void checkPieces(Piece[][] board) {
+        //Loop through all the pieces
         for(int row = 0; row < 10; row++){
             for(int col = 0; col< 10; col++){
                 if(board[row][col] != null) {
@@ -207,8 +208,8 @@ public class SmartComputerPlayer extends GameComputerPlayer {
     /**
      * Depending on what is around you add the appropriate action to a arraylist
      * @param board
-     * @param r
-     * @param c
+     * @param r-Piece row we are checking for
+     * @param c-piece col we are checking for
      */
     public void lookAround( Piece[][] board, int r, int c){
         //check rows
@@ -271,16 +272,23 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
     /**
      * Determines the scenario the spot in question is.
-     * @param p
-     * @return
+     * @param p - piece we are comparing our piece to
+     * @return - what to do
+     * 1 - attack
+     * 2 - move
+     * 3 - do in the worst case
+     * -1 - unperformable
      */
     public int value( Piece p, int v){
+        //Regular move
         if(p == null){
             return 0;
         }
+        //Impossible to move on water or your piece
         if(p.getPlayer() < 0 || p.getPlayer() == playerNum){
             return -1;
         }
+        //enemy piece visible
         if(p.getVisible() == true){
             if(p.getValue() > v  && (p.getValue() != 10 || v == 8)){
                 return 1;
@@ -290,6 +298,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
             }
 
         }
+        //attack invisible piece
         if(p.getVisible()== false){
             return 2;
         }
