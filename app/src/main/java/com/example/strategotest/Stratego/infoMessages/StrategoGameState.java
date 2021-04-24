@@ -491,17 +491,6 @@ public class StrategoGameState extends GameState {
         for (int i = start; i < start + 4; i++) {
             for (int j = 0; j < board[i].length; j++) {
 
-                //place the flag in the last possible place
-                /*if (j == board[i].length - 1 && i == start + 3) {
-                    board[i][j] = currentArmy.get(0);
-                    currentArmy.remove(0);
-                } else {
-                    board[i][j] = currentArmy.get(1);
-                    currentArmy.remove(1);
-                }
-*/
-
-
                 //set the index i j to a random piece from specific players arrayList of
                 //instantiated pieces
                 if (board[i][j] == null) {
@@ -536,7 +525,6 @@ public class StrategoGameState extends GameState {
      */
     public boolean placeNotRandom(int player) {
         int start;
-        int randomIndex;
         ArrayList<Piece> currentArmy;
 
         //place red pieces on bottom of board
@@ -560,20 +548,6 @@ public class StrategoGameState extends GameState {
                     board[i][j] = currentArmy.get(1);
                     currentArmy.remove(1);
                 }
-
-
-
-                //set the index i j to a random piece from specific players arrayList of
-                //instantiated pieces
-               // if (board[i][j] == null) {
-                //    randomIndex = (int) (Math.random() * currentArmy.size());
-
-                    //set that board index to the random index
-                   // board[i][j] = currentArmy.get(randomIndex);
-                    //once placed from bench it should be removed as its now on the board
-                 //   currentArmy.remove(randomIndex);
-                //}
-
 
             }
         }
@@ -971,8 +945,8 @@ public class StrategoGameState extends GameState {
 
         StrategoGameState compState = (StrategoGameState) obj;
         //check to see if the boards are the same
-        for(int i = 0; i < 11; i++){
-            for(int j = 0; j < 11; j++){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
                 if(this.board[i][j] == null && compState.board[i][j] == null){
                     continue;
                 }else if(this.board[i][j] == null || compState.board[i][j] == null){
@@ -1070,6 +1044,14 @@ public class StrategoGameState extends GameState {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setPiece(int x, int y, Piece put){
+        board[x][y] = put;
+    }
+
+    public void removePiece(int x, int y){
+        board[x][y] = null;
     }
 
 

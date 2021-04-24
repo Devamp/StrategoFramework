@@ -1,22 +1,116 @@
 package com.example.strategotest.Stratego.infoMessages;
 
+import android.view.View;
+
 import com.example.strategotest.R;
+import com.example.strategotest.Stratego.MainActivity;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
+import com.example.strategotest.Stratego.StrategoLocalGame;
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.game.GameFramework.actionMessage.MyNameIsAction;
+import com.example.strategotest.game.GameFramework.actionMessage.ReadyAction;
+import com.example.strategotest.game.GameFramework.players.GamePlayer;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
-
+//@RunWith(RobolectricTestRunner.class)
 public class StrategoGameStateTest {
 
+    public MainActivity activity;
+
+    @Before
+    public void setup() throws Exception {
+//        activity = Robolectric.buildActivity(MainActivity.class).create().resume().get();
+    }
+
+    /**
+     * @author Gareth Rice
+     *
+     */
+    @Test
+    public void playGame(){
+       //First we need a GameState
+        StrategoGameState gameState = new StrategoGameState();
+
+        //Set up all the red and blue pieces non randomly
+        gameState.placeNotRandom(0);
+        gameState.placeNotRandom(1);
+
+        //do a quick test to make sure the blue flag has been placed correctly
+        Piece[][] board = gameState.getBoard();
+        Piece blueFlag = board[3][9]; //this should be the blue flag
+        Piece compBlueFlag = new SpecialPiece("Flag", 0, 1, false);
+
+        assertTrue(blueFlag.equals(compBlueFlag));
+
+        //see if we can make 2 moves in a row
+//        gameState.action()
 
 
+        /*
+            Couldn't get ROBOLECTRIC to work
+        View view = activity.findViewById(R.id.playGameButton);
+        activity.onClick(view);
+        //Getting the created game
+        StrategoLocalGame localGame = (StrategoLocalGame) activity.getGame();
+        //Getting the players
+        GamePlayer[] gamePlayers = localGame.getPlayers();
+        //Sending the names of the players to the game
+        for (GamePlayer gp : gamePlayers) {
+            localGame.sendAction(new MyNameIsAction(gp, gp.getClass().toString()));
+        }
+        //Telling the game everyone is ready
+        for (GamePlayer gp : gamePlayers) {
+            localGame.sendAction(new ReadyAction(gp));
+        }
+
+
+        GamePlayer red = gamePlayers[0];
+        GamePlayer blue = gamePlayers[1];
+
+        //we need to place the pieces
+        StrategoGameState toUse = (StrategoGameState) localGame.getGameState();
+        toUse.placeNotRandom(0);
+        toUse.placeNotRandom(1);
+
+        //Can I make two moves in a row
+        localGame.sendAction(new StrategoMoveAction(red, 6, 9, 5, 9));
+        localGame.sendAction(new StrategoMoveAction(blue, 5, 9, 4, 9));
+
+        //Setting the expected outcome of the two lines above
+        StrategoGameState compare = new StrategoGameState();
+        compare.placeNotRandom(0);
+        compare.placeNotRandom(1);
+
+        compare.setPiece(5, 9, new Piece("Captain", 5, 0, false));
+        compare.removePiece(6, 9);
+
+        //Testing that I couldn't make two moves in a row
+        assertTrue("Game States were not equal", toUse.equals(compare));
+
+
+         */
+
+    }
+
+    /**
+     * @author Gareth Rice
+     */
     @Test
     public void saveBackup() {
         StrategoGameState gameState = new StrategoGameState();
+        //place all the pieces on the board
+        gameState.placeNotRandom(0);
+        gameState.placeNotRandom(1);
 
         gameState.saveBackup();
 
@@ -24,12 +118,15 @@ public class StrategoGameStateTest {
 
         StrategoGameState gameStateCopy = new StrategoGameState(gameState);
 
-        assertEquals(backUp, gameStateCopy);
+        //back up should be equal
+        assertTrue(backUp.equals(gameStateCopy));
 
+        //we make a move and create a new copy
         gameState.action(6, 9, 5, 9);
         StrategoGameState gameStateNewCopy = new StrategoGameState(gameState);
 
-        assertNotEquals(backUp, gameStateNewCopy);
+        //the backup shouldn't be the same as the gameState since GS has been updated
+        assertTrue(!backUp.equals(gameStateNewCopy));
 
     }
 
@@ -40,18 +137,20 @@ public class StrategoGameStateTest {
     public void getBackup() {
         StrategoGameState myState = new StrategoGameState();
 
-        //make sure if two turns have gone by, the backups aren't equal.
+        //place pieces
+        myState.placeNotRandom(0);
+        myState.placeNotRandom(1);
 
         myState.saveBackup();
 
         //Make a state to hold the backup
-        StrategoGameState backup = new StrategoGameState();
+        StrategoGameState backup;
         backup = myState.getBackup();
 
         //Make a copy of the myState field
         StrategoGameState old = new StrategoGameState(myState);
 
-        assertEquals(old, backup);
+        assertTrue(old.equals(backup));
     }
 
     @Test
@@ -76,9 +175,10 @@ public class StrategoGameStateTest {
         Piece lastPiece = gameState.redBench.get(39);
         Piece practiceLast = new Piece("Spy", 11, 0, false);
 
-        //write equals method
-        assertEquals(practicePiece, practiceRed);
-        assertEquals(lastPiece, practiceLast);
+        //Instanced pieces should be the same as ones I instantiated
+        assertTrue(practicePiece.equals(practiceRed));
+        //checks the last piece in the red list
+        assertTrue(lastPiece.equals(practiceLast));
     }
 
     @Test
