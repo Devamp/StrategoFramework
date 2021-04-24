@@ -24,7 +24,8 @@ import java.util.Random;
  * @version 04/21
  * <p>
  * bugs/notes:
- * The hard computer is not functional yet
+ * The computer now works. I have not yet seen a bug in the hard computer, but I just
+ * finished it so I did not have a long tim to test.
  */
 public class SmartComputerPlayer extends GameComputerPlayer {
     private ArrayList<SmartHelper> moveAttacks = new ArrayList<SmartHelper>();
@@ -71,27 +72,25 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
             // make sure we are in placement phase
             if (gameState.getPhase() == 0) {
-
-                int piece;
-                for (piece = 0; piece < 12; piece++) {
-
-                    if (playerNum == 0) {
-                        temp = gameState.getRedCharacter();
-                    } else {
-                        temp = gameState.getBlueCharacter();
-                    }
-
-                    if (temp[piece] != 0) {
-                        game.sendAction(getPlaceAction(playerNum, piece)); // get and send the place action for each piece to be placed randomly
-                        if (piece != 11) {
-                            shouldPass = false;
-                        }
-
-                        break;
-                    }
+                int backline;
+                if(playerNum == 0){
+                    backline = 9;
+                }
+                else{
+                    backline = 0;
+                }
+                int fran = (int)(Math.random() * 10);
+                game.sendAction(new StrategoPlaceAction(this,0,backline, fran));
+                game.sendAction(new StrategoPlaceAction(this,10,Math.abs(backline-1), fran));
+                if(fran == 9 || fran == 0){
+                    game.sendAction(new StrategoPlaceAction(this,10,backline, Math.abs(fran-1)));
+                }
+                else{
+                    game.sendAction(new StrategoPlaceAction(this,10,backline, fran+1));
+                    game.sendAction(new StrategoPlaceAction(this,10,backline, fran-1));
 
                 }
-
+                game.sendAction(new StrategoRandomPlace(this,playerNum));
             }
             if(shouldPass && gameState.getPhase() == 0){
                 game.sendAction(pass);
@@ -143,65 +142,14 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         for(int row = 0; row < 10; row++){
             for(int col = 0; col< 10; col++){
                 if(board[row][col] != null) {
-                    if (board[row][col].getPlayer() == playerNum) {
-                        lookAround(board, row, col);
+                    if(board[row][col].getValue() != 10 && board[row][col].getValue() != 0) {
+                        if (board[row][col].getPlayer() == playerNum) {
+                            lookAround(board, row, col);
+                        }
                     }
                 }
             }
         }
-    }
-
-    /**
-     * getPlaceAction - this is a helper method which helps the computer place its pieces randomly on their side of the board
-     *
-     * @param playerID - player id of the computer
-     * @param value    - rank of the piece to be placed
-     * @return - returns the place action that will be sent to the game
-     */
-    public StrategoPlaceAction getPlaceAction(int playerID, int value) {
-        Random gen = new Random(); // random generator to help with randomize row and column values
-
-        int row = 0; // initially set to 0
-
-        if (playerID == 0) { //computer is on the bottom side of the board (Player 1)
-            row = gen.nextInt(10 - 6) + 6; // generate random row value between 6 - 9
-        } else if (playerID == 1) { // computer is on the top side of the board (Player 2)
-            row = gen.nextInt(4); // generate random row value between 0 - 3
-        }
-
-        int col = gen.nextInt(10); // generate random col value between 0 - 9
-
-        // verify that the generated row and column indices aren't already in use
-        if (usedIndices[row][col]) { // if same row or column values are found, generate new ones
-
-            // save original row and column values
-            int oldRow = row;
-            int oldCol = col;
-
-            while (usedIndices[oldRow][oldCol]) { // loop until the loop is broken by finding an empty spot
-
-                // generate new row and column values
-                if (playerID == 0) { //computer is on the bottom side of the board (Player 1)
-                    row = gen.nextInt(10 - 6) + 6; // generate random row value between 6 - 9
-                } else if (playerID == 1) { // computer is on the top side of the board (Player 2)
-                    row = gen.nextInt(4); // generate random row value between 0 - 3
-                }
-
-                col = gen.nextInt(10);
-
-                if (!usedIndices[row][col]) { //if empty spot is found, break the loop!
-                    break;
-
-                } else { // otherwise, update old variables and keep generating
-                    oldRow = row;
-                    oldCol = col;
-                }
-            }
-        }
-
-        usedIndices[row][col] = true; // set the used row and col indices to true
-        return new StrategoPlaceAction(this, value, row, col); // return the place action
-
     }
 
 
