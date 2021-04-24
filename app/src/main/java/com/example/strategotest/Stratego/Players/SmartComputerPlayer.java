@@ -55,7 +55,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
         if (!(info instanceof StrategoGameState)) {
             return;
         }
-        theState = new StrategoGameState((StrategoGameState) info);
+        gameState = new StrategoGameState((StrategoGameState) info);
         boolean shouldPass = true;
 
         gameState = new StrategoGameState((StrategoGameState) info);
