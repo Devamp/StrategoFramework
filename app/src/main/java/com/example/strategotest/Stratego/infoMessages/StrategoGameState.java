@@ -5,6 +5,7 @@ import android.widget.ImageButton;
 import com.example.strategotest.R;
 import com.example.strategotest.Stratego.Players.DumbComputerPlayer;
 import com.example.strategotest.Stratego.Players.HumanPlayer;
+import com.example.strategotest.Stratego.Players.SmartComputerPlayer;
 import com.example.strategotest.game.GameFramework.infoMessage.GameState;
 import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
@@ -612,7 +613,15 @@ public class StrategoGameState extends GameState {
         if (player instanceof GameComputerPlayer) {
             //place the computers piece
             //first, we need to decrement
-            myId = ((DumbComputerPlayer) player).getPlayerID();
+            if(player instanceof DumbComputerPlayer) {
+                myId = ((DumbComputerPlayer) player).getPlayerID();
+            }
+            else if(player instanceof SmartComputerPlayer){
+                myId = ((SmartComputerPlayer) player).getPlayerID();
+            }
+            else{
+                return false;
+            }
         } else if (player instanceof HumanPlayer) {
             //place the human players piece
             //first, we need to get a reference to the passed in player. Using their ID decrement
