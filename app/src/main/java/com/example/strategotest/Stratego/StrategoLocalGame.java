@@ -24,6 +24,7 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  */
 public class StrategoLocalGame extends LocalGame {
 
+    private int whoWon = -1;
     /**
      * Constructor for the StrategoLocalGame
      */
@@ -86,8 +87,11 @@ public class StrategoLocalGame extends LocalGame {
 
             //check win by checking if flag has been captured
             if ((((StrategoGameState) state).getBlueCharacter())[0] == 1) { // if flag counter is 1, that means a flag has been captured
+                whoWon = 0;
                 return "Congratulations! " + playerNames[0] + " has captured the enemy flag and has won the game! "; // blue flag has been captured, so red won the game
+
             } else if ((((StrategoGameState) state).getRedCharacter())[0] == 1) {
+                whoWon = 1;
                 return "Congratulations! " + playerNames[1] + " has captured the enemy flag and has won the game! "; // red flag has been captured, so blue won the game
             }
 
@@ -107,13 +111,23 @@ public class StrategoLocalGame extends LocalGame {
             }
             //Return the result
             if (redL) {
+                whoWon = 1;
                 return ("Blue wins!");
             }
             if (blueL) {
+                whoWon = 0;
                 return ("Red wins!");
             }
         }
         return null;
+    }
+
+    /**
+     * so we can see who won the game in testing
+     * @return
+     */
+    public int getWhoWon(){
+        return whoWon;
     }
 
     /**

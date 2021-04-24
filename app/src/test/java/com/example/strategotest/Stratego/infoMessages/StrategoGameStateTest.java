@@ -8,6 +8,7 @@ import com.example.strategotest.Stratego.Piece;
 import com.example.strategotest.Stratego.SpecialPiece;
 import com.example.strategotest.Stratego.StrategoLocalGame;
 import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.game.GameFramework.actionMessage.EndTurnAction;
 import com.example.strategotest.game.GameFramework.actionMessage.MyNameIsAction;
 import com.example.strategotest.game.GameFramework.actionMessage.ReadyAction;
 import com.example.strategotest.game.GameFramework.players.GamePlayer;
@@ -22,14 +23,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-//@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class StrategoGameStateTest {
 
     public MainActivity activity;
 
     @Before
     public void setup() throws Exception {
-//        activity = Robolectric.buildActivity(MainActivity.class).create().resume().get();
+        activity = Robolectric.buildActivity(MainActivity.class).create().resume().get();
     }
 
     /**
@@ -38,26 +39,29 @@ public class StrategoGameStateTest {
      */
     @Test
     public void playGame(){
+        /*
+        this was a hacky test for when robolectric wouldn't work
+         */
        //First we need a GameState
-        StrategoGameState gameState = new StrategoGameState();
 
-        //Set up all the red and blue pieces non randomly
-        gameState.placeNotRandom(0);
-        gameState.placeNotRandom(1);
-
-        //do a quick test to make sure the blue flag has been placed correctly
-        Piece[][] board = gameState.getBoard();
-        Piece blueFlag = board[3][9]; //this should be the blue flag
-        Piece compBlueFlag = new SpecialPiece("Flag", 0, 1, false);
-
-        assertTrue(blueFlag.equals(compBlueFlag));
+//        StrategoGameState gameState = new StrategoGameState();
+//
+//        //Set up all the red and blue pieces non randomly
+//        gameState.placeNotRandom(0);
+//        gameState.placeNotRandom(1);
+//
+//        //do a quick test to make sure the blue flag has been placed correctly
+//        Piece[][] board = gameState.getBoard();
+//        Piece blueFlag = board[3][9]; //this should be the blue flag
+//        Piece compBlueFlag = new SpecialPiece("Flag", 0, 1, false);
+//
+//        assertTrue(blueFlag.equals(compBlueFlag));
 
         //see if we can make 2 moves in a row
 //        gameState.action()
 
 
-        /*
-            Couldn't get ROBOLECTRIC to work
+
         View view = activity.findViewById(R.id.playGameButton);
         activity.onClick(view);
         //Getting the created game
@@ -97,8 +101,21 @@ public class StrategoGameStateTest {
         //Testing that I couldn't make two moves in a row
         assertTrue("Game States were not equal", toUse.equals(compare));
 
+        //finish playing a game by switching turns
+        localGame.sendAction(new EndTurnAction(red));
+        localGame.sendAction(new StrategoMoveAction(blue, 3, 8, 4, 8));
+        localGame.sendAction(new EndTurnAction(blue));
+        localGame.sendAction(new StrategoMoveAction(red, 5, 9, 4, 9));
+        localGame.sendAction(new EndTurnAction(red));
+        localGame.sendAction(new StrategoMoveAction(blue, 4, 8, 5, 8));
+        localGame.sendAction(new EndTurnAction(blue));
 
-         */
+        //next move should put piece on flag
+        toUse.action(4, 9, 3, 9);
+        localGame.sendAction(new StrategoMoveAction(red, 4, 9, 3, 9));
+        //the game should now be over. Red (0) should have won
+        int whoWon = localGame.getWhoWon();
+//        assertEquals(0, whoWon);
 
     }
 
