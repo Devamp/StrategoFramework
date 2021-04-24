@@ -1,29 +1,23 @@
 package com.example.strategotest.Stratego;
 
+import com.example.strategotest.Stratego.actionMessage.StrategoMoveAction;
+import com.example.strategotest.game.GameFramework.players.GamePlayer;
+
 public class SmartHelper {
-    private int row;
-   private  int col;
-    private int trow;
-    private int tcol;
-    public SmartHelper(int r,int c,int tr, int tc){
-        row = r;
-        col = c;
-        trow = tr;
-        tcol = tr;
+  private StrategoMoveAction movement;
+  private String sent;
+    public SmartHelper(GamePlayer p, int r, int c, int tr, int tc){
+        movement = new StrategoMoveAction(p,r,c,tr,tc);
+        sent = "\n\n\n\n\n\n\nmove sent: " + c + "," + r + "," + tc + "," + tr + "\n\n\n\n\n";
     }
-    public int getRow(){
-        return row;
+    public StrategoMoveAction getMove(){
+        return movement;
+    }
+    public String toString(){
+        return sent;
     }
 
-    public int getCol() {
-        return col;
-    }
-    public int getTrow(){
-        return trow;
-    }
-    public int getTcol(){
-        return tcol;
-    }
+
 
 
 }
