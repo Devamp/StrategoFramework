@@ -39,28 +39,6 @@ public class StrategoGameStateTest {
      */
     @Test
     public void playGame(){
-        /*
-        this was a hacky test for when robolectric wouldn't work
-         */
-       //First we need a GameState
-
-//        StrategoGameState gameState = new StrategoGameState();
-//
-//        //Set up all the red and blue pieces non randomly
-//        gameState.placeNotRandom(0);
-//        gameState.placeNotRandom(1);
-//
-//        //do a quick test to make sure the blue flag has been placed correctly
-//        Piece[][] board = gameState.getBoard();
-//        Piece blueFlag = board[3][9]; //this should be the blue flag
-//        Piece compBlueFlag = new SpecialPiece("Flag", 0, 1, false);
-//
-//        assertTrue(blueFlag.equals(compBlueFlag));
-
-        //see if we can make 2 moves in a row
-//        gameState.action()
-
-
 
         View view = activity.findViewById(R.id.playGameButton);
         activity.onClick(view);

@@ -27,6 +27,7 @@ import java.util.Random;
  * The computer now works. I have not yet seen a bug in the hard computer, but I just
  * finished it so I did not have a long tim to test.
  */
+
 public class SmartComputerPlayer extends GameComputerPlayer {
     private ArrayList<SmartHelper> moveAttacks = new ArrayList<SmartHelper>();
     private ArrayList<SmartHelper> moves = new ArrayList<SmartHelper>();
