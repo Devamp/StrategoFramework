@@ -146,6 +146,7 @@ public class StrategoGameState extends GameState {
         this.timer = original.getTimer();
         this.phase = original.getPhase();
 
+
         //set the new board state equal to original board state
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {

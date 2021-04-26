@@ -257,9 +257,6 @@ public class StrategoGameStateTest {
         assertEquals(state.getBlueCharacter()[0], 10); // now it should be updated to 10
     }
 
-    @Test
-    public void place() {
-    }
 
     /**
      *
@@ -362,10 +359,6 @@ public class StrategoGameStateTest {
 
     }
 
-    @Test
-    public void movePrint() {
-    }
-
     /**
      * Tested by: Devam Patel
      */
@@ -389,12 +382,6 @@ public class StrategoGameStateTest {
         //Make sure the turn is 0 to start
         assertEquals(state.getId(),0);
     }
-
-    @Test
-    public void getPhase() {
-
-    }
-
 
     @Test
     /**
