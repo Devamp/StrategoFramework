@@ -29,14 +29,29 @@ public class StrategoPlaceAction extends GameAction {
 
     }
 
+    /**
+     * getter method for getting the value of the piece
+     *
+     * @return value - the value of the piece
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * getter method for getting the board row
+     *
+     * @return row - the row number on the board
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * getter method for getting the board column
+     *
+     * @return col - the col number on the board
+     */
     public int getCol() {
         return col;
     }
