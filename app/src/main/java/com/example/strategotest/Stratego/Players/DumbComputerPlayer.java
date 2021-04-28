@@ -277,7 +277,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     if (board[fromX + 1][fromY].getPlayer() == ((playerNum + 1) % 2)) {
                         return true;
                     }
-                } else if (board[fromX + 1][fromY] == null ) {
+                } else if (board[fromX + 1][fromY] == null) {
                     return true;
                 } else if (board[fromX + 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;

@@ -24,6 +24,7 @@ public class SpecialPiece extends Piece {
 
     /**
      * move-sets movement to false for special pieces
+     *
      * @param toPlace
      * @return
      */
@@ -34,6 +35,7 @@ public class SpecialPiece extends Piece {
 
     /**
      * attack-sets attack to false for special pieces
+     *
      * @param toAttack
      * @return
      */

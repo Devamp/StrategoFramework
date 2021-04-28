@@ -96,11 +96,11 @@ public class Piece {
         return icon;
     }
 
-    public void setWasSeen(boolean wasSeen){
+    public void setWasSeen(boolean wasSeen) {
         this.wasSeen = wasSeen;
     }
 
-    public boolean getWasSeen(){
+    public boolean getWasSeen() {
         return wasSeen;
     }
 
@@ -174,7 +174,7 @@ public class Piece {
         if (p.getPlayer() != this.getPlayer()) {
             return false;
         }
-        if(p.getVisible() != this.getVisible() || p.getWasSeen() != this.getWasSeen()){
+        if (p.getVisible() != this.getVisible() || p.getWasSeen() != this.getWasSeen()) {
             return false;
         }
         return true;

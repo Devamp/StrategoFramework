@@ -8,7 +8,6 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
 public class StrategoMoveAction extends GameAction {
@@ -43,7 +42,7 @@ public class StrategoMoveAction extends GameAction {
         return toX;
     }
 
-    public int getToY(){
+    public int getToY() {
         return toY;
     }
 }

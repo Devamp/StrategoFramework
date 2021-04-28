@@ -48,9 +48,10 @@ public class SmartComputerPlayer extends GameComputerPlayer {
     /**
      * Called when the player receives a game-state (or other info) from the
      * game.
+     * <p>
+     * <p>
+     * /**
      *
-
-    /**
      * @param info the message from the game
      */
     @Override
@@ -74,34 +75,32 @@ public class SmartComputerPlayer extends GameComputerPlayer {
             // make sure we are in placement phase
             if (gameState.getPhase() == 0) {
                 int backline;
-                if(playerNum == 0){
+                if (playerNum == 0) {
                     backline = 9;
-                }
-                else{
+                } else {
                     backline = 0;
                 }
-                int fran = (int)(Math.random() * 10);
-                game.sendAction(new StrategoPlaceAction(this,0,backline, fran));
-                game.sendAction(new StrategoPlaceAction(this,10,Math.abs(backline-1), fran));
-                if(fran == 9 || fran == 0){
-                    game.sendAction(new StrategoPlaceAction(this,10,backline, Math.abs(fran-1)));
-                }
-                else{
-                    game.sendAction(new StrategoPlaceAction(this,10,backline, fran+1));
-                    game.sendAction(new StrategoPlaceAction(this,10,backline, fran-1));
+                int fran = (int) (Math.random() * 10);
+                game.sendAction(new StrategoPlaceAction(this, 0, backline, fran));
+                game.sendAction(new StrategoPlaceAction(this, 10, Math.abs(backline - 1), fran));
+                if (fran == 9 || fran == 0) {
+                    game.sendAction(new StrategoPlaceAction(this, 10, backline, Math.abs(fran - 1)));
+                } else {
+                    game.sendAction(new StrategoPlaceAction(this, 10, backline, fran + 1));
+                    game.sendAction(new StrategoPlaceAction(this, 10, backline, fran - 1));
 
                 }
-                game.sendAction(new StrategoRandomPlace(this,playerNum));
+                game.sendAction(new StrategoRandomPlace(this, playerNum));
             }
-            if(shouldPass && gameState.getPhase() == 0){
+            if (shouldPass && gameState.getPhase() == 0) {
                 game.sendAction(pass);
             }
-            if(gameState.getPhase() == 1){ // we are in play phase
+            if (gameState.getPhase() == 1) { // we are in play phase
                 Piece[][] theBoard = gameState.getBoard();
                 moveAttacks.clear();
                 moves.clear();
                 worstCase.clear();
-                    checkPieces(theBoard);
+                checkPieces(theBoard);
                 //Make Moves
                 if (moveAttacks.size() > 0) {
                     int ran = (int) (Math.random() * moveAttacks.size());
@@ -128,8 +127,6 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                     sleep(0.5);
                     game.sendAction(pass);
                     shouldPass = false;
-
-
                 }
 
             }
@@ -137,16 +134,18 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
 
     }
+
     /**
      * Find all of your pieces and  call look around on them
+     *
      * @param board
      */
     public void checkPieces(Piece[][] board) {
         //Loop through all the pieces
-        for(int row = 0; row < 10; row++){
-            for(int col = 0; col< 10; col++){
-                if(board[row][col] != null) {
-                    if(board[row][col].getValue() != 10 && board[row][col].getValue() != 0) {
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                if (board[row][col] != null) {
+                    if (board[row][col].getValue() != 10 && board[row][col].getValue() != 0) {
                         if (board[row][col].getPlayer() == playerNum) {
                             lookAround(board, row, col);
                         }
@@ -159,71 +158,72 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
     /**
      * Depending on what is around you add the appropriate action to a arraylist
+     *
      * @param board
      * @param r-Piece row we are checking for
      * @param c-piece col we are checking for
      */
-    public void lookAround( Piece[][] board, int r, int c){
+    public void lookAround(Piece[][] board, int r, int c) {
         //check rows
-      for(int i = -1; i < 2; i++) {
-          if ((r + i) <= 9 && (r + i) >= 0 && !(i == 0)) {
-              switch (value(board[r + i][c], board[r][c].getValue())) {
-                  case -1:
-                      break;
-                  case 0:
-                      moves.add(new SmartHelper(this, r, c, r + i, c));
-                      break;
-                  case 1:
-                      moveAttacks.add(new SmartHelper(this, r, c, r + i, c));
-                      break;
-                  case 2:
-                      if (board[r][c].getValue() >= 5) {
-                          moveAttacks.add(new SmartHelper(this, r, c, r + i, c));
-                      } else {
-                          worstCase.add(new SmartHelper(this, r, c, r + i, c));
-                      }
+        for (int i = -1; i < 2; i++) {
+            if ((r + i) <= 9 && (r + i) >= 0 && !(i == 0)) {
+                switch (value(board[r + i][c], board[r][c].getValue())) {
+                    case -1:
+                        break;
+                    case 0:
+                        moves.add(new SmartHelper(this, r, c, r + i, c));
+                        break;
+                    case 1:
+                        moveAttacks.add(new SmartHelper(this, r, c, r + i, c));
+                        break;
+                    case 2:
+                        if (board[r][c].getValue() >= 5) {
+                            moveAttacks.add(new SmartHelper(this, r, c, r + i, c));
+                        } else {
+                            worstCase.add(new SmartHelper(this, r, c, r + i, c));
+                        }
 
-                      break;
-                  case 3:
-                      worstCase.add(new SmartHelper(this, r, c, r + i, c));
-                      break;
-              }
+                        break;
+                    case 3:
+                        worstCase.add(new SmartHelper(this, r, c, r + i, c));
+                        break;
+                }
 
-          }
-      }
-      //check cols
-          for(int i = -1; i < 2; i++) {
-              if ((c + i) <= 9 && (c + i) >= 0 && !(i == 0)) {
-                  switch (value(board[r][c+i], board[r][c].getValue())) {
-                      case -1:
-                          break;
-                      case 0:
-                          moves.add(new SmartHelper(this, r, c, r, c+i));
-                          break;
-                      case 1:
-                          moveAttacks.add(new SmartHelper(this, r, c, r, c+i));
-                          break;
-                      case 2:
-                          if (board[r][c].getValue() >= 5) {
-                              moveAttacks.add(new SmartHelper(this, r, c, r, c+i));
-                          } else {
-                              worstCase.add(new SmartHelper(this, r, c, r, c+i));
-                          }
+            }
+        }
+        //check cols
+        for (int i = -1; i < 2; i++) {
+            if ((c + i) <= 9 && (c + i) >= 0 && !(i == 0)) {
+                switch (value(board[r][c + i], board[r][c].getValue())) {
+                    case -1:
+                        break;
+                    case 0:
+                        moves.add(new SmartHelper(this, r, c, r, c + i));
+                        break;
+                    case 1:
+                        moveAttacks.add(new SmartHelper(this, r, c, r, c + i));
+                        break;
+                    case 2:
+                        if (board[r][c].getValue() >= 5) {
+                            moveAttacks.add(new SmartHelper(this, r, c, r, c + i));
+                        } else {
+                            worstCase.add(new SmartHelper(this, r, c, r, c + i));
+                        }
 
-                          break;
-                      case 3:
-                          worstCase.add(new SmartHelper(this, r, c, r , c + i));
-                          break;
-                  }
+                        break;
+                    case 3:
+                        worstCase.add(new SmartHelper(this, r, c, r, c + i));
+                        break;
+                }
 
-              }
-          }
-      }
-
+            }
+        }
+    }
 
 
     /**
      * Determines the scenario the spot in question is.
+     *
      * @param p - piece we are comparing our piece to
      * @return - what to do
      * 1 - attack
@@ -231,30 +231,29 @@ public class SmartComputerPlayer extends GameComputerPlayer {
      * 3 - do in the worst case
      * -1 - unperformable
      */
-    public int value( Piece p, int v){
+    public int value(Piece p, int v) {
         //Regular move
-        if(p == null){
+        if (p == null) {
             return 0;
         }
         //Impossible to move on water or your piece
-        if(p.getPlayer() < 0 || p.getPlayer() == playerNum){
+        if (p.getPlayer() < 0 || p.getPlayer() == playerNum) {
             return -1;
         }
         //enemy piece visible
-        if(p.getVisible() == true){
-            if(p.getValue() > v  && (p.getValue() != 10 || v == 8)){
+        if (p.getVisible() == true) {
+            if (p.getValue() > v && (p.getValue() != 10 || v == 8)) {
                 return 1;
-            }
-            else{
+            } else {
                 return 3;
             }
 
         }
         //attack invisible piece
-        if(p.getVisible()== false){
+        if (p.getVisible() == false) {
             return 2;
         }
-        return  3;
+        return 3;
     }
 
     public int getPlayerID() {
