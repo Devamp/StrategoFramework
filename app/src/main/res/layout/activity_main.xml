@@ -119,6 +119,7 @@
                 android:layout_weight="0"
                 android:background="#D3FFD97A"
                 android:outlineAmbientShadowColor="#000000"
+                android:paddingLeft="10sp"
                 android:paddingRight="10sp"
                 app:srcCompat="@drawable/redsquare" />
 
