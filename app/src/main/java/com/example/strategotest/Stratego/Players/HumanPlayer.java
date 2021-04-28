@@ -39,27 +39,8 @@ import java.util.TimerTask;
  * @author Hewlett De Lara
  * @author Devam Patel
  * @version 4/21
- * <p>
+ *
  * Notes:
- * Make End turn and undo turn invisible until a move has been made
- * Lock out movement after a player has moved
- * Make opponents pieces invisible -- done
- * Can move the opponents pieces. Should probably fix that
- * If you click on an empty tile, and then try to click one of your pieces, it makes an illegal
- * move action. Trying to then move the just clicked piece doesn't work and is confusing
- * Maybe somehow highlight the currently selected piece
- * Gotta reveal the piece that the player interacted with. Maybe that will be in beta?
- * I think I mixed up the undo turn and undo move
- * Don't lock the player out if they make an invalid move. They should get a warning and be
- * allowed to keep making moves until a valid one is selected
- * Hitting null space, null space for movement causes app to crash
- * <p>
- * Placing piece works but is incredibly buggy. Can place negative amount of pieces,
- * can place over lakes and opponents pieces. Places the wrong pieces. Doesn't check
- * once we have placed all pieces. Many errors. But it works.
- * <p>
- * Make textView on top of captured box to be place pieces in the place phase (instead of captured
- * pieces)
  */
 public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener {
 
@@ -187,6 +168,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //When the turn is passed, display whose turn in the upper right corner
         setTurnColor(toUse);
 
+        //should only show the board if it's this players turn
         if (toUse.getTurn() == humanPlayerID) {
             toUse.showBoard(boardButtons);
         }
@@ -227,6 +209,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             boolean blueP = true;
             boolean redP = true;
             for (int i = 0; i < 12; i++) {
+                //if this is true, then the array isn't empty and there are more pieces to place
                 if (toUse.getBlueCharacter()[i] != 0) {
                     blueP = false;
 
@@ -236,6 +219,9 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
                 }
             }
+
+            //depending on if we are blue or red, and if the pieces are all placed
+            //set endTurn button to visible
             if (humanPlayerID == 1 && blueP) {
                 endTurn.setVisibility(View.VISIBLE);
             } else if (humanPlayerID == 0 && redP) {
@@ -253,11 +239,12 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         //if the player has made a move, undoTurn and endTurn become available
         if (myPhase != 0) {
             if (hasMoved) {
+                //if a move has already been made, set end and undo to visible
                 endTurn.setVisibility(View.VISIBLE);
                 undoTurn.setVisibility(View.VISIBLE);
             } else {
                 //backup the current board so we can revert to it if we want to undo
-                game.sendAction(new StrategoBackupAction(this)); //this works. Not sure if it's the best way to do it, but it works!!
+                game.sendAction(new StrategoBackupAction(this));
 
                 endTurn.setVisibility(View.INVISIBLE);
                 undoTurn.setVisibility(View.INVISIBLE);
@@ -286,6 +273,8 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     /**
      * sets the current player as the activity's GUI
+     *
+     * @param activity
      */
     @Override
     public void setAsGui(GameMainActivity activity) {
@@ -379,7 +368,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     public void onClick(View v) {
         if (v instanceof Button) {
             buttonOnClick(v);
-        } else if (v instanceof ImageButton && !hasMoved) { //deleted && !hasMoved
+        } else if (v instanceof ImageButton && !hasMoved) {
             imageButtonOnClick(v);
         }
     }
@@ -515,47 +504,34 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      * @return
      */
     private int getTheValue(View v) {
-        //seriously, what's the way to do this without the switch statement? Hash table?
+        //return the value of the piece to be placed. Can probably use a hash table instead.
         switch (v.getId()) {
             case R.id.flagTracker:
                 return 0;
-//                break;
             case R.id.marshallTracker:
                 return 1;
-//                break;
             case R.id.generalTracker:
                 return 2;
-//                break;
             case R.id.colonelTracker:
                 return 3;
-//                break;
             case R.id.majorTracker:
                 return 4;
-//                break;
             case R.id.captainTracker:
                 return 5;
-//                break;
             case R.id.lieutenantTracker:
                 return 6;
-//                break;
             case R.id.sergeantTracker:
                 return 7;
-//                break;
             case R.id.minerTracker:
                 return 8;
-//                break;
             case R.id.scoutTracker:
                 return 9;
-//                break;
             case R.id.bombTracker:
                 return 10;
-//                break;
             case R.id.spyTracker:
                 return 11;
-//                break;
             default:
                 return -1;
-//                break;
         }
     }
 
