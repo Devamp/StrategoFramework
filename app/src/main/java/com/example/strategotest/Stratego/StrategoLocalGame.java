@@ -24,7 +24,7 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  */
 public class StrategoLocalGame extends LocalGame {
 
-    private int whoWon = -1;
+    private int whoWon = -1; // used to help store id of the player who won the current game
 
     /**
      * Constructor for the StrategoLocalGame
