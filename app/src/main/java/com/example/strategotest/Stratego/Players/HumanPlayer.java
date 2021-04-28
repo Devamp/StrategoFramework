@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -123,6 +124,13 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
     //use this variable to hold what piece is selected to place
     int placePieceVal = -1;
+
+    //Set up songs
+    private MediaPlayer song1 = null;
+    private MediaPlayer song2 = null;
+    private  MediaPlayer song3 = null;
+    private MediaPlayer song4 = null;
+
 
     /**
      * constructor
@@ -366,6 +374,24 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         piecesRemainLabel[9] = (TextView) activity.findViewById(R.id.scoutMult);
         piecesRemainLabel[10] = (TextView) activity.findViewById(R.id.bombMult);
         piecesRemainLabel[11] = (TextView) activity.findViewById(R.id.spyMult);
+
+        song1 = MediaPlayer.create(activity, R.raw.heroestonight);
+        song2 = MediaPlayer.create(activity, R.raw.cartoononon);
+        song3 = MediaPlayer.create(activity, R.raw.invinciple);
+        song4 = MediaPlayer.create(activity, R.raw.whodoesntwanttofallinlove);
+        int thisRan = (int)(Math.random() * 4);
+        if(thisRan == 0){
+            song1.start();
+        }
+        else if(thisRan == 1){
+            song2.start();
+        }
+        else if(thisRan == 2){
+            song3.start();
+        }
+        else{
+            song4.start();
+        }
 
     }
 
