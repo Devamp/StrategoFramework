@@ -363,10 +363,38 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
         piecesRemainLabel[9] = (TextView) activity.findViewById(R.id.scoutMult);
         piecesRemainLabel[10] = (TextView) activity.findViewById(R.id.bombMult);
         piecesRemainLabel[11] = (TextView) activity.findViewById(R.id.spyMult);
-
+        /*
+        for song 1
+        Song: Janji - Heroes Tonight (feat. Johnning) [NCS Release]
+        Music provided by NoCopyrightSounds
+        Free Download/Stream: http://ncs.io/ht
+        Watch: http://youtu.be/3nQNiWdeH2Q
+         */
         song1 = MediaPlayer.create(activity, R.raw.heroestonight);
+        /*
+        for song 2
+        Song: Cartoon - On & On (feat. Daniel Levi) [NCS Release]
+        Music provided by NoCopyrightSounds
+        Free Download/Stream: http://ncs.io/ht
+        Watch: https://www.youtube.com/watch?v=K4DyBUG242c
+
+         */
         song2 = MediaPlayer.create(activity, R.raw.cartoononon);
+        /*
+        for song 3
+        Song: DEAF KEV - Invincible [NCS Release]
+        Music provided by NoCopyrightSounds
+        Free Download/Stream: http://ncs.io/invincible
+        Watch: http://youtu.be/J2X5mJ3HDYE
+         */
         song3 = MediaPlayer.create(activity, R.raw.invinciple);
+        /*
+        for song 4
+        Song: Zeus X Crona - Who doesn't wanna fall in love (feat. Veronica Bravo) [NCS Release]
+        Music provided by NoCopyrightSounds
+        Free Download/Stream: http://ncs.io/WDWFIL
+         Watch: http://youtu.be/y2hIBmhR9J4
+         */
         song4 = MediaPlayer.create(activity, R.raw.whodoesntwanttofallinlove);
         int thisRan = (int)(Math.random() * 4);
         if(thisRan == 0){
