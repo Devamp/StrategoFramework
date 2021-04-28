@@ -23,6 +23,11 @@ public class StrategoRandomPlace extends GameAction {
         pId = id;
     }
 
+    /**
+     * the getter method for getting the player's id
+     *
+     * @return pId - the player's id
+     */
     public int getPId() {
         return pId;
     }
