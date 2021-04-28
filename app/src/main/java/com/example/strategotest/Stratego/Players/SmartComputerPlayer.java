@@ -29,10 +29,10 @@ import java.util.Random;
  */
 
 public class SmartComputerPlayer extends GameComputerPlayer {
+    //Stores possible moves
     private ArrayList<SmartHelper> moveAttacks = new ArrayList<SmartHelper>();
     private ArrayList<SmartHelper> moves = new ArrayList<SmartHelper>();
     private ArrayList<SmartHelper> worstCase = new ArrayList<SmartHelper>();
-    private boolean[][] usedIndices = new boolean[10][10]; // 2D boolean array to help store used up indices
 
     StrategoGameState gameState = null;
 
@@ -65,7 +65,6 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
         gameState = new StrategoGameState((StrategoGameState) info);
         PassTurnAction pass = new PassTurnAction(this);
-        int[] temp;
 
         if (gameState.getTurn() != playerNum) { //not the computer's turn
             return;
@@ -74,12 +73,14 @@ public class SmartComputerPlayer extends GameComputerPlayer {
 
             // make sure we are in placement phase
             if (gameState.getPhase() == 0) {
+                //Set the proper side
                 int backline;
                 if (playerNum == 0) {
                     backline = 9;
                 } else {
                     backline = 0;
                 }
+                //Place flag and 2-3 bombs then place rest randomly
                 int fran = (int) (Math.random() * 10);
                 game.sendAction(new StrategoPlaceAction(this, 0, backline, fran));
                 game.sendAction(new StrategoPlaceAction(this, 10, Math.abs(backline - 1), fran));
@@ -92,14 +93,17 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                 }
                 game.sendAction(new StrategoRandomPlace(this, playerNum));
             }
+            //Pass turn
             if (shouldPass && gameState.getPhase() == 0) {
                 game.sendAction(pass);
             }
+            //Make sure action phase
             if (gameState.getPhase() == 1) { // we are in play phase
                 Piece[][] theBoard = gameState.getBoard();
                 moveAttacks.clear();
                 moves.clear();
                 worstCase.clear();
+                //check possible move for each piece
                 checkPieces(theBoard);
                 //Make Moves
                 if (moveAttacks.size() > 0) {

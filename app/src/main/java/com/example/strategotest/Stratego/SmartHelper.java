@@ -17,6 +17,7 @@ public class SmartHelper {
 
     /**
      * Constructor
+     * creates the move action
      *
      * @param p  - player making action
      * @param r  - starting row
@@ -26,7 +27,6 @@ public class SmartHelper {
      */
     public SmartHelper(GamePlayer p, int r, int c, int tr, int tc) {
         movement = new StrategoMoveAction(p, r, c, tr, tc);
-        sent = "\n\n\n\n\n\n\nmove sent: " + c + "," + r + "," + tc + "," + tr + "\n\n\n\n\n";
     }
 
     /**
@@ -36,15 +36,6 @@ public class SmartHelper {
      */
     public StrategoMoveAction getMove() {
         return movement;
-    }
-
-    /**
-     * returns a string of the action for debuging
-     *
-     * @return
-     */
-    public String toString() {
-        return sent;
     }
 
 
