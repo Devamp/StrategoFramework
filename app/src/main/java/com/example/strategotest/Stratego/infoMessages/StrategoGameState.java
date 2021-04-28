@@ -20,12 +20,7 @@ import java.util.ArrayList;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @version 3/21
- * <p>
- * Notes/Bugs:
- * The scout can move as far as it pleases, but it can't move and attack
- * when I think it should be able to
- * Make a red stratego tile instead of a blue one for when it's the blue players turn?
- * Capturing the flag doesn't end the game. (Haven't tried taking all the pieces)
+ *
  */
 
 public class StrategoGameState extends GameState {
@@ -185,8 +180,6 @@ public class StrategoGameState extends GameState {
         }
 
         //copy over information (not deep copied)
-
-
         blueCharacter = new int[12];
         redCharacter = new int[12];
         filledRedCharacters = new int[12];
@@ -226,7 +219,6 @@ public class StrategoGameState extends GameState {
     public void showBoard(ImageButton[][] boardButtons) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-//                boardButtons[i][j].setImageResource(R.drawable.bluetile);
                 if (board[i][j] == null) {
                     boardButtons[i][j].setImageResource(R.drawable.test);
                 } else if (board[i][j].getValue() == -1) {
@@ -275,7 +267,6 @@ public class StrategoGameState extends GameState {
         for (int i = 0; i < 12; i++) {
             //need to instance all of the pieces
             name = setName(i);
-//            int theIcon = setIcon(i); //this doesn't work like it's supposed to. Maybe fix later?
 
             //go over the number of each particular piece and add an instanced piece to
             //an array list
@@ -304,7 +295,7 @@ public class StrategoGameState extends GameState {
     public String setName(int whichName) {
         String returnName;
 
-        //probably a poor way to get the name? Can use hashtable?
+        //switch to set correct piece names
         switch (whichName) {
             case 0:
                 returnName = "Flag";
@@ -507,6 +498,8 @@ public class StrategoGameState extends GameState {
 
             }
         }
+
+        // set all characters values to 0 after placement
         if (player == 0) {
             for (int i = 0; i < 12; i++) {
                 redCharacter[i] = 0;
@@ -686,11 +679,7 @@ public class StrategoGameState extends GameState {
                 board[row][col] = toUsePieces.get(loop);
                 break;
             }
-//            } catch (Exception ex) {
-//                //will probably throw an out of bounds exception...
-//                //but I just fixed that in the while loop itself...
-//                return false;
-//            }
+
             loop++;
             //} while (board[row][col].getValue() != value && !(loop > toUsePieces.size()));
         } while (!(loop > toUsePieces.size()));
@@ -907,17 +896,13 @@ public class StrategoGameState extends GameState {
 
         boolean isTrue = false;
         // Player 1 (represented by 0) ended turn
-//         if (gameState.turn == 0) {
         if (this.turn == 0) {
-//             gameState.turn = 1;
             this.turn = 1;
 
             isTrue = true;
         }
         // Player 2 (represented by 1) ended turn
-//         else if (gameState.turn == 1){
         else if (this.turn == 1) {
-//             gameState.turn = 0;
             this.turn = 0;
             isTrue = true;
         }

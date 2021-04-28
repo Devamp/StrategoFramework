@@ -56,6 +56,11 @@ public class Piece {
         return toReturn;
     }
 
+    /**
+     *  Getters and setters for piece class
+     *
+     */
+
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
@@ -144,17 +149,17 @@ public class Piece {
      * @return
      */
     public boolean attack(Piece toAttack) {
-        if (toAttack.getValue() == 0) {
+        if (toAttack.getValue() == 0) { // check if flag
             return true;
         } else if (this.getValue() == 8 && toAttack.getValue() == 10) {
             return true;
-        } else if (toAttack.getValue() == 10) {
+        } else if (toAttack.getValue() == 10) { // if bomb, fail attack
             return false;
         } else if (this.getValue() == 11 && toAttack.getValue() == 1) {
             return true;
-        } else if (this.getValue() < toAttack.getValue()) {
+        } else if (this.getValue() < toAttack.getValue()) { // if lower piece wins, return true
             return true;
-        } else if (this.getValue() > toAttack.getValue()) {
+        } else if (this.getValue() > toAttack.getValue()) { // if lower piece loses, return false
             return false;
         } else {
             return true;
