@@ -108,6 +108,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                     game.sendAction(moveAttacks.get(ran).getMove());
                     Log.d(moveAttacks.get(ran).toString(), "attack");
                     moveAttacks.clear();
+                    sleep(0.5);
                     game.sendAction(pass);
                     shouldPass = false;
                 } else if (moves.size() > 0) {
@@ -115,6 +116,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                     game.sendAction(moves.get(ran).getMove());
                     Log.d(moves.get(ran).toString(), "move");
                     moves.clear();
+                    sleep(0.5);
                     game.sendAction(pass);
                     shouldPass = false;
 
@@ -123,6 +125,7 @@ public class SmartComputerPlayer extends GameComputerPlayer {
                     game.sendAction(worstCase.get(ran).getMove());
                     Log.d(worstCase.get(ran).toString(), "worst");
                     worstCase.clear();
+                    sleep(0.5);
                     game.sendAction(pass);
                     shouldPass = false;
 
