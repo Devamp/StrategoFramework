@@ -24,7 +24,8 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  */
 public class StrategoLocalGame extends LocalGame {
 
-    private int whoWon = -1;
+    private int whoWon = -1; // used to help store id of the player who won the current game
+
     /**
      * Constructor for the StrategoLocalGame
      */
@@ -124,9 +125,10 @@ public class StrategoLocalGame extends LocalGame {
 
     /**
      * so we can see who won the game in testing
+     *
      * @return
      */
-    public int getWhoWon(){
+    public int getWhoWon() {
         return whoWon;
     }
 
@@ -140,7 +142,7 @@ public class StrategoLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
 
         StrategoGameState gameState = (StrategoGameState) super.state;
-        
+
         //Pass turn to next player
         if (action instanceof PassTurnAction) {
 //            officialState.endTurn();
@@ -169,7 +171,7 @@ public class StrategoLocalGame extends LocalGame {
             return toReturn;
             //Undo turn
         } else if (action instanceof StrategoUndoTurnAction) {
-            super.state = ((StrategoGameState)state).getBackup();
+            super.state = ((StrategoGameState) state).getBackup();
             return true;
             //Back up the board so you can undo turn
         } else if (action instanceof StrategoBackupAction) {

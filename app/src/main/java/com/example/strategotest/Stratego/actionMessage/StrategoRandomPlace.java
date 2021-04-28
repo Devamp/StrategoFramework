@@ -8,11 +8,11 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
 public class StrategoRandomPlace extends GameAction {
     private int pId;
+
     /**
      * constructor for GameAction
      *
@@ -23,7 +23,12 @@ public class StrategoRandomPlace extends GameAction {
         pId = id;
     }
 
-    public int getPId(){
+    /**
+     * the getter method for getting the player's id
+     *
+     * @return pId - the player's id
+     */
+    public int getPId() {
         return pId;
     }
 }

@@ -158,10 +158,10 @@ public class DumbComputerPlayer extends GameComputerPlayer {
 
     /**
      * getMoveAction - this helper method will help the computer decide which piece to move. It will randomly
-     * select a valid peice and if it can make a valid move, it will make that move. Movement direction is
+     * select a valid piece and if it can make a valid move, it will make that move. Movement direction is
      * randomly chosen.
      *
-     * @param state
+     * @param state - the game state of Stratego
      * @return move action to be send to the game
      */
     public StrategoMoveAction getMoveAction(StrategoGameState state) {
@@ -238,7 +238,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     break; // break the loop
             }
 
-            // the piece was not moveable, we must rerun the loop with new values and find another piece
+            // the piece was not movable, we must rerun the loop with new values and find another piece
             row = gen.nextInt(10);
             col = gen.nextInt(10);
 
@@ -277,7 +277,7 @@ public class DumbComputerPlayer extends GameComputerPlayer {
                     if (board[fromX + 1][fromY].getPlayer() == ((playerNum + 1) % 2)) {
                         return true;
                     }
-                } else if (board[fromX + 1][fromY] == null ) {
+                } else if (board[fromX + 1][fromY] == null) {
                     return true;
                 } else if (board[fromX + 1][fromY].getPlayer() == -1) { // make sure its not a lake
                     return false;
@@ -328,9 +328,13 @@ public class DumbComputerPlayer extends GameComputerPlayer {
         }
 
         return false;
-
     }
 
+    /**
+     * getter method for getting the player id
+     *
+     * @return number of the player id
+     */
     public int getPlayerID() {
         return playerNum;
     }

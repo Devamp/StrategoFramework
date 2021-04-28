@@ -20,12 +20,7 @@ import java.util.ArrayList;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @version 3/21
- * <p>
- * Notes/Bugs:
- * The scout can move as far as it pleases, but it can't move and attack
- * when I think it should be able to
- * Make a red stratego tile instead of a blue one for when it's the blue players turn?
- * Capturing the flag doesn't end the game. (Haven't tried taking all the pieces)
+ *
  */
 
 public class StrategoGameState extends GameState {
@@ -185,8 +180,6 @@ public class StrategoGameState extends GameState {
         }
 
         //copy over information (not deep copied)
-
-
         blueCharacter = new int[12];
         redCharacter = new int[12];
         filledRedCharacters = new int[12];
@@ -226,7 +219,6 @@ public class StrategoGameState extends GameState {
     public void showBoard(ImageButton[][] boardButtons) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-//                boardButtons[i][j].setImageResource(R.drawable.bluetile);
                 if (board[i][j] == null) {
                     boardButtons[i][j].setImageResource(R.drawable.test);
                 } else if (board[i][j].getValue() == -1) {
@@ -275,7 +267,6 @@ public class StrategoGameState extends GameState {
         for (int i = 0; i < 12; i++) {
             //need to instance all of the pieces
             name = setName(i);
-//            int theIcon = setIcon(i); //this doesn't work like it's supposed to. Maybe fix later?
 
             //go over the number of each particular piece and add an instanced piece to
             //an array list
@@ -304,7 +295,7 @@ public class StrategoGameState extends GameState {
     public String setName(int whichName) {
         String returnName;
 
-        //probably a poor way to get the name? Can use hashtable?
+        //switch to set correct piece names
         switch (whichName) {
             case 0:
                 returnName = "Flag";
@@ -355,7 +346,7 @@ public class StrategoGameState extends GameState {
 
         switch (whichPiece) {
             case 0:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.flagr;
                 } else {
                     returnDrawID = R.drawable.flagb;
@@ -363,77 +354,77 @@ public class StrategoGameState extends GameState {
 
                 break;
             case 1:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.marshr;
                 } else {
                     returnDrawID = R.drawable.marshb;
                 }
                 break;
             case 2:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.genr;
                 } else {
                     returnDrawID = R.drawable.genb;
                 }
                 break;
             case 3:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.colr;
                 } else {
                     returnDrawID = R.drawable.colb;
                 }
                 break;
             case 4:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.majr;
                 } else {
                     returnDrawID = R.drawable.majb;
                 }
                 break;
             case 5:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.captr;
                 } else {
                     returnDrawID = R.drawable.captb;
                 }
                 break;
             case 6:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.ltr;
                 } else {
                     returnDrawID = R.drawable.ltb;
                 }
                 break;
             case 7:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.sergr;
                 } else {
                     returnDrawID = R.drawable.sergb;
                 }
                 break;
             case 8:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.minerr;
                 } else {
                     returnDrawID = R.drawable.minerb;
                 }
                 break;
             case 9:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.scoutr;
                 } else {
                     returnDrawID = R.drawable.scoutb;
                 }
                 break;
             case 10:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.bombr;
                 } else {
                     returnDrawID = R.drawable.bombb;
                 }
                 break;
             case 11:
-                if(playerID == 0){
+                if (playerID == 0) {
                     returnDrawID = R.drawable.spyr;
                 } else {
                     returnDrawID = R.drawable.spyb;
@@ -507,6 +498,8 @@ public class StrategoGameState extends GameState {
 
             }
         }
+
+        // set all characters values to 0 after placement
         if (player == 0) {
             for (int i = 0; i < 12; i++) {
                 redCharacter[i] = 0;
@@ -522,6 +515,7 @@ public class StrategoGameState extends GameState {
 
     /**
      * This is a method to test the action method
+     *
      * @param player
      * @return
      */
@@ -614,13 +608,11 @@ public class StrategoGameState extends GameState {
         if (player instanceof GameComputerPlayer) {
             //place the computers piece
             //first, we need to decrement
-            if(player instanceof DumbComputerPlayer) {
+            if (player instanceof DumbComputerPlayer) {
                 myId = ((DumbComputerPlayer) player).getPlayerID();
-            }
-            else if(player instanceof SmartComputerPlayer){
+            } else if (player instanceof SmartComputerPlayer) {
                 myId = ((SmartComputerPlayer) player).getPlayerID();
-            }
-            else{
+            } else {
                 return false;
             }
         } else if (player instanceof HumanPlayer) {
@@ -687,11 +679,7 @@ public class StrategoGameState extends GameState {
                 board[row][col] = toUsePieces.get(loop);
                 break;
             }
-//            } catch (Exception ex) {
-//                //will probably throw an out of bounds exception...
-//                //but I just fixed that in the while loop itself...
-//                return false;
-//            }
+
             loop++;
             //} while (board[row][col].getValue() != value && !(loop > toUsePieces.size()));
         } while (!(loop > toUsePieces.size()));
@@ -908,17 +896,13 @@ public class StrategoGameState extends GameState {
 
         boolean isTrue = false;
         // Player 1 (represented by 0) ended turn
-//         if (gameState.turn == 0) {
         if (this.turn == 0) {
-//             gameState.turn = 1;
             this.turn = 1;
 
             isTrue = true;
         }
         // Player 2 (represented by 1) ended turn
-//         else if (gameState.turn == 1){
         else if (this.turn == 1) {
-//             gameState.turn = 0;
             this.turn = 0;
             isTrue = true;
         }
@@ -948,20 +932,20 @@ public class StrategoGameState extends GameState {
         }
     }
 
-    public boolean equals(Object obj){
-        if(! (obj instanceof StrategoGameState)){
+    public boolean equals(Object obj) {
+        if (!(obj instanceof StrategoGameState)) {
             return false;
         }
 
         StrategoGameState compState = (StrategoGameState) obj;
         //check to see if the boards are the same
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                if(this.board[i][j] == null && compState.board[i][j] == null){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (this.board[i][j] == null && compState.board[i][j] == null) {
                     continue;
-                }else if(this.board[i][j] == null || compState.board[i][j] == null){
+                } else if (this.board[i][j] == null || compState.board[i][j] == null) {
                     return false;
-                }else if(!this.board[i][j].equals(compState.board[i][j])){
+                } else if (!this.board[i][j].equals(compState.board[i][j])) {
                     return false;
                 }
             }
@@ -998,7 +982,6 @@ public class StrategoGameState extends GameState {
 
     /**
      * Getters and setters for our instance variables within the gamestate class.
-     *
      */
     public int getId() {
         return turn;
@@ -1056,11 +1039,11 @@ public class StrategoGameState extends GameState {
         return message;
     }
 
-    public void setPiece(int x, int y, Piece put){
+    public void setPiece(int x, int y, Piece put) {
         board[x][y] = put;
     }
 
-    public void removePiece(int x, int y){
+    public void removePiece(int x, int y) {
         board[x][y] = null;
     }
 

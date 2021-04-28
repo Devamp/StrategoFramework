@@ -8,7 +8,6 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
 public class StrategoPlaceAction extends GameAction {
@@ -30,15 +29,30 @@ public class StrategoPlaceAction extends GameAction {
 
     }
 
-    public int getValue(){
+    /**
+     * getter method for getting the value of the piece
+     *
+     * @return value - the value of the piece
+     */
+    public int getValue() {
         return value;
     }
 
-    public int getRow(){
+    /**
+     * getter method for getting the board row
+     *
+     * @return row - the row number on the board
+     */
+    public int getRow() {
         return row;
     }
 
-    public int getCol(){
+    /**
+     * getter method for getting the board column
+     *
+     * @return col - the col number on the board
+     */
+    public int getCol() {
         return col;
     }
 

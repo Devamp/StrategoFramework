@@ -7,10 +7,9 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
-public class PassTurnAction extends com.example.strategotest.game.GameFramework.actionMessage.GameAction{
+public class PassTurnAction extends com.example.strategotest.game.GameFramework.actionMessage.GameAction {
 
     /**
      * constructor for GameAction

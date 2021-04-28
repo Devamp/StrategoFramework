@@ -8,7 +8,6 @@ import com.example.strategotest.game.GameFramework.players.GamePlayer;
  * @author Caden Deutscher
  * @author Hewlett De Lara
  * @author Devam Patel
- *
  * @version 04/21
  */
 public class StrategoMoveAction extends GameAction {
@@ -31,19 +30,39 @@ public class StrategoMoveAction extends GameAction {
         this.toY = toY;
     }
 
+    /**
+     * getter method for getting the x-coordinate (row) of the piece's location
+     *
+     * @return fromX - the selected piece's row location
+     */
     public int getFromX() {
         return fromX;
     }
 
+    /**
+     * getter method for getting the y-coordinate (column) of the piece's location
+     *
+     * @return fromY - the selected piece's column location
+     */
     public int getFromY() {
         return fromY;
     }
 
+    /**
+     * getter method for getting the x-coordinate (row), where the piece wants to move
+     *
+     * @return toX - the selected piece's row location to be moved to
+     */
     public int getToX() {
         return toX;
     }
 
-    public int getToY(){
+    /**
+     * getter method for getting the y-coordinate (column), where the piece wants to move
+     *
+     * @return toY - the selected piece's column location to be moved to
+     */
+    public int getToY() {
         return toY;
     }
 }

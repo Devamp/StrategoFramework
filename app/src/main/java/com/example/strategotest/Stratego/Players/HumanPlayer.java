@@ -150,11 +150,10 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
         //get working gameState
         toUse = new StrategoGameState((StrategoGameState) info);
-        if(whatHappened == null){
+        if (whatHappened == null) {
 
-        }
-        else {
-            if(toUse.getMessage() != null && !happened) {
+        } else {
+            if (toUse.getMessage() != null && !happened) {
                 whatHappened.append("\n" + toUse.getMessage());
                 happened = true;
             }
@@ -459,7 +458,6 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
     }
 
 
-
     /**
      * send place action when we have piece loaded in register
      *
@@ -469,7 +467,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
      */
     public void buttonClickPlace(View v, int clickedRow, int clickedCol) {
         StrategoGameState s = new StrategoGameState();
-        if(getTheValue(v) != -1){
+        if (getTheValue(v) != -1) {
             whatHappened.setText("");
             placePieceVal = getTheValue(v);
             whatHappened.append("\n Selected: " + s.setName(placePieceVal));
@@ -480,7 +478,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
             toY = clickedCol;
             if (placePieceVal != -1) {
                 game.sendAction(new StrategoPlaceAction(this, placePieceVal, clickedRow, clickedCol));
-                if(getTheValue(v) == -1) {
+                if (getTheValue(v) == -1) {
                     whatHappened.append("\n Attempted to place: " + s.setName(placePieceVal) + " at: (" + Integer.toString(clickedRow) + "," + Integer.toString(clickedCol) + ")");
                 }
             }
@@ -490,7 +488,7 @@ public class HumanPlayer extends GameHumanPlayer implements View.OnClickListener
 
             //load the value of the piece we want to place. Will use given value to find correct
             //piece in instantiated pieces ArrayList
-            if(getTheValue(v) == 1) {
+            if (getTheValue(v) == 1) {
                 whatHappened.append("\n NO PIECE SELECTED.");
             }
             selectToPlace = true;
